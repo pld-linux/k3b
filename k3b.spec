@@ -12,14 +12,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.6
+Version:	0.11.7
 Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://unc.dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	0015b9ad457713425464dbdad6a15ab9
+# Source0-md5:	6c7cd0dcd77466d2ae896576e970b5bb
 Source1:	http://unc.dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
-# Source1-md5:	43b17b012ebb33cd9582742bf16064a5
+# Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://k3b.sourceforge.net/
@@ -105,7 +105,7 @@ cp -f /usr/share/automake/config.sub admin
 	
 %{__make}
 
-cd %{name}-i18n-%{version}
+cd %{name}-i18n-%{_i18nver}
 %{__make} -f admin/Makefile.common
 %configure
 %{__make}
@@ -119,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
 	
-%{__make} install -C %{name}-i18n-%{version} \
+%{__make} install -C %{name}-i18n-%{_i18nver} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
