@@ -1,11 +1,13 @@
+
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.7.5
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Applications
 Source0:	http://prdownloads.sourceforge.net/k3b/%{name}-%{version}.tar.gz
+Patch0:		%{name}-defaults.patch
 URL:		http://k3b.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
@@ -61,6 +63,7 @@ W³asno¶ci Kreatora CD:
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
