@@ -1,6 +1,5 @@
 #
 # TODO & NOTES:
-# - subpackages (to kill stupid reqs bcond)
 # - it overrides rpm*flags (hardcoded -O2)
 #
 # Conditional build:
@@ -13,7 +12,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.11.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://unc.dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -28,9 +27,11 @@ BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1.6.1
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
+BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
 BuildRequires:	libmad-devel
+BuildRequires:	libsamplerate-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	qt-devel >= 3.1
 BuildRequires:	xrender-devel
@@ -90,6 +91,91 @@ Header files for libk3bcore library.
 %description devel -l pl
 Pliki nag³ówkowe biblioteki libk3bcore.
 
+%package plugin-decoder-flac
+Summary:	Decoder plugin - flac
+Summary(pl):	Wtyczka dekoduj±ca - flac
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-flac
+Decoding module to decode FLAC files.
+ 
+%description plugin-decoder-flac -l pl
+Modu³ dekodujacy pliki w formacie FLAC.
+
+%package plugin-decoder-mad
+Summary:	Decoder plugin - mad
+Summary(pl):	Wtyczka dekoduj±ca - mad
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-mad
+Decoding module to decode MPEG 1 Layer III files.
+ 
+%description plugin-decoder-mad -l pl
+Modu³ dekodujacy pliki w formacie MPEG 1 Layer III.
+
+%package plugin-decoder-oggvorbis
+Summary:	Decoder plugin - oggvorbis
+Summary(pl):	Wtyczka dekoduj±ca - oggvorbis
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-oggvorbis
+Decoding module to decode Ogg Vorbis files.
+ 
+%description plugin-decoder-oggvorbis -l pl
+Modu³ dekodujacy pliki w formacie Ogg Vorbis.
+
+%package plugin-decoder-wave
+Summary:	Decoder plugin - wave
+Summary(pl):	Wtyczka dekoduj±ca - wave
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-wave
+Decoding module to decode wave files.
+ 
+%description plugin-decoder-wave -l pl
+Modu³ dekodujacy pliki w formacie wave.
+
+%package plugin-encoder-external
+Summary:	Encoder plugin - external
+Summary(pl):	Wtyczka koduj±ca - external
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-encoder-external
+Encoding module that allows specifying an encoding command.
+ 
+%description plugin-encoder-external -l pl
+Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
+
+%package plugin-encoder-oggvorbis
+Summary:	Encoder plugin - oggvorbis
+Summary(pl):	Wtyczka koduj±ca - oggvorbis
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-encoder-oggvorbis
+Encoding module to encode Ogg Vorbis files.
+ 
+%description plugin-encoder-oggvorbis -l pl
+Modu³ koduj±cy pliki w formacie Ogg Vorbis.
+
+%package plugin-encoder-sox
+Summary:	Encoder plugin - sox
+Summary(pl):	Wtyczka koduj±ca - sox
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	sox
+
+%description plugin-encoder-sox
+Encoding module to encode many file formats using sox.
+ 
+%description plugin-encoder-sox -l pl
+Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
+
 %prep
 %setup -q -a1
 %{?with_linux22:%patch0 -p1}
@@ -136,8 +222,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/kde3/libk3b*.so
-%{_libdir}/kde3/libk3b*.la
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
@@ -166,3 +250,45 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libk3btools.so
 %{_libdir}/libk3btools.la
 %{_includedir}/*.h
+
+%files plugin-decoder-flac
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bflacdecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bflacdecoder.so
+%{_datadir}/apps/k3b/plugins/k3bflacdecoder.plugin
+
+%files plugin-decoder-mad
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bmaddecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bmaddecoder.so
+%{_datadir}/apps/k3b/plugins/k3bmaddecoder.plugin
+
+%files plugin-decoder-oggvorbis
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3boggvorbisdecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3boggvorbisdecoder.so
+%{_datadir}/apps/k3b/plugins/k3boggvorbisdecoder.plugin
+
+%files plugin-decoder-wave
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bwavedecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bwavedecoder.so
+%{_datadir}/apps/k3b/plugins/k3bwavedecoder.plugin
+
+%files plugin-encoder-external
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bexternalencoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bexternalencoder.so
+%{_datadir}/apps/k3b/plugins/k3bexternalencoder.plugin
+
+%files plugin-encoder-oggvorbis
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3boggvorbisencoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3boggvorbisencoder.so
+%{_datadir}/apps/k3b/plugins/k3boggvorbisencoder.plugin
+
+%files plugin-encoder-sox
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bsoxencoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bsoxencoder.so
+%{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
