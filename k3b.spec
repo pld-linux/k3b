@@ -11,19 +11,19 @@
 #
 
 # 0.11 not ready yet, waits for KDE 3.2
-%define		_i18nver	0.10
+%define		_i18nver	0.11
 
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.5
+Version:	0.11.6
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	6d2c6266ce351abe3c69b78ad76ecc4a
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
-# Source1-md5:	a14fd760bb146eaee22802c504e53152
+Source0:	http://unc.dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+# Source0-md5:	0015b9ad457713425464dbdad6a15ab9
+Source1:	http://unc.dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
+# Source1-md5:	43b17b012ebb33cd9582742bf16064a5
 Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	arts-qt-devel
