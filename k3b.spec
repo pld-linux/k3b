@@ -1,43 +1,48 @@
 #
 # TODO & NOTES:
-# - nas support is obsolete? it depends on kdelibs build type
+# - subpackages (to kill stupid reqs bcond)
 # - it overrides rpm*flags (hardcoded -O2)
-# - BR alsa-libs ? is this really needed?
-
-%define		_snap		031107
-%define		_ver		0.11
-%define		_i18nver	0.10
-
+#
+# Conditional build:
+%bcond_with	reqs		# force optional Requires
+%bcond_without	setup		# don't build K3bSetup2 KControl Module
+%bcond_with	linux22		# building on kernel 2.2.x
+#
+%define		_i18nver	0.11
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11
-Release:	0.%{_snap}.1
+Version:	0.11.6
+Release:	1
 License:	GPL
 Group:		X11/Applications
-# From kdeextragear-1 kde cvs module
-Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	442e8309ae7ad4b090a35c1d2fa294ee
-Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{_i18nver}.tar.gz
-# Source1-md5:	a14fd760bb146eaee22802c504e53152
+Source0:	http://unc.dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+# Source0-md5:	0015b9ad457713425464dbdad6a15ab9
+Source1:	http://unc.dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
+# Source1-md5:	43b17b012ebb33cd9582742bf16064a5
+Patch0:		%{name}-linux22.patch
+Patch1:		%{name}-desktop.patch
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	alsa-lib-devel
-BuildRequires:	audiofile-devel
-BuildRequires:	autoconf
+BuildRequires:	arts-qt-devel
+BuildRequires:	autoconf >= 2.52
+BuildRequires:	automake >= 1.6.1
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
-BuildRequires:	kdelibs-devel >= 9:3.1.92
-BuildRequires:	libart_lgpl-devel
+BuildRequires:	id3lib-devel
+BuildRequires:	libmad-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	mad-devel
-BuildRequires:	sed >= 4.0
-BuildRequires:	zlib-devel
-#BuildRequires:	nas-devel
+BuildRequires:	qt-devel >= 3.1
+BuildRequires:	xrender-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
-Requires:	kdebase-core
 Requires:	mkisofs
+Requires:	qt >= 3.1
+%if %{with reqs}
+Requires:	transcode >= 0.6.0
+Requires:	vcdimager >= 0.7
+Requires:	normalize
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,6 +82,7 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	kdelibs-devel
 
 %description devel
 Header files for libk3bcore library.
@@ -84,132 +90,38 @@ Header files for libk3bcore library.
 %description devel -l pl
 Pliki nag³ówkowe biblioteki libk3bcore.
 
-%package plugin-decoder-mad
-Summary:	Decoder plugin - mad
-Summary(pl):	Wtyczka dekoduj±ca - mad
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description plugin-decoder-mad
-Decoding module to decode MPEG 1 Layer III files.
- 
-%description plugin-decoder-mad -l pl
-Modu³ dekodujacy pliki w formacie MPEG 1 Layer III.
-
-%package plugin-decoder-oggvorbis
-Summary:	Decoder plugin - oggvorbis
-Summary(pl):	Wtyczka dekoduj±ca - oggvorbis
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description plugin-decoder-oggvorbis
-Decoding module to decode Ogg Vorbis files.
- 
-%description plugin-decoder-oggvorbis -l pl
-Modu³ dekodujacy pliki w formacie Ogg Vorbis.
-
-%package plugin-decoder-wave
-Summary:	Decoder plugin - wave
-Summary(pl):	Wtyczka dekoduj±ca - wave
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description plugin-decoder-wave
-Decoding module to decode wave files.
- 
-%description plugin-decoder-wave -l pl
-Modu³ dekodujacy pliki w formacie wave.
-
-%package plugin-encoder-external
-Summary:	Encoder plugin - external
-Summary(pl):	Wtyczka koduj±ca - external
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description plugin-encoder-external
-Encoding module that allows specifying an encoding command.
- 
-%description plugin-encoder-external -l pl
-Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
-
-%package plugin-encoder-oggvorbis
-Summary:	Encoder plugin - oggvorbis
-Summary(pl):	Wtyczka koduj±ca - oggvorbis
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description plugin-encoder-oggvorbis
-Encoding module to encode Ogg Vorbis files.
- 
-%description plugin-encoder-oggvorbis -l pl
-Modu³ koduj±cy pliki w formacie Ogg Vorbis.
-
-%package plugin-encoder-sox
-Summary:	Encoder plugin - sox
-Summary(pl):	Wtyczka koduj±ca - sox
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-Requires:	sox
-
-%description plugin-encoder-sox
-Encoding module to encode many file formats using sox.
- 
-%description plugin-encoder-sox -l pl
-Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
-
 %prep
-%setup -q -n %{name}-%{_snap} -a1
+%setup -q -a1
+%{?with linux22:%patch0 -p1}
+%patch1 -p1
 
 %build
-
-# same thing as with kdemultimedia
-# includes kernel headers which breaks things
-# with PLD kernels 2.4.x, below workaround  by misiek
-mkdir linux scsi
-sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
-/usr/include/linux/cdrom.h > linux/cdrom.h
-cp /usr/include/scsi/scsi.h scsi
-
-sed -i 's/AudioVideo/X-CD-RW/' src/%{name}.desktop
-
-%{__make} -f admin/Makefile.common cvs
-
+cp -f /usr/share/automake/config.sub admin
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath \
-	--enable-final
+	--with-qt-libraries=%{_libdir} \
+	%{!?with_setup:--with-k3bsetup=no}
 	
 %{__make}
 
-cd %{name}-i18n-%{_i18nver}
+cd %{name}-i18n-%{version}
 %{__make} -f admin/Makefile.common
 %configure
 %{__make}
-cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	kde_appsdir=%{_applnkdir}
-
-cd %{name}-i18n-%{_i18nver}
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-cd ..
-
-install -d $RPM_BUILD_ROOT%{_desktopdir}/kde
-
-mv $RPM_BUILD_ROOT%{_applnkdir}/Multimedia/k3b.desktop \
-	$RPM_BUILD_ROOT%{_desktopdir}/kde
-
-mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/System/k3bsetup2.desktop \
-	$RPM_BUILD_ROOT%{_desktopdir}/kde
+	appsdir=%{_desktopdir}/kde \
+	k3bsetup2dir=%{_desktopdir}/kde \
+	kde_htmldir=%{_kdedocdir}
 	
-sed -i 's/AudioVideo/X-CD-RW/' $RPM_BUILD_ROOT%{_desktopdir}/kde/k3b.desktop
-
-echo "Categories=Qt;KDE;X-KDE-settings-system" >> \
-	$RPM_BUILD_ROOT%{_desktopdir}/kde/k3bsetup2.desktop
+%{__make} install -C %{name}-i18n-%{version} \
+	DESTDIR=$RPM_BUILD_ROOT \
+	kde_htmldir=%{_kdedocdir}
 
 %find_lang %{name} --with-kde
 
@@ -221,78 +133,36 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog FAQ README TODO
-%attr(755,root,root) %{_bindir}/k3b
-%{_libdir}/libk3bcore.la
-%attr(755,root,root) %{_libdir}/libk3bcore.so.*.*.*
-%{_libdir}/libk3bplugin.la
-%attr(755,root,root) %{_libdir}/libk3bplugin.so.*.*.*
-%{_libdir}/libk3bproject.la
-%attr(755,root,root) %{_libdir}/libk3bproject.so.*.*.*
-%{_libdir}/libk3btools.la
-%attr(755,root,root) %{_libdir}/libk3btools.so.*.*.*
-%{_libdir}/libk3baudiometainforenamerplugin.la
+%doc README FAQ ChangeLog TODO
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/kde3/libk3b*.so
+%{_libdir}/kde3/libk3b*.la
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
-%{_libdir}/kde3/kcm_k3bsetup2.la
-%attr(755,root,root) %{_libdir}/kde3/kcm_k3bsetup2.so
-%dir %{_datadir}/apps/k3b
-%{_datadir}/apps/k3b/cdi
-%{_datadir}/apps/k3b/icons
-%{_datadir}/apps/k3b/kpartplugins
-%{_datadir}/apps/k3b/pics
-%{_datadir}/apps/k3b/eventsrc
-%{_datadir}/apps/k3b/k3bui.rc
-%{_datadir}/apps/k3b/tips
-%dir %{_datadir}/apps/k3b/plugins
+%{_libdir}/libk3baudiometainforenamerplugin.la
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
+%{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
-%{_applnkdir}/.hidden/k3b-cue.desktop
-%{_applnkdir}/.hidden/k3b-iso.desktop
-%{_desktopdir}/kde/k3b.desktop
-%{_desktopdir}/kde/k3bsetup2.desktop
-%{_iconsdir}/hicolor/*/apps/k3b.png
+%{_datadir}/applnk/.hidden/*.desktop
+%{_desktopdir}/kde/*.desktop
+%{_iconsdir}/*/*/apps/k3b.png
+
+%if %{with setup}
+%attr(755,root,root) %{_libdir}/kde3/kcm_*.so
+%{_libdir}/kde3/kcm_*.la
+%endif
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libk3bcore.so
+%{_libdir}/libk3bcore.la
+%attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/libk3bdevice.la
+%attr(755,root,root) %{_libdir}/libk3bplugin.so
+%{_libdir}/libk3bplugin.la
+%attr(755,root,root) %{_libdir}/libk3bproject.so
+%{_libdir}/libk3bproject.la
+%attr(755,root,root) %{_libdir}/libk3btools.so
+%{_libdir}/libk3btools.la
 %{_includedir}/*.h
-%{_libdir}/libk3bcore.so
-%{_libdir}/libk3bplugin.so
-%{_libdir}/libk3bproject.so
-%{_libdir}/libk3btools.so
-
-%files plugin-decoder-mad
-%defattr(644,root,root,755)
-%{_libdir}/libk3bmaddecoder.la
-%attr(755,root,root) %{_libdir}/libk3bmaddecoder.so
-%{_datadir}/apps/k3b/plugins/k3bmaddecoder.plugin
-
-%files plugin-decoder-oggvorbis
-%defattr(644,root,root,755)
-%{_libdir}/libk3boggvorbisdecoder.la
-%attr(755,root,root) %{_libdir}/libk3boggvorbisdecoder.so
-%{_datadir}/apps/k3b/plugins/k3boggvorbisdecoder.plugin
-
-%files plugin-decoder-wave
-%defattr(644,root,root,755)
-%{_libdir}/libk3bwavedecoder.la
-%attr(755,root,root) %{_libdir}/libk3bwavedecoder.so
-%{_datadir}/apps/k3b/plugins/k3bwavedecoder.plugin
-
-%files plugin-encoder-external
-%defattr(644,root,root,755)
-%{_libdir}/libk3bexternalencoder.la
-%attr(755,root,root) %{_libdir}/libk3bexternalencoder.so
-%{_datadir}/apps/k3b/plugins/k3bexternalencoder.plugin
-
-%files plugin-encoder-oggvorbis
-%defattr(644,root,root,755)
-%{_libdir}/libk3boggvorbisencoder.la
-%attr(755,root,root) %{_libdir}/libk3boggvorbisencoder.so
-%{_datadir}/apps/k3b/plugins/k3boggvorbisencoder.plugin
-
-%files plugin-encoder-sox
-%defattr(644,root,root,755)
-%{_libdir}/libk3bsoxencoder.la
-%attr(755,root,root) %{_libdir}/libk3bsoxencoder.so
-%{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
