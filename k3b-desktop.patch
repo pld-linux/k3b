@@ -46,4 +46,4 @@ diff -aurN k3b-0.11.6.orig/src/k3bsetup/k3bsetup2.desktop k3b-0.11.6/src/k3bsetu
  X-KDE-ModuleType=Library
  X-KDE-RootOnly=true
 -Categories=Application;System;X-KDE-System;
-+Categories=Qt;KDE;X-KDE-settings-system;Settings;
++Categories=Qt;KDE;X-KDE-settings-system;
