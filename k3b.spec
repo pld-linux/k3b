@@ -35,14 +35,15 @@ BuildRequires:	libmad-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	qt-devel >= 3.1
+BuildRequires:	resmgr-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
 Requires:	qt >= 3.1
 %if %{with reqs}
+Requires:	normalize
 Requires:	transcode >= 0.6.0
 Requires:	vcdimager >= 0.7
-Requires:	normalize
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
