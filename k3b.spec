@@ -14,7 +14,7 @@ Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.9.tar.gz
 # Source1-md5:	f4f42ad93802b0b72d92b81c80df4cca
 Patch0:		%{name}-defaults.patch
-Patch1:         %{name}-linux_2_5.patch
+Patch1:		%{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
@@ -29,7 +29,7 @@ BuildRequires:	kdelibs-devel >= 3.1
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
-BuildRequires: 	qt-devel >= 3.1
+BuildRequires:	qt-devel >= 3.1
 BuildRequires:	zlib-devel
 ##BuildRequires:	nas-devel
 Requires:	cdrdao >= 1.1.5
