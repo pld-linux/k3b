@@ -1,7 +1,7 @@
 Summary:	The CD Kreator
 Name:		k3b
 Version:	0.7.5
-Release:	0
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://prdownloads.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -18,6 +18,8 @@ BuildRequires:	audiofile-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	nas-devel
 BuildRequires:	gettext-devel
+Requires:	cdrecord
+Requires:	mkisofs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
@@ -55,6 +57,11 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
+ALD=$RPM_BUILD_ROOT/%{_applnkdir}
+install -d $ALD/Utilities/CD-RW
+mv $ALD/{Applications/*,Utilities/CD-RW} 
+mv $ALD/{Multimedia/*,Utilities/CD-RW} 
+
 %find_lang %{name} --with-kde
 %find_lang k3bsetup --with-kde
 cat k3bsetup.lang >>%{name}.lang
@@ -66,8 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/*
-%{_applnkdir}/Applications/*
-%{_applnkdir}/Multimedia/*
+%{_applnkdir}/Utilities/CD-RW/*
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/*
