@@ -3,7 +3,7 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.8
+Version:	0.8.1
 Release:	1
 License:	GPL
 Group:		X11/Applications
@@ -11,9 +11,9 @@ Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
 Patch0:		%{name}-defaults.patch
 Patch1:         %{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
+BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
@@ -21,8 +21,9 @@ BuildRequires:	gettext-devel
 BuildRequires:	kdelibs-devel >= 3.1
 BuildRequires:	libvorbis-devel
 BuildRequires: 	qt-devel >= 3.0.3
-##BuildRequires:	nas-devel
+BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
+##BuildRequires:	nas-devel
 Requires:	qt >= 3.0.3
 BuildRequires:	cdrdao
 Requires:	cdrecord
