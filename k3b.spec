@@ -3,14 +3,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.8.1
-Release:	2
+Version:	0.9
+Release:	0.1
 License:	GPL
 Group:		X11/Applications
-# Source0-md5: 4f205fcb7afb11d8db07cac20e431819
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
-# Source1-md5: 1d1a074c61e5b9e790f3125534cae60b
-Source1:	http://dl.sourceforge.net/k3b/%{name}-0.8-i18n.tar.gz
+# Source0-md5:	cac0c1e80862070e9b0da2ead5ff4521
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.9.tar.gz
+# Source1-md5:	f4f42ad93802b0b72d92b81c80df4cca
 Patch0:		%{name}-defaults.patch
 Patch1:         %{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
@@ -75,16 +75,16 @@ W³asno¶ci Kreatora CD:
 %prep
 %setup -q -a1
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-mkdir linux
-sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
-/usr/include/linux/cdrom.h > linux/cdrom.h
+#mkdir linux
+#sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
+#/usr/include/linux/cdrom.h > linux/cdrom.h
 
 
 %configure \
@@ -93,7 +93,9 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 
 %{__make}
 
-cd k3b-0.8-i18n
+cd k3b-i18n-0.9
+
+make -f admin/Makefile.common
 
 %configure
 
@@ -105,7 +107,7 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
-cd k3b-0.8-i18n
+cd k3b-i18n-0.9
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
@@ -117,9 +119,6 @@ install -d $ALD/Utilities/CD-RW
 mv $ALD/{Multimedia/*,Utilities/CD-RW} 
 
 %find_lang %{name} --with-kde
-%find_lang k3bsetup --with-kde
-
-cat k3bsetup.lang >>%{name}.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -128,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/*
+%{_libdir}/*
 %{_applnkdir}/Utilities/CD-RW/*
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
