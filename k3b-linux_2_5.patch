@@ -1,0 +1,641 @@
+? k3b/src/device/IdeIf-linux.cc
+? k3b/src/device/IdeIf.h
+Index: k3b/src/k3bblankingjob.cpp
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/k3bblankingjob.cpp,v
+retrieving revision 1.20
+diff -u -r1.20 k3bblankingjob.cpp
+--- k3b/src/k3bblankingjob.cpp	29 Jan 2003 10:20:52 -0000	1.20
++++ k3b/src/k3bblankingjob.cpp	26 Feb 2003 01:34:27 -0000
+@@ -78,10 +78,17 @@
+     emit finished( false );
+     return;
+   }
+-
++  if( m_device->interfaceType() == K3bDevice::SCSI ){
+   *m_process << k3bMain()->externalBinManager()->binPath( "cdrecord" );
+   *m_process << QString("dev=%1").arg( m_device->busTargetLun() );
+   *m_process << QString("speed=%1").arg(m_speed);
++  }
++  else
++  {
++  *m_process << k3bMain()->externalBinManager()->binPath( "cdrecord" );
++  *m_process << QString("dev=%1").arg( m_device->devicename() );
++  *m_process << QString("speed=%1").arg(m_speed);
++  }
+   if( m_force )
+     *m_process << "-force";
+   if( k3bMain()->eject() )
+Index: k3b/src/k3bcdrecordwriter.cpp
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/k3bcdrecordwriter.cpp,v
+retrieving revision 1.16
+diff -u -r1.16 k3bcdrecordwriter.cpp
+--- k3b/src/k3bcdrecordwriter.cpp	18 Feb 2003 09:46:27 -0000	1.16
++++ k3b/src/k3bcdrecordwriter.cpp	26 Feb 2003 01:34:27 -0000
+@@ -72,8 +72,16 @@
+     *m_process << "gracetime=2";  // 2 is the lowest allowed value (Joerg, why do you do this to us?)
+ 
+   // Again we assume the device to be set!
++
++  if( burnDevice()->interfaceType() == K3bDevice::SCSI ){
+   *m_process << QString("dev=%1").arg(burnDevice()->busTargetLun());
+   *m_process << QString("speed=%1").arg(burnSpeed());
++  }
++  else
++  {
++    *m_process << QString("dev=%1").arg(burnDevice()->devicename());
++    *m_process << QString("speed=%1").arg(burnSpeed());
++  }
+ 
+   if( m_dao ) {
+     if( burnDevice()->dao() )
+Index: k3b/src/device/k3bdevicemanager.cpp
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/device/k3bdevicemanager.cpp,v
+retrieving revision 1.40
+diff -u -r1.40 k3bdevicemanager.cpp
+--- k3b/src/device/k3bdevicemanager.cpp	10 Feb 2003 19:14:54 -0000	1.40
++++ k3b/src/device/k3bdevicemanager.cpp	26 Feb 2003 01:34:28 -0000
+@@ -89,7 +89,7 @@
+   while( it.current() ) {
+     if( it.current()->deviceNodes().contains(devicename) )
+       return it.current();
+-    
++
+     ++it;
+   }
+ 
+@@ -156,7 +156,6 @@
+   }
+ 
+   scanFstab();
+-
+   return m_foundDevices;
+ }
+ 
+@@ -231,7 +230,6 @@
+ 
+     K3bDevice *dev;
+     dev = deviceByName( list[0] );
+-
+     if( dev == 0 )
+       dev = addDevice( list[0] );
+ 
+@@ -339,7 +337,7 @@
+   dev->m_lun    = lun;
+   dev->m_bus    = bus;
+   kdDebug() << "(K3bDeviceManager) bus: " << dev->m_bus << ", id: " << dev->m_target << ", lun: " << dev->m_lun << endl;
+-    
++
+ 
+   // now scan with cdrecord for a driver
+   if( m_externalBinManager->foundBin( "cdrecord" ) ) {
+@@ -456,10 +454,130 @@
+ }
+ 
+ 
+-K3bDevice* K3bDeviceManager::initializeIdeDevice( const QString& drive )
++
++
++K3bDevice* K3bDeviceManager::initializeIdeDevice( const QString& devname)
+ {
+-  K3bIdeDevice* newDevice = new K3bIdeDevice( drive );
+-  return newDevice;
++  K3bIdeDevice* dev = 0;
++
++  dev = new K3bIdeDevice( devname );
++  dev->m_target = -1; // Don't use target,bus,lun for IDE
++  dev->m_lun    = -1; //
++  dev->m_bus    = -1; //
++  kdDebug() << "(K3bDeviceManager) bus: " << dev->m_bus << ", id: " << dev->m_target << ", lun: " << dev->m_lun << endl;
++
++
++  // now scan with cdrecord for a driver
++  if( m_externalBinManager->foundBin( "cdrecord" ) ) {
++    kdDebug() << "(K3bDeviceManager) probing capabilities for device " << dev->blockDeviceName() << endl;
++
++    KProcess driverProc, capProc;
++    driverProc << m_externalBinManager->binPath( "cdrecord" );
++    driverProc << QString("dev=%1").arg(devname);
++    driverProc << "-checkdrive";
++    connect( &driverProc, SIGNAL(receivedStdout(KProcess*, char*, int)),
++	     this, SLOT(slotCollectStdout(KProcess*, char*, int)) );
++
++    m_processOutput = "";
++
++    driverProc.start( KProcess::Block, KProcess::Stdout );
++    // this should work for all drives
++    // so we are always able to say if a drive is a writer or not
++    if( driverProc.exitStatus() == 0 ) {
++      dev->m_burner = true;
++      dev->m_writeModes = 0;
++      QStringList lines = QStringList::split( "\n", m_processOutput );
++      for( QStringList::const_iterator it = lines.begin(); it != lines.end(); ++it ) {
++	const QString& line = *it;
++
++	// no info in cdrecord <= 1.10 !!!!!
++	if( line.startsWith( "Supported modes" ) ) {
++	  QStringList modes = QStringList::split( " ", line.mid(16) );
++	  if( modes.contains( "SAO" ) )
++	    dev->m_writeModes |= K3bDevice::SAO;
++	  if( modes.contains( "TAO" ) )
++	    dev->m_writeModes |= K3bDevice::TAO;
++	  if( modes.contains( "PACKET" ) )
++	    dev->m_writeModes |= K3bDevice::PACKET;
++	  if( modes.contains( "SAO/R96R" ) )
++	    dev->m_writeModes |= K3bDevice::SAO_R96R;
++	  if( modes.contains( "SAO/R96P" ) )
++	    dev->m_writeModes |= K3bDevice::SAO_R96P;
++	  if( modes.contains( "RAW/R16" ) )
++	    dev->m_writeModes |= K3bDevice::RAW_R16;
++	  if( modes.contains( "RAW/R96R" ) )
++	    dev->m_writeModes |= K3bDevice::RAW_R96R;
++	  if( modes.contains( "RAW/R96P" ) )
++	    dev->m_writeModes |= K3bDevice::RAW_R96P;
++	  break;
++	}
++      }
++    }
++
++    // default to dao and tao if no write modes info was available (cdrecord <= 1.10)
++    // I include this hack because I think it's better to get an error:
++    //   "mode not supported" when trying to write instead of never getting to choose DAO!
++    if( dev->m_writeModes == 0 )
++      dev->m_writeModes = K3bDevice::SAO|K3bDevice::TAO;
++
++    dev->setDao( dev->supportsWriteMode( K3bDevice::SAO ) );
++
++
++
++    // check drive capabilities
++    // does only work for generic-mmc drives
++    capProc << m_externalBinManager->binPath( "cdrecord" );
++    capProc << QString("dev=%1").arg(devname);
++    capProc << "-prcap";
++
++    connect( &capProc, SIGNAL(receivedStdout(KProcess*, char*, int)),
++	     this, SLOT(slotCollectStdout(KProcess*, char*, int)) );
++
++    m_processOutput = "";
++
++    capProc.start( KProcess::Block, KProcess::Stdout );
++
++    QStringList lines = QStringList::split( "\n", m_processOutput );
++
++    // parse output
++    for( QStringList::const_iterator it = lines.begin(); it != lines.end(); ++it ) {
++      const QString& line = *it;
++
++      if( line.startsWith("  ") ) {
++	if( line.contains("write CD-R media") )
++	  dev->m_burner = !line.contains( "not" );
++
++	else if( line.contains("write CD-RW media") )
++	  dev->m_bWritesCdrw = !line.contains( "not" );
++
++	else if( line.contains("Buffer-Underrun-Free recording") ||
++		 line.contains("support BURN-Proof") )
++	  dev->m_burnproof = !line.contains( "not" );
++
++	else if( line.contains( "Maximum read  speed" ) ) //lukas: are there really two spaces? trueg: Yes, there are! ;)
++	  dev->m_maxReadSpeed = K3b::round( line.mid( line.find(":")+1 ).toDouble() * 1000.0 / ( 2352.0 * 75.0 ) );
++
++	else if( line.contains( "Maximum write speed" ) )
++	  dev->m_maxWriteSpeed = K3b::round( line.mid( line.find(":")+1 ).toDouble() * 1000.0 / ( 2352.0 * 75.0 ) );
++
++	else if( line.contains( "Buffer size" ) )
++	  dev->m_bufferSize = line.mid( line.find(":")+1 ).toInt();
++	else
++	  kdDebug() << "(K3bDeviceManager) unusable cdrecord output: " << line << endl;
++
++      }
++      else if( line.startsWith("Vendor_info") )
++	dev->m_vendor = line.mid( line.find(":")+3, 8 ).stripWhiteSpace();
++      else if( line.startsWith("Identifikation") )
++	dev->m_description = line.mid( line.find(":")+3, 16 ).stripWhiteSpace();
++      else if( line.startsWith("Revision") )
++	dev->m_version = line.mid( line.find(":")+3, 4 ).stripWhiteSpace();
++      else
++	kdDebug() << "(K3bDeviceManager) unusable cdrecord output: " << line << endl;
++    }
++  }
++
++  return dev;
+ }
+ 
+ 
+@@ -500,9 +618,9 @@
+ 
+   if( IDE_DISK_MAJOR( cdromStat.st_rdev>>8 ) ) {
+     kdDebug() << devicename << " is ide device" << endl;
+-    
+     ::close( cdromfd );
+ 
++
+     // check if device has already been found
+     if( !findDevice( resolved ) )
+       device = initializeIdeDevice( resolved );
+@@ -533,13 +651,12 @@
+       delete device;
+       return 0;
+     }
+-  
+-  
++
+     if( device->burner() )
+       m_writer.append( device );
+     else
+       m_reader.append( device );
+-    
++
+     m_allDevices.append( device );
+   }
+ 
+Index: k3b/src/device/k3bdevicewidget.cpp
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/device/k3bdevicewidget.cpp,v
+retrieving revision 1.13
+diff -u -r1.13 k3bdevicewidget.cpp
+--- k3b/src/device/k3bdevicewidget.cpp	29 Jan 2003 16:51:44 -0000	1.13
++++ k3b/src/device/k3bdevicewidget.cpp	26 Feb 2003 01:34:28 -0000
+@@ -39,10 +39,10 @@
+ #include <qheader.h>
+ #include <qstring.h>
+ #include <qcolor.h>
++#include <iostream>
+ 
+ 
+-
+-class K3bDeviceWidget::PrivateTempDevice 
++class K3bDeviceWidget::PrivateTempDevice
+ {
+ public:
+   PrivateTempDevice( K3bDevice* d ) {
+@@ -57,7 +57,7 @@
+     bufferSize = d->bufferSize();
+     dao = d->dao();
+   }
+-  
++
+   K3bDevice* device;
+   int maxReadSpeed;
+   int maxWriteSpeed;
+@@ -71,7 +71,7 @@
+ };
+ 
+ 
+-class K3bDeviceWidget::PrivateDeviceViewItem2 : public QCheckListItem 
++class K3bDeviceWidget::PrivateDeviceViewItem2 : public QCheckListItem
+ {
+ public:
+   PrivateDeviceViewItem2( int type, PrivateTempDevice* dev, QListView* view, QListViewItem* after )
+@@ -86,7 +86,7 @@
+ 
+   PrivateDeviceViewItem2( int type, PrivateTempDevice* dev, QListViewItem* item, QListViewItem* after )
+     : QCheckListItem( item, QString::null, CheckBox ),
+-      m_type(type) { 
++      m_type(type) {
+     this->dev = dev;
+     init();
+ 
+@@ -146,19 +146,19 @@
+ };
+ 
+ 
+-class K3bDeviceWidget::PrivateDeviceViewItem1 : public K3bListViewItem 
++class K3bDeviceWidget::PrivateDeviceViewItem1 : public K3bListViewItem
+ {
+ public:
+   PrivateDeviceViewItem1( int type, PrivateTempDevice* dev, QListView* view, QListViewItem* after )
+     : K3bListViewItem( view, after ),
+-      m_type(type) { 
++      m_type(type) {
+     this->dev = dev;
+     init();
+   }
+ 
+   PrivateDeviceViewItem1( int type, PrivateTempDevice* dev, QListViewItem* item, QListViewItem* after )
+     : K3bListViewItem( item, after ),
+-      m_type(type) { 
++      m_type(type) {
+     this->dev = dev;
+     init();
+   }
+@@ -232,7 +232,7 @@
+       if( l.isEmpty() )
+ 	for( int i = 0; i < 13; i++ )
+ 	  l.append(K3bDevice::cdrdao_drivers[i]);
+-      
++
+       setEditor( 1, COMBO, l );
+       break;
+     case t_bufferSize:
+@@ -379,10 +379,10 @@
+       systemDeviceItem->setText( 1, dev->device->devicename() );
+     systemDeviceItem->setForegroundColor( 1, gray );
+ 
+-    K3bListViewItem* interfaceItem = new K3bListViewItem( devRoot, systemDeviceItem, 
++    K3bListViewItem* interfaceItem = new K3bListViewItem( devRoot, systemDeviceItem,
+ 							  i18n("Interface type:"),
+-							  ( dev->device->interfaceType() == K3bDevice::SCSI ? 
+-							    i18n("Generic SCSI") : 
++							  ( dev->device->interfaceType() == K3bDevice::SCSI ?
++							    i18n("Generic SCSI") :
+ 							    i18n("ATAPI") ) );
+     interfaceItem->setForegroundColor( 1, gray );
+ 
+@@ -407,7 +407,8 @@
+ 									   versionItem );
+ 
+     // now add the SCSI specific items
+-    if( dev->device->interfaceType() == K3bDevice::SCSI ) {
++    //if( dev->device->interfaceType() == K3bDevice::SCSI ) { // 2.5.x kernels allow writing without scsi emulation
++	if (dev->writer){
+       PrivateDeviceViewItem1* cdrdaoDriverItem = new PrivateDeviceViewItem1( PrivateDeviceViewItem1::t_cdrdaoDriver,
+ 									     dev,
+ 									     devRoot,
+@@ -505,7 +506,7 @@
+     tempDev->device->setWritesCdrw( tempDev->cdrw );
+     tempDev->device->setDao( tempDev->dao );
+     tempDev->device->setBufferSize( tempDev->bufferSize );
+-    
++
+     tempDev = m_tempDevices.next();
+   }
+ }
+Index: k3b/src/device/k3bidedevice.cpp
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/device/k3bidedevice.cpp,v
+retrieving revision 1.9
+diff -u -r1.9 k3bidedevice.cpp
+--- k3b/src/device/k3bidedevice.cpp	22 Dec 2002 12:01:22 -0000	1.9
++++ k3b/src/device/k3bidedevice.cpp	26 Feb 2003 01:34:28 -0000
+@@ -1,11 +1,14 @@
+ #include "k3bidedevice.h"
+ 
++#include "ScsiIf.h"
++
+ #include <stdlib.h>
+ #include <fcntl.h>		// O_RDONLY etc.
+ #include <linux/hdreg.h>
+ #include <sys/ioctl.h>		// ioctls
+ 
+ #include <kdebug.h>
++#include <qfile.h>
+ 
+ 
+ K3bIdeDevice::K3bIdeDevice( const QString& drive )
+@@ -13,7 +16,10 @@
+ {
+   m_burner = false;
+   m_burnproof = false;
+-  m_maxWriteSpeed = -1;
++  m_maxWriteSpeed = -1; // Do not consider IDE Drives as writers by default
++  m_maxReadSpeed  = 1;
++  m_burner        = false;
++
+ 
+   // we could use cdda_speed_set to test the reading speed
+   // for example from 100 down to 1 until it returns TR_OK
+@@ -42,4 +48,179 @@
+ 
+     return true;
+   }
++}
++
++
++int K3bIdeDevice::isReady() const
++{
++  ScsiIf scsiIf( QFile::encodeName(devicename()) );
++  if( scsiIf.init() != 0 ) {
++    kdDebug() << "(K3bIdeDevice) Could not open device " << devicename() << endl;
++    return 1;
++  }
++
++  unsigned char cmd[6];
++  const unsigned char *sense;
++  int senseLen;
++
++  memset(cmd, 0, 6);
++
++  switch( scsiIf.sendCmd(cmd, 6, NULL, 0, NULL, 0, 0) )
++    {
++    case 1:
++      return 1;
++
++    case 2:
++      sense = scsiIf.getSense(senseLen);
++
++      int code = sense[2] & 0x0f;
++
++      if( code == 0x02 ) {
++	// not ready
++	return 2;
++      }
++      else if( code != 0x06 ) {
++	scsiIf.printError();
++	return 1;
++      }
++      else {
++	return 0;
++      }
++    }
++
++  return 0;
++}
++
++bool K3bIdeDevice::rewritable()
++{
++  ScsiIf scsiIf( QFile::encodeName(devicename()) );
++  if( scsiIf.init() != 0 ) {
++    kdDebug() << "(K3IdeDevice) Could not open device " << devicename() << endl;
++    return false;
++  }
++
++  unsigned char cmd[10];
++  unsigned long dataLen = 34;
++  unsigned char data[34];
++
++  memset(cmd, 0, 10);
++  memset(data, 0, dataLen);
++
++  cmd[0] = 0x51; // READ DISK INFORMATION
++  cmd[7] = dataLen >> 8;
++  cmd[8] = dataLen;
++
++  if( scsiIf.sendCmd(cmd, 10, NULL, 0, data, dataLen, 0) ) {
++    kdDebug() << "(K3bIdeDevice) scsi command failed." << endl;
++    return false;
++  }
++
++  return (data[2] & 0x10);
++}
++
++int K3bIdeDevice::getModePage( ScsiIf *_scsiIf, int pageCode, unsigned char *buf,
++			    long bufLen, unsigned char *modePageHeader,
++			    unsigned char *blockDesc, int showErrorMsg )
++{
++  unsigned char cmd[10];
++  long dataLen = bufLen + 8 /*mode parameter header */ + 100 /*spare for block descriptors */ ;
++  unsigned char *data = new ( unsigned char )[dataLen];
++
++  memset( cmd, 0, 10 );
++  memset( data, 0, dataLen );
++  memset( buf, 0, bufLen );
++
++  cmd[0] = 0x5a;      // MODE SENSE
++  cmd[2] = pageCode & 0x3f;
++  cmd[7] = dataLen >> 8;
++  cmd[8] = dataLen;
++
++  if( _scsiIf->sendCmd( cmd, 10, NULL, 0, data, dataLen, showErrorMsg ) != 0 ) {
++    delete[]data;
++    return 1;
++  }
++
++  long modeDataLen = ( data[0] << 8 ) | data[1];
++  long blockDescLen = ( data[6] << 8 ) | data[7];
++
++  if( modePageHeader != NULL )
++    memcpy( modePageHeader, data, 8 );
++
++  if( blockDesc != NULL ) {
++    if( blockDescLen >= 8 )
++      memcpy( blockDesc, data + 8, 8 );
++    else
++      memset( blockDesc, 0, 8 );
++  }
++
++  if( modeDataLen > blockDescLen + 6 ) {
++    unsigned char *modePage = data + blockDescLen + 8;
++    long modePageLen = modePage[1] + 2;
++
++    if( modePageLen > bufLen )
++      modePageLen = bufLen;
++
++    memcpy( buf, modePage, modePageLen );
++    delete[]data;
++    return 0;
++  } else {
++    kdDebug() << "No mode page data received." << endl;
++    delete[]data;
++    return 1;
++  }
++}
++
++
++int K3bIdeDevice::isEmpty()
++{
++  ScsiIf scsiIf( QFile::encodeName(devicename()) );
++  if( scsiIf.init() != 0 ) {
++    kdDebug() << "(K3bIdeDevice) Could not open device " << devicename() << endl;
++    return -1;
++  }
++
++  unsigned char cmd[10];
++  unsigned long dataLen = 34;
++  unsigned char data[34];
++
++  // perform READ DISK INFORMATION
++  memset(cmd, 0, 10);
++  memset(data, 0, dataLen);
++
++  cmd[0] = 0x51; // READ DISK INFORMATION
++  cmd[7] = dataLen >> 8;
++  cmd[8] = dataLen;
++
++  if (scsiIf.sendCmd(cmd, 10, NULL, 0, data, dataLen, 0) != 0) {
++    kdDebug() << "(K3bIdeDevice) Could not check if disk in " << devicename() << " is empty." << endl;
++    return -1;
++  }
++
++  return (data[2] & 0x03);
++}
++
++bool K3bIdeDevice::block( bool block ) const
++{
++  unsigned char cmd[6];
++
++  memset(cmd, 0, 6);
++
++  cmd[0] = 0x1e;
++  
++  if (block) {
++    cmd[4] |= 0x01;
++  }
++
++  ScsiIf scsiIf( QFile::encodeName(devicename()) );
++  if( scsiIf.init() != 0 ) {
++    kdDebug() << "(K3bScsiDevice) Could not open device " << devicename() << endl;
++    return false;
++  }
++
++  if (scsiIf.sendCmd(cmd, 6, NULL, 0, NULL, 0) != 0) {
++    kdDebug() << "(K3bScsiDevice) Cannot block/unblock device " << devicename() << endl;
++    return false;
++  }
++
++  return true;
+ }
+Index: k3b/src/device/k3bidedevice.h
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/device/k3bidedevice.h,v
+retrieving revision 1.4
+diff -u -r1.4 k3bidedevice.h
+--- k3b/src/device/k3bidedevice.h	22 Dec 2002 11:03:32 -0000	1.4
++++ k3b/src/device/k3bidedevice.h	26 Feb 2003 01:34:28 -0000
+@@ -4,8 +4,7 @@
+ 
+ #include "k3bdevice.h"
+ 
+-
+-class QString;
++class ScsiIf;
+ 
+ 
+ class K3bIdeDevice : public K3bDevice
+@@ -14,16 +13,25 @@
+   K3bIdeDevice( const QString& );
+   ~K3bIdeDevice();
+ 
++  int isReady() const;
++  int isEmpty();
++  bool rewritable();
++
++  bool block(bool) const;
+   int interfaceType() const { return K3bDevice::IDE; }
+ 
+-  bool burnproof() const { return false; }
+-  bool writer() const { return false; }
+-  int maxWriteSpeed() const { return 0; }
++  //bool burnproof() const { return false; } //Ooops! No! IDE's can write ;-)
++  //bool writer() const { return false; } //Ooops! No! IDE's can write ;-)
++  //int maxWriteSpeed() const { return 0; }  //Ooops! No! IDE's can write ;-)
+ 
+  protected:
+   bool furtherInit();
+ 
+  private:
++   int getModePage( ScsiIf *_scsiIf, int pageCode, unsigned char *buf,
++		   long bufLen, unsigned char *modePageHeader,
++		   unsigned char *blockDesc, int showErrorMsg );
++//
+   friend class K3bDeviceManager;
+ };
+ 
+Index: k3b/src/device/k3bscsidevice.h
+===================================================================
+RCS file: /home/kde/kdeextragear-1/k3b/src/device/k3bscsidevice.h,v
+retrieving revision 1.7
+diff -u -r1.7 k3bscsidevice.h
+--- k3b/src/device/k3bscsidevice.h	22 Dec 2002 11:03:32 -0000	1.7
++++ k3b/src/device/k3bscsidevice.h	26 Feb 2003 01:34:28 -0000
+@@ -18,7 +18,6 @@
+   bool rewritable();
+ 
+   bool block(bool) const;
+-
+   int interfaceType() const { return K3bDevice::SCSI; }
+ 
+  private:
