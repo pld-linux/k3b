@@ -5,16 +5,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.9
+Version:	0.10
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
-# Source0-md5:	cac0c1e80862070e9b0da2ead5ff4521
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.9.tar.gz
-# Source1-md5:	f4f42ad93802b0b72d92b81c80df4cca
-Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-linux_2_5.patch
+Source0:	http://heanet.dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.gz
+# Source0-md5:	480b6d6777a9151868677a1ae078e7c7
+Source1:	http://heanet.dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{version}.tar.gz
+# Source1-md5:	a14fd760bb146eaee22802c504e53152
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
@@ -88,8 +86,6 @@ Pliki nag³ówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q -a1
-%patch0 -p1
-#%patch1 -p1
 
 %build
 kde_appsdir="%{_applnkdir}"; export kde_appsdir
@@ -109,7 +105,7 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 	--%{!?debug:dis}%{?debug:en}able-debug
 %{__make}
 
-cd k3b-i18n-0.9
+cd %{name}-i18n-%{version}
 	make -f admin/Makefile.common
 	%configure
 	%{__make}
@@ -120,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cd k3b-i18n-0.9
+cd %{name}-i18n-%{version}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 cd ..
@@ -129,7 +125,8 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
 #mv $ALD/{Applications/*,Utilities/CD-RW}
 mv $ALD/{Multimedia/*,Utilities/CD-RW}
-
+mv $ALD/{Settings/System/*,Utilities/CD-RW}
+mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
 %find_lang %{name} --with-kde
 
 %clean
@@ -147,7 +144,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/*
+%{_datadir}/sounds/*.wav
 %{_pixmapsdir}/[!l]*/*/*/*
+%attr(755,root,root) %{_libdir}/kde3/*.so
+%{_libdir}/kde3/*.la
 
 %files devel
 %defattr(644,root,root,755)
