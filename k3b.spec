@@ -15,17 +15,17 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.10.3
-Release:	0.2
+Version:	0.11
+Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
-# Source0-md5:	41a21815c2edaa3aaaa55bb922e71750
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+# Source0-md5:	8b931bcffad03d32bcae9fe7a84823d4
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	arts-kde-devel
+BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1.6.1
 BuildRequires:	cdparanoia-III-devel
@@ -121,10 +121,10 @@ cp /usr/include/scsi/scsi.h scsi
 	
 %{__make}
 
-cd %{name}-i18n-%{_i18nver}
-%{__make} -f admin/Makefile.common
-%configure
-%{__make}
+#cd %{name}-i18n-%{_i18nver}
+#%%{__make} -f admin/Makefile.common
+#%%configure
+#%%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -132,8 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} install -C %{name}-i18n-%{_i18nver} \
-	DESTDIR=$RPM_BUILD_ROOT
+#%{__make} install -C %{name}-i18n-%{_i18nver} \
+#	DESTDIR=$RPM_BUILD_ROOT
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
@@ -155,10 +155,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/libk3b*encoder.so
-%{_libdir}/libk3b*encoder.la
-%attr(755,root,root) %{_libdir}/libk3b*decoder.so
-%{_libdir}/libk3b*decoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3b*.so
+%{_libdir}/kde3/libk3b*.la
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
 %{_applnkdir}/Utilities/CD-RW/*
@@ -168,8 +166,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/*.wav
 %{_pixmapsdir}/[!l]*/*/*/*
 %if %{with setup}
-%attr(755,root,root) %{_libdir}/kde3/*.so
-%{_libdir}/kde3/*.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_*.so
+%{_libdir}/kde3/kcm_*.la
 %endif
 
 %files devel
