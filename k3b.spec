@@ -51,7 +51,7 @@ The CD Kreator features:
  - writing existing iso-images to cd
  - cd copy (data, audio, mixed mode)
  - blanking of cdrws
- - cd ripping to wav
+ - cd ripping to WAV
  - dvd ripping with the transcode tools
  - DivX/XviD encoding
  - K3b checks if the user inserted an empty disk
@@ -125,16 +125,16 @@ Decoding module to decode Ogg Vorbis files.
 Modu³ dekoduj±cy pliki w formacie Ogg Vorbis.
 
 %package plugin-decoder-wave
-Summary:	Decoder plugin - wave
-Summary(pl):	Wtyczka dekoduj±ca - wave
+Summary:	Decoder plugin - WAVE
+Summary(pl):	Wtyczka dekoduj±ca - WAVE
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-wave
-Decoding module to decode wave files.
+Decoding module to decode WAVE files.
  
 %description plugin-decoder-wave -l pl
-Modu³ dekoduj±cy pliki w formacie wave.
+Modu³ dekoduj±cy pliki w formacie WAVE.
 
 %package plugin-encoder-external
 Summary:	Encoder plugin - external
