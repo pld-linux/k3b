@@ -46,16 +46,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The CD Kreator features:
  - the most userfriendly interface ever ;-)
- - writing audio-cds
- - writing ISO-cds
- - writing existing iso-images to cd
- - cd copy (data, audio, mixed mode)
- - blanking of cdrws
- - cd ripping to WAV
+ - writing audio-CDs
+ - writing ISO-CDs
+ - writing existing iso-images to CD
+ - CD copy (data, audio, mixed mode)
+ - blanking of CD-RWs
+ - CD ripping to WAV
  - dvd ripping with the transcode tools
  - DivX/XviD encoding
  - K3b checks if the user inserted an empty disk
- - Retrieving cd info and toc
+ - Retrieving CD info and toc
  - Support for ATAPI drives without SCSI-emulation for reading
  - integrated full featured audio player
 
