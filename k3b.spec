@@ -92,7 +92,7 @@ Pliki nag³ówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q -a1
-%{?with linux22:%patch0 -p1}
+%{?with_linux22:%patch0 -p1}
 %patch1 -p1
 
 %build
