@@ -26,11 +26,11 @@ BuildRequires:	kdelibs-devel >= 3.1
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
-BuildRequires: 	qt-devel >= 3.0.3
+BuildRequires: 	qt-devel >= 3.1
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
 ##BuildRequires:	nas-devel
-Requires:	qt >= 3.0.3
+Requires:	qt >= 3.1
 BuildRequires:	cdrdao
 Requires:	cdrecord
 Requires:	mkisofs 
