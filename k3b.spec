@@ -1,6 +1,13 @@
 #
+# TODO:
+# - some dirs are from packages they aren't in R (vide konqueror dir)
+# - nas support is obsolete? it depends on kdelibs build type
+# - cosmetics in build and install sections
+# - is this bcond is really needed? lack of features makes users angry
+# - bcond for alsa: what if arts was compiled with alsa?
+#
 # Conditional build:
-# _without_reqs		- don't force optional Requires
+%bcond_without reqs		# don't force optional Requires
 #
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
@@ -9,21 +16,19 @@ Version:	0.10
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://heanet.dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.gz
 # Source0-md5:	480b6d6777a9151868677a1ae078e7c7
-Source1:	http://heanet.dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{version}.tar.gz
+Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{version}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
 BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
-BuildRequires:	autoconf >= 2.54
+BuildRequires:	autoconf
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
-BuildRequires:	kdelibs-devel >= 3.1
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
@@ -34,8 +39,11 @@ Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
 Requires:	qt >= 3.1
-%{!?_without_reqs:Requires:	transcode >= 0.6.0}
-%{!?_without_reqs:Requires:	vcdimager >= 0.7}
+%if %{with reqs}
+Requires:	transcode >= 0.6.0
+Requires:	vcdimager >= 0.7
+Requires:	normalize
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        /usr/share/doc/kde/HTML
@@ -96,9 +104,10 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 # includes kernel headers which breaks things
 # with PLD kernels 2.4.x, below workaround  by misiek
 
-mkdir linux
+mkdir linux scsi
 sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 /usr/include/linux/cdrom.h > linux/cdrom.h
+cp /usr/include/scsi/scsi.h scsi
 
 %configure \
 	--disable-rpath \
@@ -127,6 +136,7 @@ install -d $ALD/Utilities/CD-RW
 mv $ALD/{Multimedia/*,Utilities/CD-RW}
 mv $ALD/{Settings/System/*,Utilities/CD-RW}
 mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
+
 %find_lang %{name} --with-kde
 
 %clean
