@@ -1,0 +1,10 @@
+--- k3b-0.10/src/core/device/k3bscsicommand.cpp.orig	Mon Sep  1 12:20:02 2003
++++ k3b-0.10/src/core/device/k3bscsicommand.cpp	Sun Oct 19 23:05:06 2003
+@@ -33,7 +33,6 @@
+   ::memset( &m_cmd, 0, sizeof(struct cdrom_generic_command) );
+   ::memset( &m_sense, 0, sizeof(struct request_sense) );
+ 
+-  m_cmd.quiet = 1;
+   m_cmd.sense = &m_sense;
+ }
+ 
