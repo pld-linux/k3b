@@ -27,15 +27,15 @@ BuildRequires:	cdparanoia-III-devel
 BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
+BuildRequires:	kdelibs-devel >= 3.2.90
 BuildRequires:	lame-libs-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	qt-devel >= 3.1
 #BuildRequires:	unsermake >= 040511
 Requires:	cdrecord
+Requires:	kdebase-core >= 3.2.90
 Requires:	mkisofs
-Requires:	qt >= 3.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
