@@ -19,7 +19,6 @@ BuildRequires:	gettext-devel
 BuildRequires:	kdelibs-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	nas-devel
-BuildRequires:	qt-devel >= 3.0.3
 BuildRequires:	zlib-devel
 Requires:	cdrecord
 Requires:	mkisofs
@@ -67,7 +66,10 @@ W³asno¶ci Kreatora CD:
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-%configure --enable-final
+%configure \
+	--disable-rpath \
+	--%{!?debug:dis}%{?debug:en}able-debug \
+	--enable-final
 
 %{__make}
 
