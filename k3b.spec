@@ -2,7 +2,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.7.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://prdownloads.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -94,4 +94,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/*
-%{_pixmapsdir}/*/*/*/*
+%{_pixmapsdir}/[!l]*/*/*/*
