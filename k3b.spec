@@ -25,16 +25,17 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	automake
 BuildRequires:	arts-kde-devel
+BuildRequires:	autoconf >= 2.52
+BuildRequires:	automake >= 1.6.1
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	xrender-devel
 BuildRequires:	qt-devel >= 3.1
+BuildRequires:	xrender-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
@@ -113,9 +114,8 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 /usr/include/linux/cdrom.h > linux/cdrom.h
 cp /usr/include/scsi/scsi.h scsi
 
-
 %configure \
-	%{?_without_setup:--with-k3bsetup=no} \
+	%{!?with_setup:--with-k3bsetup=no} \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath
 	
@@ -128,6 +128,7 @@ cd %{name}-i18n-%{_i18nver}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -138,7 +139,7 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
 #mv $ALD/{Applications/*,Utilities/CD-RW}
 mv $ALD/{Multimedia/*,Utilities/CD-RW}
-%{?_with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
+%{?with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
 mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
 
 %find_lang %{name} --with-kde
