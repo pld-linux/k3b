@@ -9,7 +9,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.11.12
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -205,7 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/lolale/xx
+rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/xx
 %find_lang %{name} --with-kde
 
 %clean
