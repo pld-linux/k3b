@@ -205,6 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
+rm -rf $RPM_BUILD_ROOT%{_datadir}/lolale/xx
 %find_lang %{name} --with-kde
 
 %clean
