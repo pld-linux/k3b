@@ -5,22 +5,23 @@
 # - it overrides rpm*flags (hardcoded -O2)
 #
 # Conditional build:
-%bcond_without reqs		# don't force optional Requires
-%bcond_without setup		# don't build K3bSetup2 KControl Module
-%bcond_with linux22		# building on kernel 2.2.x
+%bcond_without	reqs		# don't force optional Requires
+%bcond_without	setup		# don't build K3bSetup2 KControl Module
+%bcond_with	linux22		# building on kernel 2.2.x
 #
 
+# 0.11 not ready yet, waits for KDE 3.2
 %define		_i18nver	0.10
 
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11
-Release:	2
+Version:	0.11.1
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	8b931bcffad03d32bcae9fe7a84823d4
+# Source0-md5:	50fd95a2536d2a335d61a2ce6ce5a3ee
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
@@ -105,14 +106,6 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-# same thing as with kdemultimedia
-# includes kernel headers which breaks things
-# with PLD kernels 2.4.x, below workaround  by misiek
-
-mkdir linux scsi
-sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
-/usr/include/linux/cdrom.h > linux/cdrom.h
-cp /usr/include/scsi/scsi.h scsi
 cp -f /usr/share/automake/config.sub admin
 
 %configure \
@@ -176,6 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3bcore.so
 %{_libdir}/libk3bcore.la
+%attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/libk3bdevice.la
 %attr(755,root,root) %{_libdir}/libk3bplugin.so
 %{_libdir}/libk3bplugin.la
 %attr(755,root,root) %{_libdir}/libk3bproject.so
