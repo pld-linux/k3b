@@ -1,7 +1,6 @@
 #
 # TODO & NOTES:
-# - some dirs are from packages they aren't in R (vide konqueror dir)
-# - is this reqs bcond really needed?
+# - subpackages (to kill stupid reqs bcond)
 # - it overrides rpm*flags (hardcoded -O2)
 #
 # Conditional build:
@@ -9,10 +8,7 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 %bcond_with	linux22		# building on kernel 2.2.x
 #
-
-# 0.11 not ready yet, waits for KDE 3.2
 %define		_i18nver	0.11
-
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
@@ -25,6 +21,7 @@ Source0:	http://unc.dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 Source1:	http://unc.dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	43b17b012ebb33cd9582742bf16064a5
 Patch0:		%{name}-linux22.patch
+Patch1:		%{name}-desktop.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -47,8 +44,6 @@ Requires:	vcdimager >= 0.7
 Requires:	normalize
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         _htmldir        /usr/share/doc/kde/HTML
 
 %description
 The CD Kreator features:
@@ -86,7 +81,7 @@ W³asno¶ci Kreatora CD:
 Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	kdelibs-devel
 
 %description devel
@@ -97,22 +92,16 @@ Pliki nag³ówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q -a1
-%if %{with linux22}
-%patch0 -p1
-%endif
+%{?with linux22:%patch0 -p1}
+%patch1 -p1
 
 %build
-kde_appsdir="%{_applnkdir}"; export kde_appsdir
-kde_htmldir="%{_htmldir}"; export kde_htmldir
-kde_icondir="%{_pixmapsdir}"; export kde_icondir
-
 cp -f /usr/share/automake/config.sub admin
-
 %configure \
-	--with-qt-libraries=%{_libdir} \
-	%{!?with_setup:--with-k3bsetup=no} \
 	--%{!?debug:dis}%{?debug:en}able-debug \
-	--disable-rpath
+	--disable-rpath \
+	--with-qt-libraries=%{_libdir} \
+	%{!?with_setup:--with-k3bsetup=no}
 	
 %{__make}
 
@@ -125,17 +114,14 @@ cd %{name}-i18n-%{version}
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
+	DESTDIR=$RPM_BUILD_ROOT \
+	appsdir=%{_desktopdir}/kde \
+	k3bsetup2dir=%{_desktopdir}/kde \
+	kde_htmldir=%{_kdedocdir}
+	
 %{__make} install -C %{name}-i18n-%{version} \
-	DESTDIR=$RPM_BUILD_ROOT
-
-ALD=$RPM_BUILD_ROOT%{_applnkdir}
-install -d $ALD/Utilities/CD-RW
-#mv $ALD/{Applications/*,Utilities/CD-RW}
-mv $ALD/{Multimedia/*,Utilities/CD-RW}
-%{?with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
-mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
+	DESTDIR=$RPM_BUILD_ROOT \
+	kde_htmldir=%{_kdedocdir}
 
 %find_lang %{name} --with-kde
 
@@ -146,7 +132,6 @@ rm -rf $RPM_BUILD_ROOT
 %postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
-#%files
 %defattr(644,root,root,755)
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
@@ -155,12 +140,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3b*.la
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
-%{_applnkdir}/Utilities/CD-RW/*
-%{_datadir}/apps/konqueror/servicemenus/*
+%{_datadir}/apps/konqueror/servicemenus/*.desktop
 %{_datadir}/apps/k3b
-%{_datadir}/mimelnk/application/*
+%{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
-%{_pixmapsdir}/[!l]*/*/*/*
+%{_datadir}/applnk/.hidden/*.desktop
+%{_desktopdir}/kde/*.desktop
+%{_iconsdir}/*/*/apps/k3b.png
+
 %if %{with setup}
 %attr(755,root,root) %{_libdir}/kde3/kcm_*.so
 %{_libdir}/kde3/kcm_*.la
