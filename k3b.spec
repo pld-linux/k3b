@@ -1,4 +1,3 @@
-
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
@@ -6,9 +5,9 @@ Version:	0.7.5
 Release:	3
 License:	GPL
 Group:		X11/Applications
-Source0:	http://prdownloads.sourceforge.net/k3b/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
 Patch0:		%{name}-defaults.patch
-URL:		http://k3b.sourceforge.net
+URL:		http://k3b.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
