@@ -4,10 +4,11 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.8.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
+Source1:	http://dl.sourceforge.net/k3b/%{name}-0.8-i18n.tar.gz
 Patch0:		%{name}-defaults.patch
 Patch1:         %{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
@@ -68,7 +69,7 @@ W³asno¶ci Kreatora CD:
  - zintegrowany odtwarzacz p³yt audio o pe³nych mo¿liwo¶ciach.
 
 %prep
-%setup -q 
+%setup -q -a1
 %patch0 -p1
 %patch1 -p1
 
@@ -88,19 +89,38 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 
 %{__make}
 
+cd k3b-0.8-i18n
+
+%configure
+
+%{__make}
+
+cd ..
+
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
+
+cd k3b-0.8-i18n
+
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
+
+cd ..
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
 #mv $ALD/{Applications/*,Utilities/CD-RW} 
 mv $ALD/{Multimedia/*,Utilities/CD-RW} 
 
+%find_lang %{name} --with-kde
+%find_lang k3bsetup --with-kde
+
+cat k3bsetup.lang >>%{name}.lang
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files 
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/*
