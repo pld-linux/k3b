@@ -8,7 +8,7 @@
 #
 # Conditional build:
 %bcond_without reqs		# don't force optional Requires
-%bcond_without setup		# don K3bSetup2 KControl Module
+%bcond_without setup		# don'tbuild K3bSetup2 KControl Module
 #
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
@@ -158,8 +158,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/*
 %{_datadir}/sounds/*.wav
 %{_pixmapsdir}/[!l]*/*/*/*
-%{?_with_setup:%attr(755,root,root) %{_libdir}/kde3/*.so}
-%{?_with_setup:%{_libdir}/kde3/*.la}
+%if %{with setup}
+%attr(755,root,root) %{_libdir}/kde3/*.so}
+%{_libdir}/kde3/*.la}
+%endif
 
 %files devel
 %defattr(644,root,root,755)
