@@ -159,8 +159,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/*.wav
 %{_pixmapsdir}/[!l]*/*/*/*
 %if %{with setup}
-%attr(755,root,root) %{_libdir}/kde3/*.so}
-%{_libdir}/kde3/*.la}
+%attr(755,root,root) %{_libdir}/kde3/*.so
+%{_libdir}/kde3/*.la
 %endif
 
 %files devel
