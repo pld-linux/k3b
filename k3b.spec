@@ -1,7 +1,7 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.7.5
+Version:	0.8
 Release:	3
 License:	GPL
 Group:		X11/Applications
@@ -19,8 +19,10 @@ BuildRequires:	kdelibs-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	nas-devel
 BuildRequires:	zlib-devel
+BuildRequires:	cdrdao
 Requires:	cdrecord
 Requires:	mkisofs
+Requires:	cdrdao
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        /usr/share/doc/kde/HTML
@@ -58,8 +60,8 @@ W³asno¶ci Kreatora CD:
  - zintegrowany odtwarzacz p³yt audio o pe³nych mo¿liwo¶ciach.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q 
+#%patch0 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
@@ -67,8 +69,7 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 %configure \
 	--disable-rpath \
-	--%{!?debug:dis}%{?debug:en}able-debug \
-	--enable-final
+	--%{!?debug:dis}%{?debug:en}able-debug 
 
 %{__make}
 
@@ -78,17 +79,13 @@ rm -rf $RPM_BUILD_ROOT
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
-mv $ALD/{Applications/*,Utilities/CD-RW} 
+#mv $ALD/{Applications/*,Utilities/CD-RW} 
 mv $ALD/{Multimedia/*,Utilities/CD-RW} 
-
-%find_lang %{name} --with-kde
-%find_lang k3bsetup --with-kde
-cat k3bsetup.lang >>%{name}.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+%files 
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/*
