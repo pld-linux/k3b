@@ -1,6 +1,7 @@
+#
 # Conditional build:
-# _without_reqs		dont force optional requires
-
+# _without_reqs		- don't force optional Requires
+#
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
