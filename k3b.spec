@@ -1,7 +1,4 @@
 #
-# TODO & NOTES:
-# - it overrides rpm*flags (hardcoded -O2)
-#
 # Conditional build:
 %bcond_with	reqs		# force optional Requires
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
