@@ -23,7 +23,6 @@ BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	cdparanoia-III-devel
-BuildRequires:	cdrdao
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
 BuildRequires:	kdelibs-devel >= 3.1
@@ -75,6 +74,18 @@ W³asno¶ci Kreatora CD:
  - obs³uga nagrywarek ATAPI bez emulacji SCSI przy odczycie
  - zintegrowany odtwarzacz p³yt audio o pe³nych mo¿liwo¶ciach.
 
+%package devel
+Summary:	Header files for libk3bcore library
+Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description devel
+Header files for libk3bcore library.
+
+%description devel -l pl
+Pliki nag³ówkowe biblioteki libk3bcore.
+
 %prep
 %setup -q -a1
 %patch0 -p1
@@ -92,7 +103,6 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 mkdir linux
 sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 /usr/include/linux/cdrom.h > linux/cdrom.h
-
 
 %configure \
 	--disable-rpath \
@@ -125,13 +135,22 @@ mv $ALD/{Multimedia/*,Utilities/CD-RW}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %{_applnkdir}/Utilities/CD-RW/*
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/*
 %{_pixmapsdir}/[!l]*/*/*/*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%{_includedir}/*.h
