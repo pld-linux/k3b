@@ -116,10 +116,10 @@ cp -f /usr/share/automake/config.sub admin
 	
 %{__make}
 
-#cd %{name}-i18n-%{_i18nver}
-#%%{__make} -f admin/Makefile.common
-#%%configure
-#%%{__make}
+cd %{name}-i18n-%{version}
+%{__make} -f admin/Makefile.common
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -127,8 +127,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#%{__make} install -C %{name}-i18n-%{_i18nver} \
-#	DESTDIR=$RPM_BUILD_ROOT
+%{__make} install -C %{name}-i18n-%{version} \
+	DESTDIR=$RPM_BUILD_ROOT
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
@@ -137,7 +137,7 @@ mv $ALD/{Multimedia/*,Utilities/CD-RW}
 %{?with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
 mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
 
-#%find_lang %{name} --with-kde
+%find_lang %{name} --with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -145,8 +145,8 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-#%files -f %{name}.lang
-%files
+%files -f %{name}.lang
+#%files
 %defattr(644,root,root,755)
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
