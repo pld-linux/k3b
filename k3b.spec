@@ -32,6 +32,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libvorbis-devel
+BuildRequires:	xrender-devel
 BuildRequires:	qt-devel >= 3.1
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
