@@ -1,3 +1,5 @@
+# TODO
+#  - nb locale is empty
 #
 # Conditional build:
 %bcond_with	reqs		# force optional Requires
