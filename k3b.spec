@@ -5,7 +5,7 @@
 # - it overrides rpm*flags (hardcoded -O2)
 #
 # Conditional build:
-%bcond_without	reqs		# don't force optional Requires
+%bcond_with	reqs		# force optional Requires
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 %bcond_with	linux22		# building on kernel 2.2.x
 #
