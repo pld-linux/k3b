@@ -1,7 +1,14 @@
 diff -aurN k3b-0.11.6.orig/src/k3b.desktop k3b-0.11.6/src/k3b.desktop
 --- k3b-0.11.6.orig/src/k3b.desktop	2004-01-23 17:01:51.000000000 +0100
 +++ k3b-0.11.6/src/k3b.desktop	2004-03-20 14:31:28.173784816 +0100
-@@ -37,6 +37,7 @@
+@@ -1,5 +1,6 @@
+ # KDE Config File  
+ [Desktop Entry]
++Encoding=UTF-8
+ Type=Application
+ Exec=k3b
+ Icon=k3b
+@@ -37,6 +38,7 @@
  Comment[hu]=CD-író program
  Comment[it]=Programma di masterizzazione
  Comment[nl]=CD-brandprogramma
@@ -9,7 +16,7 @@ diff -aurN k3b-0.11.6.orig/src/k3b.desktop k3b-0.11.6/src/k3b.desktop
  Comment[pt]=Um programa de gravação de CDs
  Comment[pt_BR]=Programa de escrita em CD
  Comment[ru]=Программа записи компакт-дисков
-@@ -57,4 +58,4 @@
+@@ -57,4 +59,4 @@
  Name[xx]=xxK3bxx
  MimeType=application/x-k3b
  X-KDE-NativeMimeType=application/x-k3b
