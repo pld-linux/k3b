@@ -4,7 +4,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.9
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -83,9 +83,14 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-#mkdir linux
-#sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
-#/usr/include/linux/cdrom.h > linux/cdrom.h
+
+# same thing as with kdemultimedia 
+# includes kernel headers which breaks things
+# with PLD kernels 2.4.x, below workaround  by misiek
+
+mkdir linux
+sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
+/usr/include/linux/cdrom.h > linux/cdrom.h
 
 
 %configure \
