@@ -13,7 +13,7 @@ Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.11.21
 Release:	1
-License:	GPL
+License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	18d0680daf4e5cdf1c718bf469864b1a
@@ -34,6 +34,7 @@ BuildRequires:	id3lib-devel
 BuildRequires:	kdelibs-devel >= 9:3.1
 BuildRequires:	libsamplerate-devel
 %{?with_resmgr:BuildRequires:	resmgr-devel}
+BuildRequires:	rpmbuild(macros) >= 1.129
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
@@ -189,7 +190,7 @@ cp -f /usr/share/automake/config.sub admin
 	--with-qt-libraries=%{_libdir} \
 	%{!?with_resmgr:--without-resmgr} \
 	%{!?with_setup:--with-k3bsetup=no}
-	
+
 %{__make}
 
 cd %{name}-i18n-%{_i18nver}
