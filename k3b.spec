@@ -1,10 +1,8 @@
 #
 # TODO & NOTES:
 # - some dirs are from packages they aren't in R (vide konqueror dir)
-# - nas support is obsolete? it depends on kdelibs build type
 # - is this reqs bcond really needed?
 # - it overrides rpm*flags (hardcoded -O2)
-# - BR alsa-libs ? is this really needed?
 #
 # Conditional build:
 %bcond_without reqs		# don't force optional Requires
@@ -21,25 +19,19 @@ Version:	0.10.2
 Release:	0.2
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
 # Source0-md5:	23f3ec4f57c722a33811e267395e41f1
-Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{_i18nver}.tar.gz
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
-BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
-BuildRequires:	audiofile-devel
-BuildRequires:	autoconf
 BuildRequires:	cdparanoia-III-devel
-BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
-BuildRequires:	libart_lgpl-devel
+BuildRequires:	id3lib-devel
+BuildRequires:	libmad-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	mad-devel
 BuildRequires:	qt-devel >= 3.1
-BuildRequires:	zlib-devel
-##BuildRequires:	nas-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
@@ -90,6 +82,7 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	kdelibs-devel
 
 %description devel
 Header files for libk3bcore library.
@@ -126,20 +119,17 @@ cp /usr/include/scsi/scsi.h scsi
 %{__make}
 
 cd %{name}-i18n-%{_i18nver}
-	%{__make} -f admin/Makefile.common
-	%configure
-	%{__make}
-cd ..
+%{__make} -f admin/Makefile.common
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cd %{name}-i18n-%{_i18nver}
-%{__make} install \
+%{__make} install -C %{name}-i18n-%{_i18nver} \
 	DESTDIR=$RPM_BUILD_ROOT
-cd ..
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
