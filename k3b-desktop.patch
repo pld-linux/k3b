@@ -21,7 +21,7 @@ diff -aurN k3b-0.11.6.orig/src/k3b.desktop k3b-0.11.6/src/k3b.desktop
  MimeType=application/x-k3b
  X-KDE-NativeMimeType=application/x-k3b
 -Categories=KDE;Application;AudioVideo;DiscBurning;
-+Categories=Qt;KDE;Utility;X-CD-RW;DiscBurning;
++Categories=Qt;KDE;Utility;DiscBurning;
 diff -aurN k3b-0.11.6.orig/src/k3bsetup/k3bsetup2.desktop k3b-0.11.6/src/k3bsetup/k3bsetup2.desktop
 --- k3b-0.11.6.orig/src/k3bsetup/k3bsetup2.desktop	2004-01-23 17:01:52.000000000 +0100
 +++ k3b-0.11.6/src/k3bsetup/k3bsetup2.desktop	2004-03-19 16:24:45.926586776 +0100
