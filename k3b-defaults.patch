@@ -1,39 +1,39 @@
---- k3b-0.7.5/src/tools/k3bglobals.cpp.orig	Sat May  4 22:38:13 2002
-+++ k3b-0.7.5/src/tools/k3bglobals.cpp	Fri Dec 13 01:50:33 2002
-@@ -72,7 +72,5 @@
- 
- QString K3b::globalConfig()
+--- k3b-0.9/src/core/k3bglobals.cpp.orig	Sun Jun 22 21:16:36 2003
++++ k3b-0.9/src/core/k3bglobals.cpp	Thu Jul 17 19:01:40 2003
+@@ -99,7 +99,7 @@
  {
--  // this is a little not to hard hack to ensure that we get the "global" k3b appdir
--  // k3b_cd_copy.png should always be in $KDEDIR/share/apps/k3b/pics/
+   // this is a little not to hard hack to ensure that we get the "global" k3b appdir
+   // k3b_cd_copy.png should always be in $KDEDIR/share/apps/k3b/pics/
 -  return KGlobal::dirs()->findResourceDir( "data", "k3b/pics/k3b_cd_copy.png" ) + "k3b/k3bsetup";
 +  return QString::fromLatin1("/etc/k3b.conf");
  }
---- k3b-0.7.5/src/k3bsetup/k3bsetup.cpp.orig	Thu Nov  7 09:38:10 2002
-+++ k3b-0.7.5/src/k3bsetup/k3bsetup.cpp	Fri Dec 13 02:18:27 2002
-@@ -75,7 +75,7 @@
+ 
+ 
+--- k3b-0.9/src/k3bsetup/k3bsetup.cpp.orig	Thu Jun 12 16:07:41 2003
++++ k3b-0.9/src/k3bsetup/k3bsetup.cpp	Thu Jul 17 19:03:32 2003
+@@ -77,7 +77,7 @@
  
    if( m_config->hasGroup( "Permissions" ) ) {
      m_config->setGroup( "Permissions" );
--    m_cdwritingGroup = m_config->readEntry( "cdwriting_group", "cdrecording" );
+-    m_cdwritingGroup = m_config->readEntry( "cdwriting_group", "cdrw" );
 +    m_cdwritingGroup = m_config->readEntry( "cdwriting_group", "cdwrite" );
      m_userList = m_config->readListEntry( "users" );
    }
  }
-@@ -150,8 +150,8 @@
+@@ -152,8 +152,8 @@
  uint K3bSetup::createCdWritingGroup()
  {
    if( m_cdwritingGroup.isEmpty() ) {
--    kdDebug() << "(K3bSetup) setting cd writing group to 'cdrecording'." << endl;
--    m_cdwritingGroup = "cdrecording";
+-    kdDebug() << "(K3bSetup) setting cd writing group to 'cdrw'." << endl;
+-    m_cdwritingGroup = "cdrw";
 +    kdDebug() << "(K3bSetup) setting cd writing group to 'cdwrite'." << endl;
 +    m_cdwritingGroup = "cdwrite";
    }
  
    // search group and create new if not found
---- k3b-0.7.5/src/k3bsetup/k3bsetupwizardtabs.cpp.orig	Thu Nov  7 09:40:37 2002
-+++ k3b-0.7.5/src/k3bsetup/k3bsetupwizardtabs.cpp	Fri Dec 13 02:21:07 2002
-@@ -452,7 +452,7 @@
+--- k3b-0.9/src/k3bsetup/k3bsetupwizardtabs.cpp.orig	Thu Jun 12 16:07:41 2003
++++ k3b-0.9/src/k3bsetup/k3bsetupwizardtabs.cpp	Thu Jul 17 18:53:07 2003
+@@ -561,7 +561,7 @@
    m_groupWriterGroup->layout()->setMargin( KDialog::marginHint() );
  
    m_editPermissionsGroup = new QLineEdit( m_groupWriterGroup, "LineEdit1" );
@@ -42,7 +42,7 @@
  
  
    mainGrid->addMultiCellWidget( m_labelPermissions1, 0, 0, 0, 1 );
-@@ -477,7 +477,7 @@
+@@ -586,7 +586,7 @@
    if( !setup()->cdWritingGroup().isEmpty())
      m_editPermissionsGroup->setText( setup()->cdWritingGroup() );
    else
@@ -51,7 +51,7 @@
  
    m_boxUsers->clear();
    for ( QStringList::ConstIterator it = setup()->users().begin(); it != setup()->users().end(); ++it ) {
-@@ -559,12 +559,12 @@
+@@ -668,12 +668,12 @@
  		      "priority. That is why they need to be run as root.</td>\n"
  		      "</tr>\n"
  		      "<tr>\n"
@@ -66,7 +66,7 @@
  		      " <td>these users will be able to run cdrecord, mkisofs, and cdrdao</td>\n"
  		      "</tr>\n"
  		      "<tr>\n"
-@@ -577,7 +577,7 @@
+@@ -686,7 +686,7 @@
  		      "for ATAPI devices.</td>\n"
  		      "</tr>\n"
  		      "<tr>\n"
