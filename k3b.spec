@@ -3,8 +3,8 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.9
-Release:	0.2
+Version:	0.4
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -39,6 +39,9 @@ Requires:	cdrdao >= 1.1.5
 %{!?_without_reqs:Requires:	vcdimager >= 0.7}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define            no_install_post_chrpath         1
+
+%define         _prefix         /usr/X11R6
 %define         _htmldir        /usr/share/doc/kde/HTML
 
 %description
