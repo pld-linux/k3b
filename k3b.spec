@@ -9,18 +9,23 @@
 # Conditional build:
 %bcond_without reqs		# don't force optional Requires
 %bcond_without setup		# don't build K3bSetup2 KControl Module
+%bcond_with linux22		# building on kernel 2.2.x
 #
+
+%define		_i18nver	0.10
+
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.10
-Release:	1
+Version:	0.10.2
+Release:	0.2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.gz
-# Source0-md5:	480b6d6777a9151868677a1ae078e7c7
-Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{version}.tar.gz
+# Source0-md5:	23f3ec4f57c722a33811e267395e41f1
+Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
+Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
@@ -94,6 +99,9 @@ Pliki nag³ówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q -a1
+%if %{with linux22}
+%patch0 -p1
+%endif
 
 %build
 kde_appsdir="%{_applnkdir}"; export kde_appsdir
@@ -109,6 +117,7 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 /usr/include/linux/cdrom.h > linux/cdrom.h
 cp /usr/include/scsi/scsi.h scsi
 
+
 %configure \
 	%{?_without_setup:--with-k3bsetup=no} \
 	--%{!?debug:dis}%{?debug:en}able-debug \
@@ -116,7 +125,7 @@ cp /usr/include/scsi/scsi.h scsi
 	
 %{__make}
 
-cd %{name}-i18n-%{version}
+cd %{name}-i18n-%{_i18nver}
 	%{__make} -f admin/Makefile.common
 	%configure
 	%{__make}
@@ -127,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cd %{name}-i18n-%{version}
+cd %{name}-i18n-%{_i18nver}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 cd ..
