@@ -1,6 +1,6 @@
 Summary:	The CD Kreator
 Name:		k3b
-Version:	0.7.4
+Version:	0.7.5
 Release:	0
 License:	GPL
 Group:		X11/Applications
@@ -47,7 +47,7 @@ The CD Kreator features:
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-%configure
+%configure --enable-final
 
 %{__make}
 
@@ -68,5 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %{_applnkdir}/Applications/*
 %{_applnkdir}/Multimedia/*
+%{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
+%{_datadir}/mimelnk/application/*
 %{_pixmapsdir}/*/*/*/*
