@@ -1,12 +1,15 @@
+# _without_reqs	- dont force optional requires
+
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.8
-Release:	3
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
 Patch0:		%{name}-defaults.patch
+Patch1:         %{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
@@ -15,14 +18,18 @@ BuildRequires:	audiofile-devel
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
-BuildRequires:	kdelibs-devel
+BuildRequires:	kdelibs-devel >= 3.1
 BuildRequires:	libvorbis-devel
-BuildRequires:	nas-devel
+BuildRequires: 	qt-devel >= 3.0.3
+##BuildRequires:	nas-devel
 BuildRequires:	zlib-devel
+Requires:	qt >= 3.0.3
 BuildRequires:	cdrdao
 Requires:	cdrecord
-Requires:	mkisofs
-Requires:	cdrdao
+Requires:	mkisofs 
+Requires:	cdrdao >= 1.1.5
+%{!?_without_reqs:Requires:	transcode >= 0.6.0}
+%{!?_without_reqs:Requires:	vcdimager >= 0.7}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        /usr/share/doc/kde/HTML
@@ -62,10 +69,17 @@ W³asno¶ci Kreatora CD:
 %prep
 %setup -q 
 %patch0 -p1
+%patch1 -p1
 
 %build
+kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
+
+mkdir linux
+sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
+/usr/include/linux/cdrom.h > linux/cdrom.h
+
 
 %configure \
 	--disable-rpath \
