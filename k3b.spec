@@ -84,6 +84,7 @@ Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	kdelibs-devel
+%{?with_resmgr:Requires:	resmgr-devel}
 
 %description devel
 Header files for libk3bcore library.
