@@ -89,8 +89,8 @@ Header files for libk3bcore library.
 Pliki nag³ówkowe biblioteki libk3bcore.
 
 %package plugin-decoder-flac
-Summary:	Decoder plugin - flac
-Summary(pl):	Wtyczka dekoduj±ca - flac
+Summary:	Decoder plugin - FLAC
+Summary(pl):	Wtyczka dekoduj±ca - FLAC
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
