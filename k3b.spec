@@ -8,7 +8,7 @@
 #
 # Conditional build:
 %bcond_without reqs		# don't force optional Requires
-%bcond_without setup		# don'tbuild K3bSetup2 KControl Module
+%bcond_without setup		# don't build K3bSetup2 KControl Module
 #
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
