@@ -98,7 +98,7 @@ Requires:	%{name} = %{version}-%{release}
 Decoding module to decode FLAC files.
  
 %description plugin-decoder-flac -l pl
-Modu³ dekodujacy pliki w formacie FLAC.
+Modu³ dekoduj±cy pliki w formacie FLAC.
 
 %package plugin-decoder-mad
 Summary:	Decoder plugin - mad
@@ -110,7 +110,7 @@ Requires:	%{name} = %{version}-%{release}
 Decoding module to decode MPEG 1 Layer III files.
  
 %description plugin-decoder-mad -l pl
-Modu³ dekodujacy pliki w formacie MPEG 1 Layer III.
+Modu³ dekoduj±cy pliki w formacie MPEG 1 Layer III.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
@@ -122,7 +122,7 @@ Requires:	%{name} = %{version}-%{release}
 Decoding module to decode Ogg Vorbis files.
  
 %description plugin-decoder-oggvorbis -l pl
-Modu³ dekodujacy pliki w formacie Ogg Vorbis.
+Modu³ dekoduj±cy pliki w formacie Ogg Vorbis.
 
 %package plugin-decoder-wave
 Summary:	Decoder plugin - wave
@@ -134,7 +134,7 @@ Requires:	%{name} = %{version}-%{release}
 Decoding module to decode wave files.
  
 %description plugin-decoder-wave -l pl
-Modu³ dekodujacy pliki w formacie wave.
+Modu³ dekoduj±cy pliki w formacie wave.
 
 %package plugin-encoder-external
 Summary:	Encoder plugin - external
