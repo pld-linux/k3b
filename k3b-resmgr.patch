@@ -1,0 +1,24 @@
+diff -ruN k3b-0.11.21./configure k3b-0.11.21/configure
+--- k3b-0.11.21./configure	2005-03-15 11:41:26.000000000 +0100
++++ k3b-0.11.21/configure	2005-03-15 20:11:31.400954072 +0100
+@@ -33875,7 +33875,7 @@
+   ac_cv_use_resmgr=yes
+ fi;
+ 
+-if test "$ac_cv_use_regmgr" = "yes"; then
++if test "$ac_cv_use_resmgr" = "yes"; then
+   RESMGR_LIB=""
+ 
+ 
+diff -ruN k3b-0.11.21./configure.in k3b-0.11.21/configure.in
+--- k3b-0.11.21./configure.in	2005-03-15 11:41:11.000000000 +0100
++++ k3b-0.11.21/configure.in	2005-03-15 20:11:35.197376928 +0100
+@@ -278,7 +278,7 @@
+ dnl === check for resmgr - begin ============
+ AC_ARG_WITH(resmgr, AS_HELP_STRING([--without-resmgr], [build without ResMgr support (default=no)]), [ac_cv_use_resmgr=$withval], [ac_cv_use_resmgr=yes])
+ 
+-if test "$ac_cv_use_regmgr" = "yes"; then
++if test "$ac_cv_use_resmgr" = "yes"; then
+   RESMGR_LIB=""
+   KDE_CHECK_HEADERS(resmgr.h, [
+          KDE_CHECK_LIB(resmgr,rsm_open_device,[
