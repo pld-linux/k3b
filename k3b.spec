@@ -25,6 +25,7 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
 URL:		http://k3b.sourceforge.net/
+BuildRequires:	automake
 BuildRequires:	arts-kde-devel
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
