@@ -16,7 +16,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.11
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -113,8 +113,10 @@ mkdir linux scsi
 sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 /usr/include/linux/cdrom.h > linux/cdrom.h
 cp /usr/include/scsi/scsi.h scsi
+cp -f /usr/share/automake/config.sub admin
 
 %configure \
+	--with-qt-libraries=%{_libdir} \
 	%{!?with_setup:--with-k3bsetup=no} \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath
