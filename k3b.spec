@@ -189,6 +189,7 @@ cp -f /usr/share/automake/config.sub admin
 %{__make}
 
 cd %{name}-i18n-%{_i18nver}
+cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure
 %{__make}
