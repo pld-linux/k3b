@@ -4,7 +4,7 @@
 
 %define		_ver		0.11.90
 %define		_i18nver	0.11
-%define		_snap		040513
+%define		_snap		040516
 
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
@@ -13,8 +13,7 @@ Version:	%{_ver}.%{_snap}
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ep09.pld-linux.org/~adgor/%{name}-%{_snap}.tar.bz2
-##%% Source0-md5:	88f46a5cfbda5fa89b4bfee504567df1
+Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
