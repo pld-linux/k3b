@@ -23,6 +23,8 @@ Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-am19.patch
 Patch3:		%{name}-group.patch
+Patch4:		%{name}-c++.patch
+Patch5:		%{name}-resmgr.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -181,6 +183,8 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
