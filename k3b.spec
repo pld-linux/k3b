@@ -1,10 +1,11 @@
-# _without_reqs	- dont force optional requires
+# Conditional build:
+# _without_reqs		dont force optional requires
 
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.9
-Release:	0.2
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -14,12 +15,14 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.9.tar.gz
 Patch0:		%{name}-defaults.patch
 Patch1:         %{name}-linux_2_5.patch
 URL:		http://k3b.sourceforge.net/
+BuildRequires:	XFree86-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
 BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	cdparanoia-III-devel
+BuildRequires:	cdrdao
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
 BuildRequires:	kdelibs-devel >= 3.1
@@ -27,14 +30,12 @@ BuildRequires:	libart_lgpl-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
 BuildRequires: 	qt-devel >= 3.1
-BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
 ##BuildRequires:	nas-devel
-Requires:	qt >= 3.1
-BuildRequires:	cdrdao
+Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs 
-Requires:	cdrdao >= 1.1.5
+Requires:	qt >= 3.1
 %{!?_without_reqs:Requires:	transcode >= 0.6.0}
 %{!?_without_reqs:Requires:	vcdimager >= 0.7}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -83,7 +84,6 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-
 # same thing as with kdemultimedia 
 # includes kernel headers which breaks things
 # with PLD kernels 2.4.x, below workaround  by misiek
@@ -96,27 +96,22 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 %configure \
 	--disable-rpath \
 	--%{!?debug:dis}%{?debug:en}able-debug 
-
 %{__make}
 
 cd k3b-i18n-0.9
-
-make -f admin/Makefile.common
-
-%configure
-
-%{__make}
-
+	make -f admin/Makefile.common
+	%configure
+	%{__make}
 cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 cd k3b-i18n-0.9
-
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
-
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 cd ..
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
