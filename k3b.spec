@@ -61,7 +61,7 @@ W³asno¶ci Kreatora CD:
 
 %prep
 %setup -q 
-#%patch0 -p1
+%patch0 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
