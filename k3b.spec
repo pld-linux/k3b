@@ -16,7 +16,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.10.3
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
@@ -155,6 +155,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libk3b*encoder.so
+%{_libdir}/libk3b*encoder.la
+%attr(755,root,root) %{_libdir}/libk3b*decoder.so
+%{_libdir}/libk3b*decoder.la
+%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
+%{_libdir}/libk3baudiometainforenamerplugin.la
 %{_applnkdir}/Utilities/CD-RW/*
 %{_datadir}/apps/konqueror/servicemenus/*
 %{_datadir}/apps/k3b
@@ -168,6 +174,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libk3bcore.so
+%{_libdir}/libk3bcore.la
+%attr(755,root,root) %{_libdir}/libk3bplugin.so
+%{_libdir}/libk3bplugin.la
+%attr(755,root,root) %{_libdir}/libk3bproject.so
+%{_libdir}/libk3bproject.la
+%attr(755,root,root) %{_libdir}/libk3btools.so
+%{_libdir}/libk3btools.la
 %{_includedir}/*.h
