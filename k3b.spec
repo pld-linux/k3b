@@ -1,19 +1,20 @@
 #
 # Conditional build:
-%bcond_with	reqs		# force optional Requires
-%bcond_without	setup		# don't build K3bSetup2 KControl Module
 %bcond_with	linux22		# building on kernel 2.2.x
-#
+
+%define		_ver		0.11.90
 %define		_i18nver	0.11
+%define		_snap		040513
+
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.9
-Release:	2
+Version:	%{_ver}.%{_snap}
+Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	88f46a5cfbda5fa89b4bfee504567df1
+Source0:	http://ep09.pld-linux.org/~adgor/%{name}-%{_snap}.tar.bz2
+##%% Source0-md5:	88f46a5cfbda5fa89b4bfee504567df1
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
@@ -26,19 +27,15 @@ BuildRequires:	cdparanoia-III-devel
 BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
+BuildRequires:	lame-libs-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	qt-devel >= 3.1
-Requires:	cdrdao >= 1.1.5
+#BuildRequires:	unsermake >= 040511
 Requires:	cdrecord
 Requires:	mkisofs
 Requires:	qt >= 3.1
-%if %{with reqs}
-Requires:	transcode >= 0.6.0
-Requires:	vcdimager >= 0.7
-Requires:	normalize
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -146,6 +143,18 @@ Encoding module that allows specifying an encoding command.
 %description plugin-encoder-external -l pl
 Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
 
+%package plugin-encoder-lame
+Summary:	Encoder plugin - lame
+Summary(pl):	Wtyczka koduj±ca - lame
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-encoder-lame
+Encoding module to encode MP3 files.
+ 
+%description plugin-encoder-lame -l pl
+Modu³ koduj±cy pliki w formacie MP3.
+
 %package plugin-encoder-oggvorbis
 Summary:	Encoder plugin - oggvorbis
 Summary(pl):	Wtyczka koduj±ca - oggvorbis
@@ -172,24 +181,25 @@ Encoding module to encode many file formats using sox.
 Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 
 %prep
-%setup -q -a1
+%setup -q -n %{name}-%{_snap} -a1
 %{?with_linux22:%patch0 -p1}
 %patch1 -p1
 
 %build
+
 cp -f /usr/share/automake/config.sub admin
+cp -f /usr/share/automake/config.sub k3b-i18n-%{_i18nver}/admin
+
+#export UNSERMAKE=/usr/share/unsermake/unsermake
+
+%{__make} -f admin/Makefile.common cvs
+
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath \
-	--with-qt-libraries=%{_libdir} \
-	%{!?with_setup:--with-k3bsetup=no}
+	--enable-final \
+	--with-qt-libraries=%{_libdir}
 	
-%{__make}
-
-cd %{name}-i18n-%{_i18nver}
-cp -f /usr/share/automake/config.sub admin
-%{__make} -f admin/Makefile.common
-%configure
 %{__make}
 
 %install
@@ -199,10 +209,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
-	kde_htmldir=%{_kdedocdir}
-	
-%{__make} install -C %{name}-i18n-%{_i18nver} \
-	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
 %find_lang %{name} --with-kde
@@ -215,37 +221,42 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README FAQ ChangeLog TODO
+%doc k3b/{README,FAQ,ChangeLog,TODO}
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
+%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
+%{_libdir}/kde3/kcm_k3bsetup2.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_k3bsetup2.so
+%{_datadir}/applnk/.hidden/*.desktop
+%dir %{_datadir}/apps/k3b
+%{_datadir}/apps/k3b/cdi
+%{_datadir}/apps/k3b/icons
+%{_datadir}/apps/k3b/kpartplugins
+%{_datadir}/apps/k3b/pics
+%dir %{_datadir}/apps/k3b/plugins
+%{_datadir}/apps/k3b/eventsrc
+%{_datadir}/apps/k3b/k3bui.rc
+%{_datadir}/apps/k3b/tips
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
-%{_datadir}/apps/k3b
 %{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
-%{_datadir}/applnk/.hidden/*.desktop
 %{_desktopdir}/kde/*.desktop
 %{_iconsdir}/*/*/apps/k3b.png
 
-%if %{with setup}
-%attr(755,root,root) %{_libdir}/kde3/kcm_*.so
-%{_libdir}/kde3/kcm_*.la
-%endif
-
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libk3bcore.so
-%{_libdir}/libk3bcore.la
-%attr(755,root,root) %{_libdir}/libk3bdevice.so
-%{_libdir}/libk3bdevice.la
-%attr(755,root,root) %{_libdir}/libk3bplugin.so
-%{_libdir}/libk3bplugin.la
-%attr(755,root,root) %{_libdir}/libk3bproject.so
-%{_libdir}/libk3bproject.la
-%attr(755,root,root) %{_libdir}/libk3btools.so
-%{_libdir}/libk3btools.la
 %{_includedir}/*.h
+%{_libdir}/libk3bcore.la
+%attr(755,root,root) %{_libdir}/libk3bcore.so
+%{_libdir}/libk3bdevice.la
+%attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/libk3bplugin.la
+%attr(755,root,root) %{_libdir}/libk3bplugin.so
+%{_libdir}/libk3bproject.la
+%attr(755,root,root) %{_libdir}/libk3bproject.so
+%{_libdir}/libk3btools.la
+%attr(755,root,root) %{_libdir}/libk3btools.so
 
 %files plugin-decoder-flac
 %defattr(644,root,root,755)
@@ -270,6 +281,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3bwavedecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bwavedecoder.so
 %{_datadir}/apps/k3b/plugins/k3bwavedecoder.plugin
+
+%files plugin-encoder-lame
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3blameencoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3blameencoder.so
+%{_datadir}/apps/k3b/plugins/k3blameencoder.plugin
 
 %files plugin-encoder-external
 %defattr(644,root,root,755)
