@@ -18,16 +18,17 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
 BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
+BuildRequires:	autoconf >= 2.54
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	fam-devel
 BuildRequires:	gettext-devel
 BuildRequires:	kdelibs-devel >= 3.1
+BuildRequires:	libart_lgpl-devel
 BuildRequires:	libvorbis-devel
+BuildRequires:	mad-devel
 BuildRequires: 	qt-devel >= 3.0.3
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
-BuildRequires:	libart_lgpl-devel
-BuildRequires:	mad-devel
 ##BuildRequires:	nas-devel
 Requires:	qt >= 3.0.3
 BuildRequires:	cdrdao
