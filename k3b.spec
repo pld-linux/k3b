@@ -2,20 +2,21 @@
 #  - nb locale is empty
 #
 # Conditional build:
-%bcond_with	reqs		# force optional Requires
-%bcond_without	setup		# don't build K3bSetup2 KControl Module
 %bcond_with	linux22		# building on kernel 2.2.x
+%bcond_with	reqs		# force optional Requires
+%bcond_without	resmgr		# build without ResMgr support
+%bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_i18nver	0.11
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.20
-Release:	2
+Version:	0.11.21
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	6c4844319ccb5e9be3ec69aec80c8d5f
+# Source0-md5:	18d0680daf4e5cdf1c718bf469864b1a
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
@@ -30,16 +31,12 @@ BuildRequires:	cdparanoia-III-devel
 BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
-BuildRequires:	kdelibs-devel
-BuildRequires:	libmad-devel
+BuildRequires:	kdelibs-devel >= 9:3.1
 BuildRequires:	libsamplerate-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	qt-devel >= 3.1
-BuildRequires:	resmgr-devel
+%{?with_resmgr:BuildRequires:	resmgr-devel}
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
-Requires:	qt >= 3.1
 %if %{with reqs}
 Requires:	normalize
 Requires:	transcode >= 0.6.0
@@ -190,6 +187,7 @@ cp -f /usr/share/automake/config.sub admin
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath \
 	--with-qt-libraries=%{_libdir} \
+	%{!?with_resmgr:--without-resmgr} \
 	%{!?with_setup:--with-k3bsetup=no}
 	
 %{__make}
