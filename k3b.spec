@@ -1,13 +1,14 @@
 #
-# TODO:
+# TODO & NOTES:
 # - some dirs are from packages they aren't in R (vide konqueror dir)
 # - nas support is obsolete? it depends on kdelibs build type
-# - cosmetics in build and install sections
-# - is this bcond is really needed? lack of features makes users angry
-# - bcond for alsa: what if arts was compiled with alsa?
+# - is this reqs bcond really needed?
+# - it overrides rpm*flags (hardcoded -O2)
+# - BR alsa-libs ? is this really needed?
 #
 # Conditional build:
 %bcond_without reqs		# don't force optional Requires
+%bcond_without setup		# don K3bSetup2 KControl Module
 #
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
@@ -23,7 +24,6 @@ Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{version}.tar.g
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	arts-kde-devel
-BuildRequires:	arts-qt
 BuildRequires:	audiofile-devel
 BuildRequires:	autoconf
 BuildRequires:	cdparanoia-III-devel
@@ -110,12 +110,14 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 cp /usr/include/scsi/scsi.h scsi
 
 %configure \
-	--disable-rpath \
-	--%{!?debug:dis}%{?debug:en}able-debug
+	%{?_without_setup:--with-k3bsetup=no} \
+	--%{!?debug:dis}%{?debug:en}able-debug \
+	--disable-rpath
+	
 %{__make}
 
 cd %{name}-i18n-%{version}
-	make -f admin/Makefile.common
+	%{__make} -f admin/Makefile.common
 	%configure
 	%{__make}
 cd ..
@@ -134,7 +136,7 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
 #mv $ALD/{Applications/*,Utilities/CD-RW}
 mv $ALD/{Multimedia/*,Utilities/CD-RW}
-mv $ALD/{Settings/System/*,Utilities/CD-RW}
+%{?_with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
 mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
 
 %find_lang %{name} --with-kde
@@ -147,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README
+%doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %{_applnkdir}/Utilities/CD-RW/*
@@ -156,8 +158,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/*
 %{_datadir}/sounds/*.wav
 %{_pixmapsdir}/[!l]*/*/*/*
-%attr(755,root,root) %{_libdir}/kde3/*.so
-%{_libdir}/kde3/*.la
+%{?_with_setup:%attr(755,root,root) %{_libdir}/kde3/*.so}
+%{?_with_setup:%{_libdir}/kde3/*.la}
 
 %files devel
 %defattr(644,root,root,755)
