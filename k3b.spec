@@ -7,7 +7,9 @@ Version:	0.8.1
 Release:	2
 License:	GPL
 Group:		X11/Applications
+# Source0-md5: 4f205fcb7afb11d8db07cac20e431819
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.gz
+# Source1-md5: 1d1a074c61e5b9e790f3125534cae60b
 Source1:	http://dl.sourceforge.net/k3b/%{name}-0.8-i18n.tar.gz
 Patch0:		%{name}-defaults.patch
 Patch1:         %{name}-linux_2_5.patch
