@@ -34,7 +34,7 @@ BuildRequires:	zlib-devel
 ##BuildRequires:	nas-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
-Requires:	mkisofs 
+Requires:	mkisofs
 Requires:	qt >= 3.1
 %{!?_without_reqs:Requires:	transcode >= 0.6.0}
 %{!?_without_reqs:Requires:	vcdimager >= 0.7}
@@ -96,7 +96,7 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-# same thing as with kdemultimedia 
+# same thing as with kdemultimedia
 # includes kernel headers which breaks things
 # with PLD kernels 2.4.x, below workaround  by misiek
 
@@ -106,7 +106,7 @@ sed -e 's#slots\[CDROM_MAX_SLOTS\]#kde_slots\[CDROM_MAX_SLOTS\]#g' \
 
 %configure \
 	--disable-rpath \
-	--%{!?debug:dis}%{?debug:en}able-debug 
+	--%{!?debug:dis}%{?debug:en}able-debug
 %{__make}
 
 cd k3b-i18n-0.9
@@ -127,8 +127,8 @@ cd ..
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/Utilities/CD-RW
-#mv $ALD/{Applications/*,Utilities/CD-RW} 
-mv $ALD/{Multimedia/*,Utilities/CD-RW} 
+#mv $ALD/{Applications/*,Utilities/CD-RW}
+mv $ALD/{Multimedia/*,Utilities/CD-RW}
 
 %find_lang %{name} --with-kde
 
