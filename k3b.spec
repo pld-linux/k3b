@@ -16,12 +16,12 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.1
+Version:	0.11.2
 Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	50fd95a2536d2a335d61a2ce6ce5a3ee
+# Source0-md5:	8874af367c624dd4c25bce83812ad606
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 Patch0:		%{name}-linux22.patch
@@ -137,7 +137,7 @@ mv $ALD/{Multimedia/*,Utilities/CD-RW}
 %{?with_setup:mv $ALD/{Settings/System/*,Utilities/CD-RW}}
 mv $ALD/.hidden/* $RPM_BUILD_ROOT%{_datadir}/mimelnk/application
 
-%find_lang %{name} --with-kde
+#%find_lang %{name} --with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
