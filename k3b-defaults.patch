@@ -1,0 +1,77 @@
+--- k3b-0.7.5/src/tools/k3bglobals.cpp.orig	Sat May  4 22:38:13 2002
++++ k3b-0.7.5/src/tools/k3bglobals.cpp	Fri Dec 13 01:50:33 2002
+@@ -72,7 +72,5 @@
+ 
+ QString K3b::globalConfig()
+ {
+-  // this is a little not to hard hack to ensure that we get the "global" k3b appdir
+-  // k3b_cd_copy.png should always be in $KDEDIR/share/apps/k3b/pics/
+-  return KGlobal::dirs()->findResourceDir( "data", "k3b/pics/k3b_cd_copy.png" ) + "k3b/k3bsetup";
++  return QString::fromLatin1("/etc/k3b.conf");
+ }
+--- k3b-0.7.5/src/k3bsetup/k3bsetup.cpp.orig	Thu Nov  7 09:38:10 2002
++++ k3b-0.7.5/src/k3bsetup/k3bsetup.cpp	Fri Dec 13 02:18:27 2002
+@@ -75,7 +75,7 @@
+ 
+   if( m_config->hasGroup( "Permissions" ) ) {
+     m_config->setGroup( "Permissions" );
+-    m_cdwritingGroup = m_config->readEntry( "cdwriting_group", "cdrecording" );
++    m_cdwritingGroup = m_config->readEntry( "cdwriting_group", "cdwrite" );
+     m_userList = m_config->readListEntry( "users" );
+   }
+ }
+@@ -150,8 +150,8 @@
+ uint K3bSetup::createCdWritingGroup()
+ {
+   if( m_cdwritingGroup.isEmpty() ) {
+-    kdDebug() << "(K3bSetup) setting cd writing group to 'cdrecording'." << endl;
+-    m_cdwritingGroup = "cdrecording";
++    kdDebug() << "(K3bSetup) setting cd writing group to 'cdwrite'." << endl;
++    m_cdwritingGroup = "cdwrite";
+   }
+ 
+   // search group and create new if not found
+--- k3b-0.7.5/src/k3bsetup/k3bsetupwizardtabs.cpp.orig	Thu Nov  7 09:40:37 2002
++++ k3b-0.7.5/src/k3bsetup/k3bsetupwizardtabs.cpp	Fri Dec 13 02:21:07 2002
+@@ -452,7 +452,7 @@
+   m_groupWriterGroup->layout()->setMargin( KDialog::marginHint() );
+ 
+   m_editPermissionsGroup = new QLineEdit( m_groupWriterGroup, "LineEdit1" );
+-  m_editPermissionsGroup->setText( "cdrecording" );
++  m_editPermissionsGroup->setText( "cdwrite" );
+ 
+ 
+   mainGrid->addMultiCellWidget( m_labelPermissions1, 0, 0, 0, 1 );
+@@ -477,7 +477,7 @@
+   if( !setup()->cdWritingGroup().isEmpty())
+     m_editPermissionsGroup->setText( setup()->cdWritingGroup() );
+   else
+-    m_editPermissionsGroup->setText( "cdrecording" );
++    m_editPermissionsGroup->setText( "cdwrite" );
+ 
+   m_boxUsers->clear();
+   for ( QStringList::ConstIterator it = setup()->users().begin(); it != setup()->users().end(); ++it ) {
+@@ -559,12 +559,12 @@
+ 		      "priority. That is why they need to be run as root.</td>\n"
+ 		      "</tr>\n"
+ 		      "<tr>\n"
+-		      " <td>add cdrecord, mkisofs, and cdrdao to group 'cdrecording'</td>\n"
++		      " <td>add cdrecord, mkisofs, and cdrdao to group 'cdwrite'</td>\n"
+ 		      " <td>not everybody should be allowed to execute these programs since running a program as suid root "
+ 		      "is always a security risk.</td>\n"
+ 		      "</tr>\n"
+ 		      "<tr>\n"
+-		      " <td>add the selected users to group 'cdrecording'</td>\n"
++		      " <td>add the selected users to group 'cdwrite'</td>\n"
+ 		      " <td>these users will be able to run cdrecord, mkisofs, and cdrdao</td>\n"
+ 		      "</tr>\n"
+ 		      "<tr>\n"
+@@ -577,7 +577,7 @@
+ 		      "for ATAPI devices.</td>\n"
+ 		      "</tr>\n"
+ 		      "<tr>\n"
+-		      " <td>add all detected devices to group 'cdrecording'</td>\n"
++		      " <td>add all detected devices to group 'cdwrite'</td>\n"
+ 		      " <td>since write access to devices is always a security risk (although one cannot do much harm with writing "
+ 		      "to a CD device), only the selected users will be able to access the drives</td>\n"
+ 		      "</tr>\n"
