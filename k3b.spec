@@ -24,6 +24,8 @@ BuildRequires:	libvorbis-devel
 BuildRequires: 	qt-devel >= 3.0.3
 BuildRequires:	XFree86-devel
 BuildRequires:	zlib-devel
+BuildRequires:	libart_lgpl-devel
+BuildRequires:	mad-devel
 ##BuildRequires:	nas-devel
 Requires:	qt >= 3.0.3
 BuildRequires:	cdrdao
