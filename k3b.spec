@@ -11,20 +11,19 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.21
+Version:	0.11.22
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	18d0680daf4e5cdf1c718bf469864b1a
+# Source0-md5:	deb1811763b81a7c90bbfd2dd587ad2c
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-am19.patch
 Patch3:		%{name}-group.patch
-Patch4:		%{name}-c++.patch
-Patch5:		%{name}-resmgr.patch
+Patch4:		%{name}-resmgr.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -184,7 +183,6 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
