@@ -18,6 +18,7 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-am19.patch
 URL:		http://k3b.sourceforge.net/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -175,6 +176,7 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 %setup -q -a1
 %{?with_linux22:%patch0 -p1}
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
