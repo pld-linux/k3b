@@ -4,7 +4,7 @@
 # - it overrides rpm*flags (hardcoded -O2)
 # - BR alsa-libs ? is this really needed?
 
-%define		_snap		031023
+%define		_snap		031107
 %define		_ver		0.11
 %define		_i18nver	0.10
 
@@ -17,7 +17,7 @@ License:	GPL
 Group:		X11/Applications
 # From kdeextragear-1 kde cvs module
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	88a81d97bcba33659f27e7be4a24f6a9
+# Source0-md5:	442e8309ae7ad4b090a35c1d2fa294ee
 Source1:	http://dl.sourceforge.net/sourceforge/k3b/%{name}-i18n-%{_i18nver}.tar.gz
 # Source1-md5:	a14fd760bb146eaee22802c504e53152
 URL:		http://k3b.sourceforge.net/
@@ -175,7 +175,9 @@ sed -i 's/AudioVideo/X-CD-RW/' src/%{name}.desktop
 %{__make} -f admin/Makefile.common cvs
 
 %configure \
-	--%{!?debug:dis}%{?debug:en}able-debug
+	--%{!?debug:dis}%{?debug:en}able-debug \
+	--disable-rpath \
+	--enable-final
 	
 %{__make}
 
