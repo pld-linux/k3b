@@ -27,6 +27,7 @@ BuildRequires:	cdparanoia-III-devel
 BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
+BuildRequires:	kdelibs-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libvorbis-devel
