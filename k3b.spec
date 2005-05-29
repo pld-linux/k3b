@@ -13,8 +13,8 @@ Version:	0.11.99
 Release:	0.%{_snap}.1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	2b4fb811f2d5419804fe8914868c7a2d
+Source0:	%{name}-%{_snap}.tar.bz2
+# Source0-md5:	d89034f939a7bd626f4685a928850009
 # Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 # Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
 Patch0:		%{name}-group.patch
