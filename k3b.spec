@@ -7,27 +7,25 @@
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
-%define		_i18nver	0.11
+%define		_i18nver	0.12
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.11.24
-Release:	1
+Version:	0.12
+Release:	0.9
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	cf1111472487e4da87c649525e5987f6
+# Source0-md5:	df8f53698d28697213dfa6c9612bb249
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
-# Source1-md5:	80d1ac1766ad8a8cdadca5f4273f2d95
+# Source1-md5:	9fb4531d43f5477368d2069e0ff4b876
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-am19.patch
-Patch3:		%{name}-group.patch
-Patch4:		%{name}-resmgr.patch
+Patch2:		%{name}-group.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake >= 1.6.1
+BuildRequires:	automake >= 1.9.5
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	flac-devel
 BuildRequires:	gettext-devel
@@ -180,10 +178,8 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 %prep
 %setup -q -a1
 %{?with_linux22:%patch0 -p1}
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
@@ -216,9 +212,14 @@ rm -rf $RPM_BUILD_ROOT
 	kde_htmldir=%{_kdedocdir}
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/xx
-mv -f $RPM_BUILD_ROOT%{_datadir}/locale/ve{n,}
 
 %find_lang %{name} --with-kde
+%find_lang k3bsetup --with-kde
+%find_lang libk3b --with-kde
+%find_lang libk3bdevice --with-kde
+
+rm -f all.lang
+cat *.lang > all.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -226,7 +227,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files -f %{name}.lang
+%files -f all.lang
 %defattr(644,root,root,755)
 %doc README FAQ ChangeLog TODO
 %attr(755,root,root) %{_bindir}/*
@@ -248,16 +249,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libk3bcore.so
-%{_libdir}/libk3bcore.la
+%attr(755,root,root) %{_libdir}/libk3b.so
+%{_libdir}/libk3b.la
+%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
+%{_libdir}/libk3baudioprojectcddbplugin.la
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
 %{_libdir}/libk3bdevice.la
-%attr(755,root,root) %{_libdir}/libk3bplugin.so
-%{_libdir}/libk3bplugin.la
-%attr(755,root,root) %{_libdir}/libk3bproject.so
-%{_libdir}/libk3bproject.la
-%attr(755,root,root) %{_libdir}/libk3btools.so
-%{_libdir}/libk3btools.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bartsoutputplugin.so
+%{_libdir}/kde3/libk3bartsoutputplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bffmpegdecoder.so
+%{_libdir}/kde3/libk3bffmpegdecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3blameencoder.so
+%{_libdir}/kde3/libk3blameencoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3blibsndfiledecoder.so
+%{_libdir}/kde3/libk3blibsndfiledecoder.la
 %{_includedir}/*.h
 
 %files plugin-decoder-flac

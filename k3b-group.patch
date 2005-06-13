@@ -1,5 +1,5 @@
---- k3b-0.11.18/src/k3bsetup/k3bsetup2.cpp~	2004-11-28 14:27:24.000000000 +0200
-+++ k3b-0.11.18/src/k3bsetup/k3bsetup2.cpp	2005-01-02 20:03:05.000000000 +0200
+--- k3b-0.11.18/k3bsetup/k3bsetup2.cpp~	2004-11-28 14:27:24.000000000 +0200
++++ k3b-0.11.18/k3bsetup/k3bsetup2.cpp	2005-01-02 20:03:05.000000000 +0200
 @@ -329,7 +329,7 @@
  
    d->config->setGroup( "General Settings" );
