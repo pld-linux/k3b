@@ -1,49 +1,22 @@
-diff -aurN k3b-0.11.6.orig/src/k3b.desktop k3b-0.11.6/src/k3b.desktop
---- k3b-0.11.6.orig/src/k3b.desktop	2004-01-23 17:01:51.000000000 +0100
-+++ k3b-0.11.6/src/k3b.desktop	2004-03-20 14:31:28.173784816 +0100
-@@ -1,5 +1,6 @@
- # KDE Config File  
- [Desktop Entry]
-+Encoding=UTF-8
- Type=Application
- Exec=k3b
- Icon=k3b
-@@ -37,6 +38,7 @@
- Comment[hu]=CD-író program
- Comment[it]=Programma di masterizzazione
- Comment[nl]=CD-brandprogramma
-+Comment[pl]=Narzędzie do tworzenia płyt CD
- Comment[pt]=Um programa de gravação de CDs
- Comment[pt_BR]=Programa de escrita em CD
- Comment[ru]=Программа записи компакт-дисков
-@@ -57,4 +59,4 @@
- Name[xx]=xxK3bxx
+diff -aurN k3b-0.12.orig/src/k3b.desktop k3b-0.12/src/k3b.desktop
+--- k3b-0.12.orig/src/k3b.desktop	2005-06-14 19:05:49.000000000 +0200
++++ k3b-0.12/src/k3b.desktop	2005-06-14 19:06:26.000000000 +0200
+@@ -80,5 +80,5 @@
  MimeType=application/x-k3b
+ X-KDE-StartupNotify=true
  X-KDE-NativeMimeType=application/x-k3b
 -Categories=KDE;Application;AudioVideo;DiscBurning;
-+Categories=Qt;KDE;Utility;DiscBurning;
-diff -aurN k3b-0.11.6.orig/src/k3bsetup/k3bsetup2.desktop k3b-0.11.6/src/k3bsetup/k3bsetup2.desktop
---- k3b-0.11.6.orig/src/k3bsetup/k3bsetup2.desktop	2004-01-23 17:01:52.000000000 +0100
-+++ k3b-0.11.6/src/k3bsetup/k3bsetup2.desktop	2004-03-19 16:24:45.926586776 +0100
-@@ -11,6 +11,7 @@
- Comment[hu]=K3bSetup 2 - jogosultságbeállítás CD/DVD-íráshoz a K3b-ben
- Comment[it]=Impostazioni di K3b 2 - modifica i permessi per CD/DVD per scrivere con K3b
- Comment[nl]=K3bSetup 2 - stelt de toegangsrechten in voor CD/DVD-branden met K3b
-+Comment[pl]=Modyfikuje uprawnienia wymagane do tworzenia CD/DVD przez K3b
- Comment[pt]=K3bSetup 2 - modificar as permissões para a gravação de CDs/DVDs com o K3b
- Comment[pt_BR]=K3bSetup 2 - modifica as permissões para a queima de CD/DVD com o K3b
- Comment[ru]=K3bSetup 2 - настроить права для записи при помощи K3b
-@@ -34,6 +35,7 @@
- Name[et]=K3b seadistamine
- Name[hi]=के3बी-सेटअप 2
- Name[it]=Impostazioni di K3b 2
-+Name[pl]=Ustawienia K3b
- Name[sv]=Ställ in K3b 2
- Name[ta]=K3bஅமைவு
- Name[xx]=xxK3bSetup 2xx
-@@ -45,4 +47,4 @@
++Categories=Qt;KDE;AudioVideo;DiscBurning;
+ X-DCOP-ServiceType=Unique
+diff -aurN k3b-0.12.orig/k3bsetup/k3bsetup2.desktop k3b-0.12/k3bsetup/k3bsetup2.desktop
+--- k3b-0.12.orig/k3bsetup/k3bsetup2.desktop	2005-06-13 10:00:42.000000000 +0200
++++ k3b-0.12/k3bsetup/k3bsetup2.desktop	2005-06-14 19:00:07.000000000 +0200
+@@ -58,7 +58,7 @@
  X-KDE-Library=k3bsetup2
  X-KDE-ModuleType=Library
  X-KDE-RootOnly=true
 -Categories=Application;System;X-KDE-System;
 +Categories=Qt;KDE;X-KDE-settings-system;
+ GenericName=CD & DVD Burning Setup
+ GenericName[bg]=Настройка на записа на CD и DVD
+ GenericName[cs]=Nastavení vypalování CD a DVD
