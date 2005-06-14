@@ -1,6 +1,6 @@
 # TODO
-#  - HAL support
-#  - more plugins subpackages
+#  - more subpackages (audio metainfo renamer, audio project cddb,
+#    konqueror/servicemenus)
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -13,7 +13,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12
-Release:	0.9
+Release:	0.91
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -29,9 +29,11 @@ BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1.9.5
 BuildRequires:	cdparanoia-III-devel
+BuildRequires:	dbus-qt-devel
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
+BuildRequires:	hal-devel >= 0.4
 BuildRequires:	id3lib-devel
 BuildRequires:	kdelibs-devel >= 9:3.2
 BuildRequires:	lame-libs-devel
@@ -106,10 +108,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-ffmpeg
-Decoding module to decode wma files.
+Decoding module to decode wma (and others) files.
 
 %description plugin-decoder-ffmpeg -l pl
-Modu³ dekoduj±cy pliki w formacie wma.
+Modu³ dekoduj±cy pliki w formacie wma (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
@@ -242,7 +244,7 @@ Requires:	%{name} = %{version}-%{release}
 Audio Output plugin which plays through arts.
 
 %description plugin-output-arts -l pl
-Modu³ odtwarzania d¼wiêku przez arts.
+Wtyczka odtwarzania d¼wiêku przez arts.
 
 %prep
 %setup -q -a1
