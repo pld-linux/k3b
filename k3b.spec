@@ -1,6 +1,6 @@
 # TODO
 #  - HAL support
-#  - more decoder/encoder subpackages (mv from -devel)
+#  - more plugins subpackages
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -99,6 +99,18 @@ Header files for libk3bcore library.
 %description devel -l pl
 Pliki nag³ówkowe biblioteki libk3bcore.
 
+%package plugin-decoder-ffmpeg
+Summary:	Decoder plugin - FFMpeg
+Summary(pl):	Wtyczka dekoduj±ca - FFMpeg
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-ffmpeg
+Decoding module to decode wma files.
+
+%description plugin-decoder-ffmpeg -l pl
+Modu³ dekoduj±cy pliki w formacie wma.
+
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
 Summary(pl):	Wtyczka dekoduj±ca - FLAC
@@ -111,6 +123,18 @@ Decoding module to decode FLAC files.
 %description plugin-decoder-flac -l pl
 Modu³ dekoduj±cy pliki w formacie FLAC.
 
+%package plugin-decoder-libsndfile
+Summary:	Decoder plugin - libsndfile
+Summary(pl):	Wtyczka dekoduj±ca - libsndfile
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-libsndfile
+Decoding module to decode audio files supported by libsndfile.
+
+%description plugin-decoder-libsndfile -l pl
+Modu³ dekoduj±cy pliki audio obs³ugiwane przez bibliotekê libsndfile.
+
 %package plugin-decoder-mad
 Summary:	Decoder plugin - mad
 Summary(pl):	Wtyczka dekoduj±ca - mad
@@ -118,10 +142,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-mad
-Decoding module to decode MPEG 1 Layer III files.
+Decoding module to decode MPEG-1 Layer III files.
 
 %description plugin-decoder-mad -l pl
-Modu³ dekoduj±cy pliki w formacie MPEG 1 Layer III.
+Modu³ dekoduj±cy pliki w formacie MPEG-1 Layer III.
 
 %package plugin-decoder-musepack
 Summary:	Decoder plugin - Musepack
@@ -130,10 +154,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-musepack
-Decoding module to decode Musepack files.
+Decoding module to decode Musepack audio files.
 
 %description plugin-decoder-musepack -l pl
-Modu³ dekoduj±cy pliki w formacie Musepack.
+Modu³ dekoduj±cy pliki audio w formacie Musepack.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
@@ -171,6 +195,18 @@ Encoding module that allows specifying an encoding command.
 %description plugin-encoder-external -l pl
 Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
 
+%package plugin-encoder-lame
+Summary:	Encoder plugin - lame
+Summary(pl):	Wtyczka koduj±ca - lame
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-encoder-lame
+Encoding module to encode MPEG-1 Layer III (mp3) files.
+
+%description plugin-encoder-lame -l pl
+Modu³ koduj±cy pliki w formacie MPEG-1 Layer III (mp3).
+
 %package plugin-encoder-oggvorbis
 Summary:	Encoder plugin - oggvorbis
 Summary(pl):	Wtyczka koduj±ca - oggvorbis
@@ -195,6 +231,18 @@ Encoding module to encode many file formats using sox.
 
 %description plugin-encoder-sox -l pl
 Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
+
+%package plugin-output-arts
+Summary:	Plugin - arts support
+Summary(pl):	Wtyczka - obs³uga arts
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-output-arts
+Audio Output plugin which plays through arts.
+
+%description plugin-output-arts -l pl
+Modu³ odtwarzania d¼wiêku przez arts.
 
 %prep
 %setup -q -a1
@@ -248,7 +296,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
+%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
+%{_libdir}/libk3baudioprojectcddbplugin.la
+#%{_datadir}/apps/k3b/plugins/k3baudiometainforenamer.plugin
+#%{_datadir}/apps/k3b/plugins/k3baudioprojectcddb.plugin
 %{_datadir}/applnk/.hidden/*.desktop
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
 %dir %{_datadir}/apps/k3b
@@ -270,65 +322,79 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3b.so
-%{_libdir}/libk3b.la
-%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
-%{_libdir}/libk3baudioprojectcddbplugin.la
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
-%attr(755,root,root) %{_libdir}/kde3/libk3bartsoutputplugin.so
-%{_libdir}/kde3/libk3bartsoutputplugin.la
+%{_includedir}/*.h
+
+%files plugin-decoder-ffmpeg
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/kde3/libk3bffmpegdecoder.so
 %{_libdir}/kde3/libk3bffmpegdecoder.la
-%attr(755,root,root) %{_libdir}/kde3/libk3blameencoder.so
-%{_libdir}/kde3/libk3blameencoder.la
-%attr(755,root,root) %{_libdir}/kde3/libk3blibsndfiledecoder.so
-%{_libdir}/kde3/libk3blibsndfiledecoder.la
-%{_includedir}/*.h
+%{_datadir}/apps/k3b/plugins/k3bffmpegdecoder.plugin
 
 %files plugin-decoder-flac
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bflacdecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bflacdecoder.so
+%{_libdir}/kde3/libk3bflacdecoder.la
 %{_datadir}/apps/k3b/plugins/k3bflacdecoder.plugin
+
+%files plugin-decoder-libsndfile
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/kde3/libk3blibsndfiledecoder.so
+%{_libdir}/kde3/libk3blibsndfiledecoder.la
+%{_datadir}/apps/k3b/plugins/k3blibsndfiledecoder.plugin
 
 %files plugin-decoder-mad
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bmaddecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bmaddecoder.so
+%{_libdir}/kde3/libk3bmaddecoder.la
 %{_datadir}/apps/k3b/plugins/k3bmaddecoder.plugin
 
 %files plugin-decoder-musepack
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bmpcdecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bmpcdecoder.so
+%{_libdir}/kde3/libk3bmpcdecoder.la
 %{_datadir}/apps/k3b/plugins/k3bmpcdecoder.plugin
 
 %files plugin-decoder-oggvorbis
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3boggvorbisdecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3boggvorbisdecoder.so
+%{_libdir}/kde3/libk3boggvorbisdecoder.la
 %{_datadir}/apps/k3b/plugins/k3boggvorbisdecoder.plugin
 
 %files plugin-decoder-wave
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bwavedecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bwavedecoder.so
+%{_libdir}/kde3/libk3bwavedecoder.la
 %{_datadir}/apps/k3b/plugins/k3bwavedecoder.plugin
 
 %files plugin-encoder-external
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bexternalencoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bexternalencoder.so
+%{_libdir}/kde3/libk3bexternalencoder.la
 %{_datadir}/apps/k3b/plugins/k3bexternalencoder.plugin
+
+%files plugin-encoder-lame
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/kde3/libk3blameencoder.so
+%{_libdir}/kde3/libk3blameencoder.la
+%{_datadir}/apps/k3b/plugins/k3blameencoder.plugin
 
 %files plugin-encoder-oggvorbis
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3boggvorbisencoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3boggvorbisencoder.so
+%{_libdir}/kde3/libk3boggvorbisencoder.la
 %{_datadir}/apps/k3b/plugins/k3boggvorbisencoder.plugin
 
 %files plugin-encoder-sox
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libk3bsoxencoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bsoxencoder.so
+%{_libdir}/kde3/libk3bsoxencoder.la
 %{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
+
+%files plugin-output-arts
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/kde3/libk3bartsoutputplugin.so
+%{_libdir}/kde3/libk3bartsoutputplugin.la
+%{_datadir}/apps/k3b/plugins/k3bartsoutputplugin.plugin
