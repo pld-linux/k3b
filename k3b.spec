@@ -1,5 +1,4 @@
 # TODO
-#  - nb locale is empty
 #  - HAL support
 #  - more decoder/encoder subpackages (mv from -devel)
 #
@@ -253,22 +252,27 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f all.lang
 %defattr(644,root,root,755)
-%doc README FAQ ChangeLog TODO
-%attr(755,root,root) %{_bindir}/*
+%doc ChangeLog FAQ README TODO
+%attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
 %{_libdir}/libk3baudiometainforenamerplugin.la
+%{_datadir}/applnk/.hidden/*.desktop
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
-%{_datadir}/apps/k3b
+%dir %{_datadir}/apps/k3b
+%dir %{_datadir}/apps/k3b/plugins
+%{_datadir}/apps/k3b/*
+%exclude %{_datadir}/apps/k3b/plugins/*
 %{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
-%{_datadir}/applnk/.hidden/*.desktop
-%{_desktopdir}/kde/*.desktop
+%{_desktopdir}/kde/k3b.desktop
 %{_iconsdir}/*/*/apps/k3b.png
 
 %if %{with setup}
+%attr(755,root,root) %{_bindir}/k3bsetup
 %attr(755,root,root) %{_libdir}/kde3/kcm_*.so
 %{_libdir}/kde3/kcm_*.la
+%{_desktopdir}/kde/k3bsetup2.desktop
 %endif
 
 %files devel
@@ -305,6 +309,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/kde3/libk3bmpcdecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bmpcdecoder.so
+%{_datadir}/apps/k3b/plugins/k3bmpcdecoder.plugin
 
 %files plugin-decoder-oggvorbis
 %defattr(644,root,root,755)
