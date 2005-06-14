@@ -1,6 +1,7 @@
 # TODO
 #  - nb locale is empty
 #  - HAL support
+#  - more decoder/encoder subpackages (mv from -devel)
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -23,6 +24,7 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
+Patch3:		%{name}-musepack.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -106,7 +108,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-flac
 Decoding module to decode FLAC files.
- 
+
 %description plugin-decoder-flac -l pl
 Modu³ dekoduj±cy pliki w formacie FLAC.
 
@@ -118,9 +120,21 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-mad
 Decoding module to decode MPEG 1 Layer III files.
- 
+
 %description plugin-decoder-mad -l pl
 Modu³ dekoduj±cy pliki w formacie MPEG 1 Layer III.
+
+%package plugin-decoder-musepack
+Summary:	Decoder plugin - Musepack
+Summary(pl):	Wtyczka dekoduj±ca - Musepack
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-decoder-musepack
+Decoding module to decode Musepack files.
+
+%description plugin-decoder-musepack -l pl
+Modu³ dekoduj±cy pliki w formacie Musepack.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
@@ -130,7 +144,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-oggvorbis
 Decoding module to decode Ogg Vorbis files.
- 
+
 %description plugin-decoder-oggvorbis -l pl
 Modu³ dekoduj±cy pliki w formacie Ogg Vorbis.
 
@@ -142,7 +156,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-wave
 Decoding module to decode WAVE files.
- 
+
 %description plugin-decoder-wave -l pl
 Modu³ dekoduj±cy pliki w formacie WAVE.
 
@@ -154,7 +168,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-external
 Encoding module that allows specifying an encoding command.
- 
+
 %description plugin-encoder-external -l pl
 Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
 
@@ -166,7 +180,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-oggvorbis
 Encoding module to encode Ogg Vorbis files.
- 
+
 %description plugin-encoder-oggvorbis -l pl
 Modu³ koduj±cy pliki w formacie Ogg Vorbis.
 
@@ -179,7 +193,7 @@ Requires:	sox
 
 %description plugin-encoder-sox
 Encoding module to encode many file formats using sox.
- 
+
 %description plugin-encoder-sox -l pl
 Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 
@@ -188,6 +202,7 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 %{?with_linux22:%patch0 -p1}
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
@@ -285,6 +300,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3bmaddecoder.la
 %attr(755,root,root) %{_libdir}/kde3/libk3bmaddecoder.so
 %{_datadir}/apps/k3b/plugins/k3bmaddecoder.plugin
+
+%files plugin-decoder-musepack
+%defattr(644,root,root,755)
+%{_libdir}/kde3/libk3bmpcdecoder.la
+%attr(755,root,root) %{_libdir}/kde3/libk3bmpcdecoder.so
 
 %files plugin-decoder-oggvorbis
 %defattr(644,root,root,755)
