@@ -234,15 +234,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/xx
-
-%find_lang %{name} --with-kde
-%find_lang k3bsetup --with-kde
-%find_lang libk3b --with-kde
-%find_lang libk3bdevice --with-kde
-
-rm -f all.lang
-cat *.lang > all.lang
+%find_lang %{name} --all-name --with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -250,7 +242,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files -f all.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog FAQ README TODO
 %attr(755,root,root) %{_bindir}/k3b
