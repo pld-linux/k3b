@@ -32,7 +32,7 @@ BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
-BuildRequires:	kdelibs-devel >= 9:3.1
+BuildRequires:	kdelibs-devel >= 9:3.2
 BuildRequires:	lame-libs-devel
 BuildRequires:	libmusepack-devel >= 1.1
 BuildRequires:	libmusicbrainz-devel
