@@ -1,5 +1,6 @@
 # TODO
 #  - nb locale is empty
+#  - HAL support
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -27,13 +28,20 @@ BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1.9.5
 BuildRequires:	cdparanoia-III-devel
-BuildRequires:	flac-devel
+BuildRequires:	ffmpeg-devel >= 0.4.9
+BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
 BuildRequires:	id3lib-devel
 BuildRequires:	kdelibs-devel >= 9:3.1
+BuildRequires:	lame-libs-devel
+BuildRequires:	libmusepack-devel >= 1.1
+BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
+BuildRequires:	libsndfile-devel
+BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
@@ -183,6 +191,7 @@ Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 
 %build
 cp -f /usr/share/automake/config.sub admin
+%{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	--disable-rpath \
