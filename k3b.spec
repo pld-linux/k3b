@@ -1,6 +1,3 @@
-# TODO
-#  - more subpackages (audio metainfo renamer, audio project cddb,
-#    konqueror/servicemenus)
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -9,11 +6,12 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_i18nver	0.12
+%define		_kdever		9:3.2
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12
-Release:	0.99
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -28,14 +26,12 @@ URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1.9.5
-BuildRequires:	cdparanoia-III-devel
 BuildRequires:	dbus-qt-devel
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
 BuildRequires:	hal-devel >= 0.4
-BuildRequires:	id3lib-devel
-BuildRequires:	kdelibs-devel >= 9:3.2
+BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libmusepack-devel >= 1.1
 BuildRequires:	libmusicbrainz-devel
@@ -234,6 +230,21 @@ Encoding module to encode many file formats using sox.
 %description plugin-encoder-sox -l pl
 Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
 
+%package plugin-konqueror
+Summary:	Plugins extending the functionality of Konqueror
+Summary(pl):	Wtyczki rozszerzaj±ce funkcjonalno¶æ Konquerora
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	konqueror >= %{_kdever}
+
+%description plugin-konqueror
+Package contains plugins (but accurately "servicemenus") extending the
+functionality of Konqueror.
+
+%description plugin-konqueror -l pl
+Pakiet zawiera wtyczki (a dok³adniej "servicemenus") rozszerzaj±ce
+funkcjonalno¶æ Konquerora.
+
 %package plugin-output-arts
 Summary:	Plugin - arts support
 Summary(pl):	Wtyczka - obs³uga arts
@@ -245,6 +256,20 @@ Audio Output plugin which plays through arts.
 
 %description plugin-output-arts -l pl
 Wtyczka odtwarzania d¼wiêku przez arts.
+
+%package plugin-project
+Summary:	Additional plugins from group project
+Summary(pl):	Dodatkowe wtyczki z grupy projekt
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-project
+Additional plugins from group project:
+Audio Metainfo Renamer, Cddb Audio Plugin.
+
+%description plugin-project -l pl
+Dodatkowe wtyczki z grupy projekt:
+Audio Metainfo Renamer, Cddb Audio Plugin.
 
 %prep
 %setup -q -a1
@@ -279,7 +304,7 @@ rm -rf $RPM_BUILD_ROOT
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
-	
+
 %{__make} install -C %{name}-i18n-%{_i18nver} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
@@ -297,14 +322,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog FAQ README TODO
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
-%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
-%{_libdir}/libk3baudiometainforenamerplugin.la
-%{_libdir}/libk3baudioprojectcddbplugin.la
-#%{_datadir}/apps/k3b/plugins/k3baudiometainforenamer.plugin
-#%{_datadir}/apps/k3b/plugins/k3baudioprojectcddb.plugin
 %{_datadir}/applnk/.hidden/*.desktop
-%{_datadir}/apps/konqueror/servicemenus/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
 %{_datadir}/apps/k3b/*
@@ -395,8 +413,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3bsoxencoder.la
 %{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
 
+%files plugin-konqueror
+%defattr(644,root,root,755)
+%{_datadir}/apps/konqueror/servicemenus/*.desktop
+
 %files plugin-output-arts
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/kde3/libk3bartsoutputplugin.so
 %{_libdir}/kde3/libk3bartsoutputplugin.la
 %{_datadir}/apps/k3b/plugins/k3bartsoutputplugin.plugin
+
+%files plugin-project
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
+%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
+%{_libdir}/libk3baudiometainforenamerplugin.la
+%{_libdir}/libk3baudioprojectcddbplugin.la
+%{_datadir}/apps/k3b/plugins/k3baudiometainforenamerplugin.plugin
+%{_datadir}/apps/k3b/plugins/k3baudioprojectcddbplugin.plugin
