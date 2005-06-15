@@ -1,10 +1,10 @@
---- k3b-0.11.11/src/device/k3bscsicommand.cpp	2004-01-21 10:20:11.000000000 +0000
-+++ k3b-0.11.11.new/src/device/k3bscsicommand.cpp	2004-06-15 13:46:22.297011136 +0000
-@@ -91,7 +91,6 @@
-   ::memset( &m_cmd, 0, sizeof(struct cdrom_generic_command) );
-   ::memset( &m_sense, 0, sizeof(struct request_sense) );
+--- k3b-0.12/libk3bdevice/k3bscsicommand_linux.cpp.orig	2005-06-15 12:16:50.000000000 +0200
++++ k3b-0.12/libk3bdevice/k3bscsicommand_linux.cpp	2005-06-15 12:17:04.000000000 +0200
+@@ -41,7 +41,6 @@
+   ::memset( &d->cmd, 0, sizeof(struct cdrom_generic_command) );
+   ::memset( &d->sense, 0, sizeof(struct request_sense) );
  
--  m_cmd.quiet = 1;
-   m_cmd.sense = &m_sense;
+-  d->cmd.quiet = 1;
+   d->cmd.sense = &d->sense;
  }
  
