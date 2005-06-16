@@ -104,10 +104,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-ffmpeg
-Decoding module to decode wma (and others) files.
+Decoding module to decode WMA (and others) files.
 
 %description plugin-decoder-ffmpeg -l pl
-Modu³ dekoduj±cy pliki w formacie wma (i nie tylko).
+Modu³ dekoduj±cy pliki w formacie WMA (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
@@ -228,7 +228,7 @@ Requires:	sox
 Encoding module to encode many file formats using sox.
 
 %description plugin-encoder-sox -l pl
-Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
+Modu³ koduj±cy pliki w wielu formatach przy u¿yciu programu sox.
 
 %package plugin-konqueror
 Summary:	Plugins extending the functionality of Konqueror
