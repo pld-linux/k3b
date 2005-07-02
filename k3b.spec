@@ -5,19 +5,18 @@
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
-%define		_i18nver	0.12.1
 %define		_kdever		9:3.2
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.1
+Version:	0.12.2
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	d1354cc0d0b1e49b7d3f20defbedc9e9
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
-# Source1-md5:	d67b1dc8ededad4ffb75344d865913a2
+# Source0-md5:	52dac62c8f22330784f82703385482ee
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
+# Source1-md5:	bea95a7fe1364231aba822f8aab7e4d9
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
@@ -288,7 +287,7 @@ cp -f /usr/share/automake/config.sub admin
 
 %{__make}
 
-cd %{name}-i18n-%{_i18nver}
+cd %{name}-i18n-%{version}
 cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure
@@ -303,7 +302,7 @@ rm -rf $RPM_BUILD_ROOT
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
 
-%{__make} install -C %{name}-i18n-%{_i18nver} \
+%{__make} install -C %{name}-i18n-%{version} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
