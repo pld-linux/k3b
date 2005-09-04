@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12.3
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -24,7 +24,7 @@ URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
-BuildRequires:	dbus-qt-devel
+BuildRequires:	dbus-qt-devel >= 0.33
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
