@@ -9,14 +9,15 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.3
-Release:	2
+Version:	0.12.4a
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	5a8515ad15d124104a79e63dab12366d
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	26464eccb5a8801e175748c783c36974
+# Source0-md5:	816bbf45eaa3bbcccbedc80cf0d25b42
+#Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.12.4.tar.bz2
+# Source1-md5:	ffdc697fb1e3518f1af900425230612b
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
@@ -287,7 +288,8 @@ cp -f /usr/share/automake/config.sub admin
 
 %{__make}
 
-cd %{name}-i18n-%{version}
+#cd %{name}-i18n-%{version}
+cd %{name}-i18n-0.12.4
 cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure
@@ -302,7 +304,8 @@ rm -rf $RPM_BUILD_ROOT
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
 
-%{__make} install -C %{name}-i18n-%{version} \
+#%{__make} install -C %{name}-i18n-%{version} \
+%{__make} install -C %{name}-i18n-0.12.4 \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
