@@ -15,12 +15,12 @@ License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	816bbf45eaa3bbcccbedc80cf0d25b42
-#Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-0.12.4.tar.bz2
-# Source1-md5:	ffdc697fb1e3518f1af900425230612b
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
+# Source1-md5:	17744598d50deabe5edf3f9fc9e0af89
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
+Patch3:		%{name}-optiontab.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -275,6 +275,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %{?with_linux22:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
@@ -288,8 +289,7 @@ cp -f /usr/share/automake/config.sub admin
 
 %{__make}
 
-#cd %{name}-i18n-%{version}
-cd %{name}-i18n-0.12.4
+cd %{name}-i18n-%{version}
 cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure
@@ -304,8 +304,7 @@ rm -rf $RPM_BUILD_ROOT
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
 
-#%{__make} install -C %{name}-i18n-%{version} \
-%{__make} install -C %{name}-i18n-0.12.4 \
+%{__make} install -C %{name}-i18n-%{version} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
