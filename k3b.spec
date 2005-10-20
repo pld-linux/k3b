@@ -9,18 +9,17 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.4a
+Version:	0.12.5
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	816bbf45eaa3bbcccbedc80cf0d25b42
+# Source0-md5:	090979890229d33de3dadc263b09e621
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	17744598d50deabe5edf3f9fc9e0af89
+# Source1-md5:	da6399fb6fb8d071de36b0a4fb2111aa
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
-Patch3:		%{name}-optiontab.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -275,7 +274,6 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %{?with_linux22:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
