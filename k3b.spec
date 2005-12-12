@@ -9,14 +9,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.8
+Version:	0.12.9
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	dff0c2075266e6ad5d3c4ad99bcf8a54
+# Source0-md5:	00610c33829a3f7ddcb8652526900c5b
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	eea7b0026cc1c34c4ca4bdd09d0eda0d
+# Source1-md5:	b195f36a212a395ee7cc1a263c3ca4ad
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
@@ -243,6 +243,18 @@ functionality of Konqueror.
 Pakiet zawiera wtyczki (a dok³adniej "servicemenus") rozszerzaj±ce
 funkcjonalno¶æ Konquerora.
 
+%package plugin-output-alsa
+Summary:	Plugin - ALSA support
+Summary(pl):	Wtyczka - obs³uga ALSA
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-output-alsa
+Audio Output plugin which plays through ALSA.
+
+%description plugin-output-alsa -l pl
+Wtyczka odtwarzania d¼wiêku przez ALSA.
+
 %package plugin-output-arts
 Summary:	Plugin - arts support
 Summary(pl):	Wtyczka - obs³uga arts
@@ -413,6 +425,12 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-konqueror
 %defattr(644,root,root,755)
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
+
+%files plugin-output-alsa
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/kde3/libk3balsaoutputplugin.so
+%{_libdir}/kde3/libk3balsaoutputplugin.la
+%{_datadir}/apps/k3b/plugins/k3balsaoutputplugin.plugin
 
 %files plugin-output-arts
 %defattr(644,root,root,755)
