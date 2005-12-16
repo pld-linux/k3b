@@ -292,10 +292,10 @@ cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
-	--disable-rpath \
+	%{!?debug:--disable-rpath} \
+	%{!?with_setup:--with-k3bsetup=no} \
 	--with-qt-libraries=%{_libdir} \
-	%{!?with_resmgr:--without-resmgr} \
-	%{!?with_setup:--with-k3bsetup=no}
+	%{!?with_resmgr:--without-resmgr}
 
 %{__make}
 
@@ -334,8 +334,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applnk/.hidden/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
-%{_datadir}/apps/k3b/*
-%exclude %{_datadir}/apps/k3b/plugins/*
+%{_datadir}/apps/k3b/[!p]*
+%{_datadir}/apps/k3b/pics
 %{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
 %{_desktopdir}/kde/k3b.desktop
