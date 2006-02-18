@@ -86,7 +86,10 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	dbus-qt-devel
+Requires:	hal-devel
 Requires:	kdelibs-devel
+Requires:	libsamplerate-devel
 %{?with_resmgr:Requires:	resmgr-devel}
 
 %description devel
@@ -307,6 +310,7 @@ cp -f /usr/share/automake/config.sub admin
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -317,6 +321,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install -C %{name}-i18n-%{version} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
+
+install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
 
 %find_lang %{name} --all-name --with-kde
 
@@ -355,6 +361,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
+%{_includedir}/libisofs
 
 %files plugin-decoder-ffmpeg
 %defattr(644,root,root,755)
