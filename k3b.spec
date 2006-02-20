@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12.12
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -31,6 +31,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	hal-devel >= 0.4
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
+BuildRequires:	libgsm-devel
 BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
