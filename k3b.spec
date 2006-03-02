@@ -9,14 +9,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.12
-Release:	2
+Version:	0.12.13
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	75257fa05bfc5504a07d12959cdc6342
+# Source0-md5:	3926e7e0b3fa912ae8db92c0b8609bb4
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	32029e9a4fdf599a18591d8ac980c299
+# Source1-md5:	bb72c9f5feb66bee12298596ce9bc0f9
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
