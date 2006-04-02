@@ -42,8 +42,6 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
-Requires:	dvd+rw-tools
-Requires:	growisofs >= 5.10
 Requires:	kdelibs
 Requires:	mkisofs
 %if %{with reqs}
