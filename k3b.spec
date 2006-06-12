@@ -1,6 +1,3 @@
-# TODO
-#  - more subpackages (audio metainfo renamer, audio project cddb,
-#    konqueror/servicemenus)
 #
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
@@ -8,36 +5,34 @@
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
-%define		_i18nver	0.12
+%define		_kdever		9:3.2
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12
-Release:	0.99
+Version:	0.12.15
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	df8f53698d28697213dfa6c9612bb249
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{_i18nver}.tar.bz2
-# Source1-md5:	9fb4531d43f5477368d2069e0ff4b876
+# Source0-md5:	246607f9d63b94c7f91ac86c108efdc2
+Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
+# Source1-md5:	6cbfd080b3684efae0ed4b4797b5cecb
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
-Patch3:		%{name}-musepack.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake >= 1.9.5
-BuildRequires:	cdparanoia-III-devel
-BuildRequires:	dbus-qt-devel
+BuildRequires:	automake >= 1:1.9.4
+BuildRequires:	dbus-qt-devel >= 0.33
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
 BuildRequires:	hal-devel >= 0.4
-BuildRequires:	id3lib-devel
-BuildRequires:	kdelibs-devel >= 9:3.2
+BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
-BuildRequires:	libmusepack-devel >= 1.1
+BuildRequires:	libgsm-devel
+BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
@@ -47,6 +42,7 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
+Requires:	kdelibs
 Requires:	mkisofs
 %if %{with reqs}
 Requires:	normalize
@@ -92,7 +88,10 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	dbus-qt-devel
+Requires:	hal-devel
 Requires:	kdelibs-devel
+Requires:	libsamplerate-devel
 %{?with_resmgr:Requires:	resmgr-devel}
 
 %description devel
@@ -108,10 +107,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-ffmpeg
-Decoding module to decode wma (and others) files.
+Decoding module to decode WMA (and others) files.
 
 %description plugin-decoder-ffmpeg -l pl
-Modu³ dekoduj±cy pliki w formacie wma (i nie tylko).
+Modu³ dekoduj±cy pliki w formacie WMA (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
@@ -232,7 +231,34 @@ Requires:	sox
 Encoding module to encode many file formats using sox.
 
 %description plugin-encoder-sox -l pl
-Modu³ koduj±cy pliki w wielu formatach u¿ywaj±c programu sox.
+Modu³ koduj±cy pliki w wielu formatach przy u¿yciu programu sox.
+
+%package plugin-konqueror
+Summary:	Plugins extending the functionality of Konqueror
+Summary(pl):	Wtyczki rozszerzaj±ce funkcjonalno¶æ Konquerora
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	konqueror >= %{_kdever}
+
+%description plugin-konqueror
+Package contains plugins (but accurately "servicemenus") extending the
+functionality of Konqueror.
+
+%description plugin-konqueror -l pl
+Pakiet zawiera wtyczki (a dok³adniej "servicemenus") rozszerzaj±ce
+funkcjonalno¶æ Konquerora.
+
+%package plugin-output-alsa
+Summary:	Plugin - ALSA support
+Summary(pl):	Wtyczka - obs³uga ALSA
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-output-alsa
+Audio Output plugin which plays through ALSA.
+
+%description plugin-output-alsa -l pl
+Wtyczka odtwarzania d¼wiêku przez ALSA.
 
 %package plugin-output-arts
 Summary:	Plugin - arts support
@@ -246,26 +272,39 @@ Audio Output plugin which plays through arts.
 %description plugin-output-arts -l pl
 Wtyczka odtwarzania d¼wiêku przez arts.
 
+%package plugin-project
+Summary:	Additional plugins from group project
+Summary(pl):	Dodatkowe wtyczki z grupy projekt
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-project
+Additional plugins from group project:
+Audio Metainfo Renamer, Cddb Audio Plugin.
+
+%description plugin-project -l pl
+Dodatkowe wtyczki z grupy projekt:
+Audio Metainfo Renamer, Cddb Audio Plugin.
+
 %prep
 %setup -q -a1
 %{?with_linux22:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
-	--disable-rpath \
+	%{!?debug:--disable-rpath} \
+	%{!?with_setup:--with-k3bsetup=no} \
 	--with-qt-libraries=%{_libdir} \
-	%{!?with_resmgr:--without-resmgr} \
-	%{!?with_setup:--with-k3bsetup=no}
+	%{!?with_resmgr:--without-resmgr}
 
 %{__make}
 
-cd %{name}-i18n-%{_i18nver}
+cd %{name}-i18n-%{version}
 cp -f /usr/share/automake/config.sub admin
 %{__make} -f admin/Makefile.common
 %configure
@@ -273,16 +312,19 @@ cp -f /usr/share/automake/config.sub admin
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
-	
-%{__make} install -C %{name}-i18n-%{_i18nver} \
+
+%{__make} install -C %{name}-i18n-%{version} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
+
+install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
 
 %find_lang %{name} --all-name --with-kde
 
@@ -297,18 +339,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog FAQ README TODO
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
-%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
-%{_libdir}/libk3baudiometainforenamerplugin.la
-%{_libdir}/libk3baudioprojectcddbplugin.la
-#%{_datadir}/apps/k3b/plugins/k3baudiometainforenamer.plugin
-#%{_datadir}/apps/k3b/plugins/k3baudioprojectcddb.plugin
 %{_datadir}/applnk/.hidden/*.desktop
-%{_datadir}/apps/konqueror/servicemenus/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
-%{_datadir}/apps/k3b/*
-%exclude %{_datadir}/apps/k3b/plugins/*
+%{_datadir}/apps/k3b/[!p]*
+%{_datadir}/apps/k3b/pics
 %{_datadir}/mimelnk/application/x-k3b.desktop
 %{_datadir}/sounds/*.wav
 %{_desktopdir}/kde/k3b.desktop
@@ -328,6 +363,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
+%{_includedir}/libisofs
 
 %files plugin-decoder-ffmpeg
 %defattr(644,root,root,755)
@@ -395,8 +431,27 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3bsoxencoder.la
 %{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
 
+%files plugin-konqueror
+%defattr(644,root,root,755)
+%{_datadir}/apps/konqueror/servicemenus/*.desktop
+
+%files plugin-output-alsa
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/kde3/libk3balsaoutputplugin.so
+%{_libdir}/kde3/libk3balsaoutputplugin.la
+%{_datadir}/apps/k3b/plugins/k3balsaoutputplugin.plugin
+
 %files plugin-output-arts
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/kde3/libk3bartsoutputplugin.so
 %{_libdir}/kde3/libk3bartsoutputplugin.la
 %{_datadir}/apps/k3b/plugins/k3bartsoutputplugin.plugin
+
+%files plugin-project
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
+%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
+%{_libdir}/libk3baudiometainforenamerplugin.la
+%{_libdir}/libk3baudioprojectcddbplugin.la
+%{_datadir}/apps/k3b/plugins/k3baudiometainforenamerplugin.plugin
+%{_datadir}/apps/k3b/plugins/k3baudioprojectcddbplugin.plugin
