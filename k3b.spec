@@ -9,14 +9,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.15
+Version:	0.12.16
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	246607f9d63b94c7f91ac86c108efdc2
+# Source0-md5:	cac9b8230295c1756581399b3bbd0687
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	6cbfd080b3684efae0ed4b4797b5cecb
+# Source1-md5:	1dc3edf8afff8b1c9064b42335a61add
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
@@ -449,9 +449,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files plugin-project
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libk3baudiometainforenamerplugin.so
-%attr(755,root,root) %{_libdir}/libk3baudioprojectcddbplugin.so
-%{_libdir}/libk3baudiometainforenamerplugin.la
-%{_libdir}/libk3baudioprojectcddbplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libk3baudiometainforenamerplugin.so
+%attr(755,root,root) %{_libdir}/kde3/libk3baudioprojectcddbplugin.so
+%{_libdir}/kde3/libk3baudiometainforenamerplugin.la
+%{_libdir}/kde3/libk3baudioprojectcddbplugin.la
 %{_datadir}/apps/k3b/plugins/k3baudiometainforenamerplugin.plugin
 %{_datadir}/apps/k3b/plugins/k3baudioprojectcddbplugin.plugin
