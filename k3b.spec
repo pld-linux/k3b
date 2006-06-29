@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_with	linux22		# building on kernel 2.2.x
 %bcond_with	reqs		# force optional Requires
+%bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
@@ -28,7 +29,7 @@ BuildRequires:	dbus-qt-devel >= 0.33
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
-BuildRequires:	hal-devel >= 0.4
+%{?with_hal:BuildRequires:	hal-devel >= 0.4}
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libgsm-devel
@@ -300,6 +301,7 @@ cp -f /usr/share/automake/config.sub admin
 	%{!?debug:--disable-rpath} \
 	%{!?with_setup:--with-k3bsetup=no} \
 	--with-qt-libraries=%{_libdir} \
+	%{!?with_hal:--without-hal} \
 	%{!?with_resmgr:--without-resmgr}
 
 %{__make}
