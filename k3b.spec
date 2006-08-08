@@ -295,7 +295,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 
 %build
 cp -f /usr/share/automake/config.sub admin
-#%{__make} -f admin/Makefile.common
+%{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	%{!?debug:--disable-rpath} \
