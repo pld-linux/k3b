@@ -7,17 +7,16 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_kdever		9:3.2
+%define		_pre	pre1
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.16
-Release:	1
+Version:	1.0
+Release:	0.%{_pre}.1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	cac9b8230295c1756581399b3bbd0687
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	1dc3edf8afff8b1c9064b42335a61add
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
+# Source0-md5:	6abafc955bd7678bf951276b498f30d9
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
@@ -288,14 +287,15 @@ Dodatkowe wtyczki z grupy projekt:
 Audio Metainfo Renamer, Cddb Audio Plugin.
 
 %prep
-%setup -q -a1
+%setup -q -n %{name}-%{version}%{_pre}
 %{?with_linux22:%patch0 -p1}
-%patch1 -p1
+%patch1 -p0
 %patch2 -p1
+%{__sed} -i -e s/"#MIN_CONFIG(3.4)"/"#MIN_CONFIG(3.3)"/g configure.in.in
 
 %build
 cp -f /usr/share/automake/config.sub admin
-%{__make} -f admin/Makefile.common
+#%{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
 	%{!?debug:--disable-rpath} \
@@ -306,12 +306,6 @@ cp -f /usr/share/automake/config.sub admin
 
 %{__make}
 
-cd %{name}-i18n-%{version}
-cp -f /usr/share/automake/config.sub admin
-%{__make} -f admin/Makefile.common
-%configure
-%{__make}
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
@@ -320,10 +314,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 	DESTDIR=$RPM_BUILD_ROOT \
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
-	kde_htmldir=%{_kdedocdir}
-
-%{__make} install -C %{name}-i18n-%{version} \
-	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
@@ -344,6 +334,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applnk/.hidden/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
+%{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
+%{_datadir}/services/kfile_k3b.desktop
+%{_datadir}/services/videodvd.protocol
 %{_datadir}/apps/k3b/[!p]*
 %{_datadir}/apps/k3b/pics
 %{_datadir}/mimelnk/application/x-k3b.desktop
@@ -362,6 +355,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3b.so
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/kde3/kfile_k3b.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_k3b.so
+%{_libdir}/kde3/kio_videodvd.la
+%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
