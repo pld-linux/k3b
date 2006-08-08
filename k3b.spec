@@ -31,6 +31,7 @@ BuildRequires:	gettext-devel
 %{?with_hal:BuildRequires:	hal-devel >= 0.4}
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
+BuildRequires:	libdvdread-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
