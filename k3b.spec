@@ -40,6 +40,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	sed >= 4.0
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
@@ -292,7 +293,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %{?with_linux22:%patch0 -p1}
 %patch1 -p0
 %patch2 -p1
-%{__sed} -i -e s/"#MIN_CONFIG(3.4)"/"#MIN_CONFIG(3.3)"/g configure.in.in
+%{__sed} -i -e 's/"#MIN_CONFIG(3.4)"/"#MIN_CONFIG(3.3)"/g' configure.in.in
 
 %build
 cp -f /usr/share/automake/config.sub admin
