@@ -12,7 +12,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	1.0
-Release:	0.%{_pre}.1
+Release:	0.%{_pre}.2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
@@ -20,11 +20,13 @@ Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
+Patch3:		kde-ac260.patch
+Patch4:		%{name}-qt336.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
-BuildRequires:	dbus-qt-devel >= 0.33
+BuildRequires:	dbus-qt3-devel >= 0.2
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
@@ -90,7 +92,7 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	dbus-qt-devel
+Requires:	dbus-qt3-devel >= 0.2
 Requires:	hal-devel
 Requires:	kdelibs-devel
 Requires:	libsamplerate-devel
@@ -293,7 +295,8 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %{?with_linux22:%patch0 -p1}
 %patch1 -p0
 %patch2 -p1
-%{__sed} -i -e 's/"#MIN_CONFIG(3.4)"/"#MIN_CONFIG(3.3)"/g' configure.in.in
+%patch3 -p1
+%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
