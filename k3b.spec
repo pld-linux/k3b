@@ -22,6 +22,7 @@ Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
 Patch3:		kde-ac260.patch
 Patch4:		%{name}-qt336.patch
+Patch5:		%{name}-dbus.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -297,6 +298,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
