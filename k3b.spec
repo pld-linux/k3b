@@ -96,6 +96,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	dbus-qt3-devel >= 0.2
 Requires:	hal-devel
 Requires:	kdelibs-devel
+Requires:	libdvdread-devel
 Requires:	libsamplerate-devel
 %{?with_resmgr:Requires:	resmgr-devel}
 
