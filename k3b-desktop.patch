@@ -1,0 +1,22 @@
+diff -aurN k3b-0.12.orig/src/k3b.desktop k3b-0.12/src/k3b.desktop
+--- k3b-0.12.orig/src/k3b.desktop	2005-06-14 19:05:49.000000000 +0200
++++ k3b-0.12/src/k3b.desktop	2005-06-14 19:06:26.000000000 +0200
+@@ -80,5 +80,5 @@
+ MimeType=application/x-k3b
+ X-KDE-StartupNotify=true
+ X-KDE-NativeMimeType=application/x-k3b
+-Categories=KDE;Application;AudioVideo;DiscBurning;
++Categories=Qt;KDE;AudioVideo;DiscBurning;
+ X-DCOP-ServiceType=Unique
+diff -aurN k3b-0.12.orig/k3bsetup/k3bsetup2.desktop k3b-0.12/k3bsetup/k3bsetup2.desktop
+--- k3b-0.12.orig/k3bsetup/k3bsetup2.desktop	2005-06-13 10:00:42.000000000 +0200
++++ k3b-0.12/k3bsetup/k3bsetup2.desktop	2005-06-14 19:00:07.000000000 +0200
+@@ -58,7 +58,7 @@
+ X-KDE-Library=k3bsetup2
+ X-KDE-ModuleType=Library
+ X-KDE-RootOnly=true
+-Categories=Application;System;X-KDE-System;
++Categories=Qt;KDE;X-KDE-settings-system;
+ GenericName=CD & DVD Burning Setup
+ GenericName[bg]=Настройка на записа на CD и DVD
+ GenericName[cs]=Nastavení vypalování CD a DVD
