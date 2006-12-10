@@ -21,7 +21,8 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
 Patch0:		%{name}-linux22.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
-Patch3:		%{name}-autotools.patch
+Patch3:		kde-ac260.patch
+Patch4:		kde-ac260-lt.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -44,7 +45,6 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
-Requires:	kdelibs
 Requires:	mkisofs
 %if %{with reqs}
 Requires:	normalize
@@ -294,6 +294,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
