@@ -23,11 +23,12 @@ Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
 Patch3:		kde-ac260.patch
 Patch4:		kde-ac260-lt.patch
+Patch5:		kde-am.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
-BuildRequires:	dbus-qt-devel >= 0.70
+BuildRequires:	dbus-qt-devel >= 0.62
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
@@ -281,12 +282,12 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-project
-Additional plugins from group project:
-Audio Metainfo Renamer, Cddb Audio Plugin.
+Additional plugins from group project: Audio Metainfo Renamer, Cddb
+Audio Plugin.
 
 %description plugin-project -l pl
-Dodatkowe wtyczki z grupy projekt:
-Audio Metainfo Renamer, Cddb Audio Plugin.
+Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
+Plugin.
 
 %prep
 %setup -q -a1
@@ -295,6 +296,11 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+cd k3b-i18n-%{version}
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
