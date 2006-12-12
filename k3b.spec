@@ -30,7 +30,7 @@ BuildRequires:	dbus-qt-devel >= 0.62
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
-%{?with_hal:BuildRequires:	hal-devel >= 0.4}
+%{?with_hal:BuildRequires:	hal-devel >= 0.5}
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdvdread-devel
