@@ -54,6 +54,8 @@ Requires:	vcdimager >= 0.7
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define         _noautoreq      libtool(.*)
+
 %description
 The CD Kreator features:
  - the most userfriendly interface ever ;-)
