@@ -1,8 +1,0 @@
---- k3b-1.0pre1/configure.in.in.wiget	2006-08-18 12:23:16.000000000 +0200
-+++ k3b-1.0pre1/configure.in.in	2006-08-18 12:35:06.000000000 +0200
-@@ -1,4 +1,4 @@
--#MIN_CONFIG(3.4)
-+#MIN_CONFIG(3.3.6)
- 
- AC_CHECK_HEADERS(byteswap.h)
- 
