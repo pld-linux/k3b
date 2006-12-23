@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	linux22		# building on kernel 2.2.x
+%bcond_without	linux22		# building on kernel 2.2.x
 %bcond_with	reqs		# force optional Requires
 %bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
@@ -11,7 +11,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12.17
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -23,6 +23,7 @@ Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-group.patch
 Patch3:		kde-ac260.patch
 Patch4:		kde-ac260-lt.patch
+Patch5:		kde-am.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -296,6 +297,7 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
