@@ -1,6 +1,5 @@
 #
 # Conditional build:
-%bcond_without	linux22		# building on kernel 2.2.x
 %bcond_with	reqs		# force optional Requires
 %bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
@@ -18,12 +17,11 @@ Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	e7d423fe386fe0cab7aec6034eb33316
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
 # Source1-md5:	f9de0fb3ce91fa572f4f0fd24dcfe2f2
-Patch0:		%{name}-linux22.patch
-Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-group.patch
-Patch3:		kde-ac260.patch
-Patch4:		kde-ac260-lt.patch
-Patch5:		kde-am.patch
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-group.patch
+Patch2:		kde-ac260.patch
+Patch3:		kde-ac260-lt.patch
+Patch4:		kde-am.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -292,12 +290,11 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 
 %prep
 %setup -q -a1
-%{?with_linux22:%patch0 -p1}
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
