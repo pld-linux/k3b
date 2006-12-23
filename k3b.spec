@@ -1,29 +1,24 @@
 #
 # Conditional build:
-%bcond_with	linux22		# building on kernel 2.2.x
 %bcond_with	reqs		# force optional Requires
 %bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_kdever		9:3.2
+%define		_pre	rc2
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	0.12.17
-Release:	2
+Version:	1.0
+Release:	0.%{_pre}.2
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	e7d423fe386fe0cab7aec6034eb33316
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	f9de0fb3ce91fa572f4f0fd24dcfe2f2
-Patch0:		%{name}-linux22.patch
-Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-group.patch
-Patch3:		kde-ac260.patch
-Patch4:		kde-ac260-lt.patch
-Patch5:		kde-am.patch
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-group.patch
+Patch2:		%{name}-dbus.patch
+Patch3:		%{name}-libadd.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -32,9 +27,10 @@ BuildRequires:	dbus-qt-devel >= 0.70
 BuildRequires:	ffmpeg-devel >= 0.4.9
 BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
-%{?with_hal:BuildRequires:	hal-devel >= 0.4}
+%{?with_hal:BuildRequires:	hal-devel >= 0.5}
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
+BuildRequires:	libdvdread-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
@@ -43,6 +39,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	sed >= 4.0
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
@@ -53,6 +50,8 @@ Requires:	transcode >= 0.6.0
 Requires:	vcdimager >= 0.7
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define         _noautoreq      libtool(.*)
 
 %description
 The CD Kreator features:
@@ -91,9 +90,10 @@ Summary:	Header files for libk3bcore library
 Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	dbus-qt-devel
+Requires:	dbus-qt3-devel >= 0.2
 Requires:	hal-devel
 Requires:	kdelibs-devel
+Requires:	libdvdread-devel
 Requires:	libsamplerate-devel
 %{?with_resmgr:Requires:	resmgr-devel}
 
@@ -290,20 +290,17 @@ Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
 Plugin.
 
 %prep
-%setup -q -a1
-%{?with_linux22:%patch0 -p1}
+%setup -q -n %{name}-%{version}%{_pre}
+%patch0 -p0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-cd k3b-i18n-%{version}
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
+cp -f /usr/share/libtool/ltmain.sh admin
+: > admin/libtool.m4.in
+rm -f acinclude.m4
 %{__make} -f admin/Makefile.common
 %configure \
 	--%{!?debug:dis}%{?debug:en}able-debug \
@@ -315,12 +312,6 @@ cp -f /usr/share/automake/config.sub admin
 
 %{__make}
 
-cd %{name}-i18n-%{version}
-cp -f /usr/share/automake/config.sub admin
-%{__make} -f admin/Makefile.common
-%configure
-%{__make}
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
@@ -329,10 +320,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 	DESTDIR=$RPM_BUILD_ROOT \
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
-	kde_htmldir=%{_kdedocdir}
-
-%{__make} install -C %{name}-i18n-%{version} \
-	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
@@ -353,6 +340,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applnk/.hidden/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
+%{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
+%{_datadir}/services/kfile_k3b.desktop
+%{_datadir}/services/videodvd.protocol
 %{_datadir}/apps/k3b/[!p]*
 %{_datadir}/apps/k3b/pics
 %{_datadir}/mimelnk/application/x-k3b.desktop
@@ -371,6 +361,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3b.so
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_libdir}/kde3/kfile_k3b.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_k3b.so
+%{_libdir}/kde3/kio_videodvd.la
+%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
