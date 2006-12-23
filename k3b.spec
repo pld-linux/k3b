@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12.17
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -294,6 +294,8 @@ Audio Metainfo Renamer, Cddb Audio Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+cd %{name}-i18n-%{version}
 %patch4 -p1
 
 %build
