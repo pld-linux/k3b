@@ -15,6 +15,7 @@ Release:	0.%{_pre}.3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
+# Source0-md5:	558e60fefe41860e8f016fdcbdb22d65
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-dbus.patch
