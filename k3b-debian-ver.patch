@@ -1,6 +1,6 @@
-diff -urN k3b-1.0rc2.org/libk3b/core/k3bdefaultexternalprograms.cpp k3b-1.0rc2/libk3b/core/k3bdefaultexternalprograms.cpp
+diff -ur k3b-1.0rc2.org/libk3b/core/k3bdefaultexternalprograms.cpp k3b-1.0rc2/libk3b/core/k3bdefaultexternalprograms.cpp
 --- k3b-1.0rc2.org/libk3b/core/k3bdefaultexternalprograms.cpp	2006-12-13 15:41:57.000000000 +0100
-+++ k3b-1.0rc2/libk3b/core/k3bdefaultexternalprograms.cpp	2006-12-24 11:56:34.710236000 +0100
++++ k3b-1.0rc2/libk3b/core/k3bdefaultexternalprograms.cpp	2006-12-24 12:54:23.010991250 +0100
 @@ -222,12 +222,12 @@
    }
  
@@ -17,7 +17,22 @@ diff -urN k3b-1.0rc2.org/libk3b/core/k3bdefaultexternalprograms.cpp k3b-1.0rc2/l
      bin->addFeature( "short-track-raw" );
  
    addBin( bin );
-@@ -475,10 +475,7 @@
+@@ -431,8 +431,12 @@
+   K3bProcessOutputCollector out( &vp );
+   if( vp.start( KProcess::Block, KProcess::AllOutput ) ) {
+     int pos = out.output().find( "readcd" );
+-    if( pos < 0 )
+-      return false;
++    if( pos < 0 ) {
++	    pos = out.output().find( "readom" );
++	    if( pos < 0 ) {
++		    return false;
++	    }
++    }
+ 
+     pos = out.output().find( QRegExp("[0-9]"), pos );
+     if( pos < 0 )
+@@ -475,10 +479,7 @@
    }
  
  
@@ -28,7 +43,7 @@ diff -urN k3b-1.0rc2.org/libk3b/core/k3bdefaultexternalprograms.cpp k3b-1.0rc2/l
      bin->addFeature( "hacked-atapi" );
  
    addBin(bin);
-diff -urN k3b-1.0rc2.org/libk3b/projects/audiocd/k3baudiojob.cpp k3b-1.0rc2/libk3b/projects/audiocd/k3baudiojob.cpp
+diff -ur k3b-1.0rc2.org/libk3b/projects/audiocd/k3baudiojob.cpp k3b-1.0rc2/libk3b/projects/audiocd/k3baudiojob.cpp
 --- k3b-1.0rc2.org/libk3b/projects/audiocd/k3baudiojob.cpp	2006-12-13 15:42:02.000000000 +0100
 +++ k3b-1.0rc2/libk3b/projects/audiocd/k3baudiojob.cpp	2006-12-24 11:51:31.647295750 +0100
 @@ -264,7 +264,7 @@
@@ -40,7 +55,7 @@ diff -urN k3b-1.0rc2.org/libk3b/projects/audiocd/k3baudiojob.cpp k3b-1.0rc2/libk
        cdrecordCdText = k3bcore->externalBinManager()->binObject("cdrecord")->hasFeature( "cdtext" );
      }    
  
-diff -urN k3b-1.0rc2.org/libk3b/projects/datadvd/k3bgrowisofsimager.cpp k3b-1.0rc2/libk3b/projects/datadvd/k3bgrowisofsimager.cpp
+diff -ur k3b-1.0rc2.org/libk3b/projects/datadvd/k3bgrowisofsimager.cpp k3b-1.0rc2/libk3b/projects/datadvd/k3bgrowisofsimager.cpp
 --- k3b-1.0rc2.org/libk3b/projects/datadvd/k3bgrowisofsimager.cpp	2006-12-13 15:42:00.000000000 +0100
 +++ k3b-1.0rc2/libk3b/projects/datadvd/k3bgrowisofsimager.cpp	2006-12-24 11:53:35.507036500 +0100
 @@ -119,6 +119,7 @@
@@ -59,7 +74,7 @@ diff -urN k3b-1.0rc2.org/libk3b/projects/datadvd/k3bgrowisofsimager.cpp k3b-1.0r
    }
  
    emit debuggingOutput( "Used versions", "growisofs: " + m_growisofsBin->version );
-diff -urN k3b-1.0rc2.org/libk3b/projects/mixedcd/k3bmixedjob.cpp k3b-1.0rc2/libk3b/projects/mixedcd/k3bmixedjob.cpp
+diff -ur k3b-1.0rc2.org/libk3b/projects/mixedcd/k3bmixedjob.cpp k3b-1.0rc2/libk3b/projects/mixedcd/k3bmixedjob.cpp
 --- k3b-1.0rc2.org/libk3b/projects/mixedcd/k3bmixedjob.cpp	2006-12-13 15:42:17.000000000 +0100
 +++ k3b-1.0rc2/libk3b/projects/mixedcd/k3bmixedjob.cpp	2006-12-24 11:52:13.817931250 +0100
 @@ -1130,7 +1130,7 @@
@@ -71,7 +86,7 @@ diff -urN k3b-1.0rc2.org/libk3b/projects/mixedcd/k3bmixedjob.cpp k3b-1.0rc2/libk
      cdrecordCdText =
        k3bcore->externalBinManager()->binObject("cdrecord")->hasFeature( "cdtext" );
      cdrecordUsable =
-diff -urN k3b-1.0rc2.org/src/k3bsystemproblemdialog.cpp k3b-1.0rc2/src/k3bsystemproblemdialog.cpp
+diff -ur k3b-1.0rc2.org/src/k3bsystemproblemdialog.cpp k3b-1.0rc2/src/k3bsystemproblemdialog.cpp
 --- k3b-1.0rc2.org/src/k3bsystemproblemdialog.cpp	2006-12-13 15:41:47.000000000 +0100
 +++ k3b-1.0rc2/src/k3bsystemproblemdialog.cpp	2006-12-24 12:01:55.894308750 +0100
 @@ -181,6 +181,7 @@
