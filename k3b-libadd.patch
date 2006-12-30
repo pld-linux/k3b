@@ -42,17 +42,6 @@
  libk3blameencoder_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
  
  pluginsdir = $(kde_datadir)/k3b/plugins
---- k3b-1.0pre1/plugins/audiooutput/alsa/Makefile.am.wiget	2006-08-18 19:23:13.000000000 +0200
-+++ k3b-1.0pre1/plugins/audiooutput/alsa/Makefile.am	2006-08-18 19:23:54.000000000 +0200
-@@ -4,7 +4,7 @@
- 
- libk3balsaoutputplugin_la_SOURCES = k3balsaoutputplugin.cpp
- 
--libk3balsaoutputplugin_la_LIBADD = ../../../libk3b/libk3b.la $(LIBASOUND)
-+libk3balsaoutputplugin_la_LIBADD = ../../../libk3bdevice/libk3bdevice.la ../../../libk3b/libk3b.la $(LIB_KDECORE) $(LIB_QT) $(LIBASOUND)
- libk3balsaoutputplugin_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
- 
- pluginsdir = $(kde_datadir)/k3b/plugins
 --- k3b-1.0pre1/plugins/audiooutput/arts/Makefile.am.wiget	2006-08-18 19:19:07.000000000 +0200
 +++ k3b-1.0pre1/plugins/audiooutput/arts/Makefile.am	2006-08-18 19:20:19.000000000 +0200
 @@ -4,7 +4,7 @@
@@ -185,3 +174,14 @@
  kio_videodvd_la_LDFLAGS = -avoid-version -module $(all_libraries) $(KDE_PLUGIN)
  
  protocol_DATA = videodvd.protocol
+--- k3b-1.0rc3/plugins/audiooutput/alsa/Makefile.am.orig	2006-12-29 21:40:30.000000000 +0100
++++ k3b-1.0rc3/plugins/audiooutput/alsa/Makefile.am	2006-12-30 06:47:54.000000000 +0100
+@@ -5,7 +5,7 @@
+ libk3balsaoutputplugin_la_SOURCES = k3balsaoutputplugin.cpp
+ 
+ libk3balsaoutputplugin_la_CFLAGS = $(ALSA_CFLAGS)
+-libk3balsaoutputplugin_la_LIBADD = ../../../libk3b/libk3b.la $(ALSA_LIBS)
++libk3balsaoutputplugin_la_LIBADD = ../../../libk3bdevice/libk3bdevice.la ../../../libk3b/libk3b.la $(LIB_KDECORE) $(LIB_QT) $(ALSA_LIBS)
+ libk3balsaoutputplugin_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
+ 
+ pluginsdir = $(kde_datadir)/k3b/plugins
