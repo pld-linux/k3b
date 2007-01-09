@@ -6,7 +6,7 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_kdever		9:3.2
-%define		_pre	rc3
+%define		_pre	rc4
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
@@ -15,7 +15,7 @@ Release:	0.%{_pre}.1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
-# Source0-md5:	d7f6ccce1795b7483760ce376e01d435
+# Source0-md5:	785e81fe3ee695d3b927cef9759a9753
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-dbus.patch
