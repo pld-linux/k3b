@@ -11,7 +11,7 @@ Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
 Version:	0.12.17
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -24,6 +24,8 @@ Patch2:		%{name}-group.patch
 Patch3:		kde-ac260.patch
 Patch4:		kde-ac260-lt.patch
 Patch5:		kde-am.patch
+Patch6:		k3b-flac.patch
+Patch7:		kde-common-LD_quote.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -297,10 +299,14 @@ Plugin.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+
 cd k3b-i18n-%{version}
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch7 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
