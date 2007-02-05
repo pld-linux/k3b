@@ -6,7 +6,7 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_kdever		9:3.2
-%define		_pre	rc4
+%define		_pre	rc5
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
@@ -15,12 +15,11 @@ Release:	0.%{_pre}.1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
-# Source0-md5:	785e81fe3ee695d3b927cef9759a9753
+# Source0-md5:	e91f86f34f2db241759b36f6f07960e5
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-dbus.patch
 Patch3:		%{name}-libadd.patch
-Patch4:		%{name}-debian-ver.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -297,7 +296,6 @@ Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub admin
