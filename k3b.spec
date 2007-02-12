@@ -8,7 +8,7 @@
 %define		_kdever		9:3.2
 %define		_pre	rc6
 Summary:	The CD Kreator
-Summary(pl):	Kreator CD
+Summary(pl.UTF-8):   Kreator CD
 Name:		k3b
 Version:	1.0
 Release:	0.%{_pre}.1
@@ -70,25 +70,25 @@ The CD Kreator features:
  - Support for ATAPI drives without SCSI-emulation for reading
  - integrated full featured audio player
 
-%description -l pl
-W³asno¶ci Kreatora CD:
- - najbardziej przyjazny dla u¿ytkownika interfejs ;-)
- - zapisywanie p³yt CD-Audio
- - zapisywanie p³yt ISO
- - zapisywanie istniej±cych obrazów ISO na CD
- - kopiowanie CD (data/audio/mixed - z danymi, d¼wiêkiem i mieszane)
- - czyszczenie p³yt CD-RW
- - rippowanie CD do plików WAV
- - rippowanie DVD przy u¿yciu narzêdzi transcode
+%description -l pl.UTF-8
+WÅ‚asnoÅ›ci Kreatora CD:
+ - najbardziej przyjazny dla uÅ¼ytkownika interfejs ;-)
+ - zapisywanie pÅ‚yt CD-Audio
+ - zapisywanie pÅ‚yt ISO
+ - zapisywanie istniejÄ…cych obrazÃ³w ISO na CD
+ - kopiowanie CD (data/audio/mixed - z danymi, dÅºwiÄ™kiem i mieszane)
+ - czyszczenie pÅ‚yt CD-RW
+ - rippowanie CD do plikÃ³w WAV
+ - rippowanie DVD przy uÅ¼yciu narzÄ™dzi transcode
  - kodowanie DivX/XviD
- - sprawdzanie, czy u¿ytkownik w³o¿y³ czyst± p³ytê
+ - sprawdzanie, czy uÅ¼ytkownik wÅ‚oÅ¼yÅ‚ czystÄ… pÅ‚ytÄ™
  - odtwarzania CD-info i TOC
- - obs³uga nagrywarek ATAPI bez emulacji SCSI przy odczycie
- - zintegrowany odtwarzacz p³yt audio o pe³nych mo¿liwo¶ciach.
+ - obsÅ‚uga nagrywarek ATAPI bez emulacji SCSI przy odczycie
+ - zintegrowany odtwarzacz pÅ‚yt audio o peÅ‚nych moÅ¼liwoÅ›ciach.
 
 %package devel
 Summary:	Header files for libk3bcore library
-Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	dbus-qt3-devel >= 0.2
@@ -101,132 +101,132 @@ Requires:	libsamplerate-devel
 %description devel
 Header files for libk3bcore library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki libk3bcore.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki libk3bcore.
 
 %package plugin-decoder-ffmpeg
 Summary:	Decoder plugin - FFMpeg
-Summary(pl):	Wtyczka dekoduj±ca - FFMpeg
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - FFMpeg
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-ffmpeg
 Decoding module to decode WMA (and others) files.
 
-%description plugin-decoder-ffmpeg -l pl
-Modu³ dekoduj±cy pliki w formacie WMA (i nie tylko).
+%description plugin-decoder-ffmpeg -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki w formacie WMA (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
-Summary(pl):	Wtyczka dekoduj±ca - FLAC
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - FLAC
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-flac
 Decoding module to decode FLAC files.
 
-%description plugin-decoder-flac -l pl
-Modu³ dekoduj±cy pliki w formacie FLAC.
+%description plugin-decoder-flac -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki w formacie FLAC.
 
 %package plugin-decoder-libsndfile
 Summary:	Decoder plugin - libsndfile
-Summary(pl):	Wtyczka dekoduj±ca - libsndfile
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - libsndfile
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-libsndfile
 Decoding module to decode audio files supported by libsndfile.
 
-%description plugin-decoder-libsndfile -l pl
-Modu³ dekoduj±cy pliki audio obs³ugiwane przez bibliotekê libsndfile.
+%description plugin-decoder-libsndfile -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki audio obsÅ‚ugiwane przez bibliotekÄ™ libsndfile.
 
 %package plugin-decoder-mad
 Summary:	Decoder plugin - mad
-Summary(pl):	Wtyczka dekoduj±ca - mad
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - mad
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-mad
 Decoding module to decode MPEG-1 Layer III files.
 
-%description plugin-decoder-mad -l pl
-Modu³ dekoduj±cy pliki w formacie MPEG-1 Layer III.
+%description plugin-decoder-mad -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki w formacie MPEG-1 Layer III.
 
 %package plugin-decoder-musepack
 Summary:	Decoder plugin - Musepack
-Summary(pl):	Wtyczka dekoduj±ca - Musepack
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - Musepack
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-musepack
 Decoding module to decode Musepack audio files.
 
-%description plugin-decoder-musepack -l pl
-Modu³ dekoduj±cy pliki audio w formacie Musepack.
+%description plugin-decoder-musepack -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki audio w formacie Musepack.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
-Summary(pl):	Wtyczka dekoduj±ca - oggvorbis
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-oggvorbis
 Decoding module to decode Ogg Vorbis files.
 
-%description plugin-decoder-oggvorbis -l pl
-Modu³ dekoduj±cy pliki w formacie Ogg Vorbis.
+%description plugin-decoder-oggvorbis -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki w formacie Ogg Vorbis.
 
 %package plugin-decoder-wave
 Summary:	Decoder plugin - WAVE
-Summary(pl):	Wtyczka dekoduj±ca - WAVE
+Summary(pl.UTF-8):   Wtyczka dekodujÄ…ca - WAVE
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-wave
 Decoding module to decode WAVE files.
 
-%description plugin-decoder-wave -l pl
-Modu³ dekoduj±cy pliki w formacie WAVE.
+%description plugin-decoder-wave -l pl.UTF-8
+ModuÅ‚ dekodujÄ…cy pliki w formacie WAVE.
 
 %package plugin-encoder-external
 Summary:	Encoder plugin - external
-Summary(pl):	Wtyczka koduj±ca - external
+Summary(pl.UTF-8):   Wtyczka kodujÄ…ca - external
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-external
 Encoding module that allows specifying an encoding command.
 
-%description plugin-encoder-external -l pl
-Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
+%description plugin-encoder-external -l pl.UTF-8
+ModuÅ‚ kodujÄ…cy pozwalajÄ…cy na sformuÅ‚owanie komendy kodowania.
 
 %package plugin-encoder-lame
 Summary:	Encoder plugin - lame
-Summary(pl):	Wtyczka koduj±ca - lame
+Summary(pl.UTF-8):   Wtyczka kodujÄ…ca - lame
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-lame
 Encoding module to encode MPEG-1 Layer III (mp3) files.
 
-%description plugin-encoder-lame -l pl
-Modu³ koduj±cy pliki w formacie MPEG-1 Layer III (mp3).
+%description plugin-encoder-lame -l pl.UTF-8
+ModuÅ‚ kodujÄ…cy pliki w formacie MPEG-1 Layer III (mp3).
 
 %package plugin-encoder-oggvorbis
 Summary:	Encoder plugin - oggvorbis
-Summary(pl):	Wtyczka koduj±ca - oggvorbis
+Summary(pl.UTF-8):   Wtyczka kodujÄ…ca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-oggvorbis
 Encoding module to encode Ogg Vorbis files.
 
-%description plugin-encoder-oggvorbis -l pl
-Modu³ koduj±cy pliki w formacie Ogg Vorbis.
+%description plugin-encoder-oggvorbis -l pl.UTF-8
+ModuÅ‚ kodujÄ…cy pliki w formacie Ogg Vorbis.
 
 %package plugin-encoder-sox
 Summary:	Encoder plugin - sox
-Summary(pl):	Wtyczka koduj±ca - sox
+Summary(pl.UTF-8):   Wtyczka kodujÄ…ca - sox
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	sox
@@ -234,12 +234,12 @@ Requires:	sox
 %description plugin-encoder-sox
 Encoding module to encode many file formats using sox.
 
-%description plugin-encoder-sox -l pl
-Modu³ koduj±cy pliki w wielu formatach przy u¿yciu programu sox.
+%description plugin-encoder-sox -l pl.UTF-8
+ModuÅ‚ kodujÄ…cy pliki w wielu formatach przy uÅ¼yciu programu sox.
 
 %package plugin-konqueror
 Summary:	Plugins extending the functionality of Konqueror
-Summary(pl):	Wtyczki rozszerzaj±ce funkcjonalno¶æ Konquerora
+Summary(pl.UTF-8):   Wtyczki rozszerzajÄ…ce funkcjonalnoÅ›Ä‡ Konquerora
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	konqueror >= %{_kdever}
@@ -248,37 +248,37 @@ Requires:	konqueror >= %{_kdever}
 Package contains plugins (but accurately "servicemenus") extending the
 functionality of Konqueror.
 
-%description plugin-konqueror -l pl
-Pakiet zawiera wtyczki (a dok³adniej "servicemenus") rozszerzaj±ce
-funkcjonalno¶æ Konquerora.
+%description plugin-konqueror -l pl.UTF-8
+Pakiet zawiera wtyczki (a dokÅ‚adniej "servicemenus") rozszerzajÄ…ce
+funkcjonalnoÅ›Ä‡ Konquerora.
 
 %package plugin-output-alsa
 Summary:	Plugin - ALSA support
-Summary(pl):	Wtyczka - obs³uga ALSA
+Summary(pl.UTF-8):   Wtyczka - obsÅ‚uga ALSA
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-output-alsa
 Audio Output plugin which plays through ALSA.
 
-%description plugin-output-alsa -l pl
-Wtyczka odtwarzania d¼wiêku przez ALSA.
+%description plugin-output-alsa -l pl.UTF-8
+Wtyczka odtwarzania dÅºwiÄ™ku przez ALSA.
 
 %package plugin-output-arts
 Summary:	Plugin - arts support
-Summary(pl):	Wtyczka - obs³uga arts
+Summary(pl.UTF-8):   Wtyczka - obsÅ‚uga arts
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-output-arts
 Audio Output plugin which plays through arts.
 
-%description plugin-output-arts -l pl
-Wtyczka odtwarzania d¼wiêku przez arts.
+%description plugin-output-arts -l pl.UTF-8
+Wtyczka odtwarzania dÅºwiÄ™ku przez arts.
 
 %package plugin-project
 Summary:	Additional plugins from group project
-Summary(pl):	Dodatkowe wtyczki z grupy projekt
+Summary(pl.UTF-8):   Dodatkowe wtyczki z grupy projekt
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -286,7 +286,7 @@ Requires:	%{name} = %{version}-%{release}
 Additional plugins from group project: Audio Metainfo Renamer, Cddb
 Audio Plugin.
 
-%description plugin-project -l pl
+%description plugin-project -l pl.UTF-8
 Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
 Plugin.
 
