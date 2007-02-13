@@ -8,7 +8,7 @@
 %define		_kdever		9:3.2
 %define		_pre	rc6
 Summary:	The CD Kreator
-Summary(pl.UTF-8):   Kreator CD
+Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.0
 Release:	0.%{_pre}.1
@@ -88,7 +88,7 @@ Własności Kreatora CD:
 
 %package devel
 Summary:	Header files for libk3bcore library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki libk3bcore
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	dbus-qt3-devel >= 0.2
@@ -106,7 +106,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %package plugin-decoder-ffmpeg
 Summary:	Decoder plugin - FFMpeg
-Summary(pl.UTF-8):   Wtyczka dekodująca - FFMpeg
+Summary(pl.UTF-8):	Wtyczka dekodująca - FFMpeg
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -118,7 +118,7 @@ Moduł dekodujący pliki w formacie WMA (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
-Summary(pl.UTF-8):   Wtyczka dekodująca - FLAC
+Summary(pl.UTF-8):	Wtyczka dekodująca - FLAC
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -130,7 +130,7 @@ Moduł dekodujący pliki w formacie FLAC.
 
 %package plugin-decoder-libsndfile
 Summary:	Decoder plugin - libsndfile
-Summary(pl.UTF-8):   Wtyczka dekodująca - libsndfile
+Summary(pl.UTF-8):	Wtyczka dekodująca - libsndfile
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -142,7 +142,7 @@ Moduł dekodujący pliki audio obsługiwane przez bibliotekę libsndfile.
 
 %package plugin-decoder-mad
 Summary:	Decoder plugin - mad
-Summary(pl.UTF-8):   Wtyczka dekodująca - mad
+Summary(pl.UTF-8):	Wtyczka dekodująca - mad
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -154,7 +154,7 @@ Moduł dekodujący pliki w formacie MPEG-1 Layer III.
 
 %package plugin-decoder-musepack
 Summary:	Decoder plugin - Musepack
-Summary(pl.UTF-8):   Wtyczka dekodująca - Musepack
+Summary(pl.UTF-8):	Wtyczka dekodująca - Musepack
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -166,7 +166,7 @@ Moduł dekodujący pliki audio w formacie Musepack.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
-Summary(pl.UTF-8):   Wtyczka dekodująca - oggvorbis
+Summary(pl.UTF-8):	Wtyczka dekodująca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -178,7 +178,7 @@ Moduł dekodujący pliki w formacie Ogg Vorbis.
 
 %package plugin-decoder-wave
 Summary:	Decoder plugin - WAVE
-Summary(pl.UTF-8):   Wtyczka dekodująca - WAVE
+Summary(pl.UTF-8):	Wtyczka dekodująca - WAVE
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -190,7 +190,7 @@ Moduł dekodujący pliki w formacie WAVE.
 
 %package plugin-encoder-external
 Summary:	Encoder plugin - external
-Summary(pl.UTF-8):   Wtyczka kodująca - external
+Summary(pl.UTF-8):	Wtyczka kodująca - external
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -202,7 +202,7 @@ Moduł kodujący pozwalający na sformułowanie komendy kodowania.
 
 %package plugin-encoder-lame
 Summary:	Encoder plugin - lame
-Summary(pl.UTF-8):   Wtyczka kodująca - lame
+Summary(pl.UTF-8):	Wtyczka kodująca - lame
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -214,7 +214,7 @@ Moduł kodujący pliki w formacie MPEG-1 Layer III (mp3).
 
 %package plugin-encoder-oggvorbis
 Summary:	Encoder plugin - oggvorbis
-Summary(pl.UTF-8):   Wtyczka kodująca - oggvorbis
+Summary(pl.UTF-8):	Wtyczka kodująca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -226,7 +226,7 @@ Moduł kodujący pliki w formacie Ogg Vorbis.
 
 %package plugin-encoder-sox
 Summary:	Encoder plugin - sox
-Summary(pl.UTF-8):   Wtyczka kodująca - sox
+Summary(pl.UTF-8):	Wtyczka kodująca - sox
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	sox
@@ -239,7 +239,7 @@ Moduł kodujący pliki w wielu formatach przy użyciu programu sox.
 
 %package plugin-konqueror
 Summary:	Plugins extending the functionality of Konqueror
-Summary(pl.UTF-8):   Wtyczki rozszerzające funkcjonalność Konquerora
+Summary(pl.UTF-8):	Wtyczki rozszerzające funkcjonalność Konquerora
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	konqueror >= %{_kdever}
@@ -254,7 +254,7 @@ funkcjonalność Konquerora.
 
 %package plugin-output-alsa
 Summary:	Plugin - ALSA support
-Summary(pl.UTF-8):   Wtyczka - obsługa ALSA
+Summary(pl.UTF-8):	Wtyczka - obsługa ALSA
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -266,7 +266,7 @@ Wtyczka odtwarzania dźwięku przez ALSA.
 
 %package plugin-output-arts
 Summary:	Plugin - arts support
-Summary(pl.UTF-8):   Wtyczka - obsługa arts
+Summary(pl.UTF-8):	Wtyczka - obsługa arts
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
@@ -278,7 +278,7 @@ Wtyczka odtwarzania dźwięku przez arts.
 
 %package plugin-project
 Summary:	Additional plugins from group project
-Summary(pl.UTF-8):   Dodatkowe wtyczki z grupy projekt
+Summary(pl.UTF-8):	Dodatkowe wtyczki z grupy projekt
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
