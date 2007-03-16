@@ -6,16 +6,15 @@
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
 %define		_kdever		9:3.2
-%define		_pre	rc7
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.0
-Release:	0.%{_pre}.1
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
-# Source0-md5:	f6d9ae341c73f51b0f50731f7f812f24
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+# Source0-md5:	02bf955059adfe9ac8a11d36fb34a11c
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-dbus.patch
@@ -291,7 +290,7 @@ Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
 Plugin.
 
 %prep
-%setup -q -n %{name}-%{version}%{_pre}
+%setup -q
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
