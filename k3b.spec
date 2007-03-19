@@ -14,7 +14,7 @@ Version:	1.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+Source0:	http://switch.dl.sourceforge.net/sourceforge/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	02bf955059adfe9ac8a11d36fb34a11c
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
