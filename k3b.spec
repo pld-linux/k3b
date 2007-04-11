@@ -38,10 +38,10 @@ BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
 BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
+BuildRequires:	qt-devel >= 3.2
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	sed >= 4.0
 BuildRequires:	taglib-devel
-BuildRequires:	qt-devel >= 3.2
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
