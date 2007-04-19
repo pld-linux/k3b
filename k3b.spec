@@ -10,12 +10,14 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	1.0
-Release:	2
+Version:	1.0.1
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	02bf955059adfe9ac8a11d36fb34a11c
+# Source0-md5:	8abd11f56e6e40d6f2d0b076a5f8b8ed
+Source1:	http://dl.sourceforge.net/k3b/k3b-i18n-%{version}.tar.bz2
+# Source1-md5:	f87a27408a4153d860103816ba83db09
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-dbus.patch
@@ -291,27 +293,33 @@ Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
 Plugin.
 
 %prep
-%setup -q
+%setup -q -a1
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
-cp -f /usr/share/automake/config.sub admin
-cp -f /usr/share/libtool/ltmain.sh admin
-: > admin/libtool.m4.in
-rm -f acinclude.m4
-%{__make} -f admin/Makefile.common
-%configure \
-	--%{!?debug:dis}%{?debug:en}able-debug \
-	%{!?debug:--disable-rpath} \
-	%{!?with_setup:--with-k3bsetup=no} \
-	--with-qt-libraries=%{_libdir} \
-	%{!?with_hal:--without-hal} \
-	%{!?with_resmgr:--without-resmgr}
+curdir=$(pwd)
+for dir in . k3b-i18n-*; do
+	cd $dir
+	cp -f /usr/share/automake/config.sub admin
+	cp -f /usr/share/libtool/ltmain.sh admin
+	: > admin/libtool.m4.in
+	rm -f acinclude.m4
+	%{__make} -f admin/Makefile.common
+	%configure \
+		--%{!?debug:dis}%{?debug:en}able-debug \
+		%{!?debug:--disable-rpath} \
+		%{!?with_setup:--with-k3bsetup=no} \
+		--with-qt-libraries=%{_libdir} \
+		%{!?with_hal:--without-hal} \
+		%{!?with_resmgr:--without-resmgr}
+	cd $curdir
+done
 
 %{__make}
+%{__make} -C k3b-i18n-*
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -322,6 +330,9 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
+
+%{__make} -C k3b-i18n-* install \
+	DESTDIR=$RPM_BUILD_ROOT \
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
 
