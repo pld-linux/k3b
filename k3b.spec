@@ -20,8 +20,7 @@ Source1:	http://dl.sourceforge.net/k3b/k3b-i18n-%{version}.tar.bz2
 # Source1-md5:	f87a27408a4153d860103816ba83db09
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
-Patch2:		%{name}-dbus.patch
-Patch3:		%{name}-libadd.patch
+Patch2:		%{name}-libadd.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -297,7 +296,6 @@ Plugin.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 curdir=$(pwd)
