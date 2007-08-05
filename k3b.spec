@@ -51,6 +51,7 @@ Requires:	normalize
 Requires:	transcode >= 0.6.0
 Requires:	vcdimager >= 0.7
 %endif
+Suggests:	convmv
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _noautoreq      libtool(.*)
