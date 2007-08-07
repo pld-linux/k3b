@@ -26,7 +26,7 @@ BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
 BuildRequires:	dbus-qt-devel >= 0.70
 BuildRequires:	ffmpeg-devel >= 0.4.9
-BuildRequires:	flac-devel >= 1.1.2
+BuildRequires:	flac-c++-devel >= 1.1.2
 BuildRequires:	gettext-devel
 %{?with_hal:BuildRequires:	hal-devel >= 0.5}
 BuildRequires:	kdelibs-devel >= %{_kdever}
