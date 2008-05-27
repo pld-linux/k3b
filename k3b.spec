@@ -37,7 +37,7 @@ BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2.2.4
 BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
 BuildRequires:	rpmbuild(macros) >= 1.129
