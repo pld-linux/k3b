@@ -9,14 +9,14 @@
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.0.4
-Release:	2
+Version:	1.0.5
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	42538ddae0809707d3bcdbe0a6ed6a43
+# Source0-md5:	e3b37d0d009af3dd149215d6ae0d54f3
 Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	27833d12b8e9438eb7a10c5ab330fee1
+# Source1-md5:	610b1fd9356c89cbb38b6dda1f115c86
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
@@ -303,7 +303,7 @@ curdir=$(pwd)
 for dir in . k3b-i18n-*; do
 	cd $dir
 	cp -f /usr/share/automake/config.sub admin
-	cp -f /usr/share/libtool/ltmain.sh admin
+	cp -f /usr/share/libtool/config/ltmain.sh admin
 	: > admin/libtool.m4.in
 	rm -f acinclude.m4
 	%{__make} -f admin/Makefile.common
