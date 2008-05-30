@@ -351,6 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applnk/.hidden/*.desktop
 %dir %{_datadir}/apps/k3b
 %dir %{_datadir}/apps/k3b/plugins
+%dir %{_libdir}/kde3
 %{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
 %{_datadir}/services/kfile_k3b.desktop
 %{_datadir}/services/videodvd.protocol
@@ -360,6 +361,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/*.wav
 %{_desktopdir}/kde/k3b.desktop
 %{_iconsdir}/*/*/apps/k3b.png
+%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
+%{_libdir}/kde3/kio_videodvd.la
 
 %if %{with setup}
 %attr(755,root,root) %{_bindir}/k3bsetup
@@ -374,8 +377,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
 %{_libdir}/kde3/kfile_k3b.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_k3b.so
-%{_libdir}/kde3/kio_videodvd.la
-%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
