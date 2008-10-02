@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.0.5
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -20,12 +20,13 @@ Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
+Patch3:		%{name}-ffmpeg.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
 BuildRequires:	dbus-qt-devel >= 0.70
-BuildRequires:	ffmpeg-devel >= 0.4.9
+BuildRequires:	ffmpeg-devel >= 0.4.9-4.20080930.1
 BuildRequires:	flac-c++-devel >= 1.2.0
 BuildRequires:	gettext-devel
 %{?with_hal:BuildRequires:	hal-devel >= 0.5}
@@ -297,6 +298,7 @@ Plugin.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 curdir=$(pwd)
@@ -332,6 +334,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 
 %{__make} -C k3b-i18n-* install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	kde_htmldir=%{_kdedocdir}
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
 
