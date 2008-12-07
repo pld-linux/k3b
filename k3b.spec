@@ -1,35 +1,37 @@
 #
 # Conditional build:
+%bcond_with	linux22		# building on kernel 2.2.x
 %bcond_with	reqs		# force optional Requires
 %bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
 #
-%define		_kdever		9:3.5
+%define		_kdever		9:3.2
+%define		_pre	pre2
 Summary:	The CD Kreator
-Summary(pl.UTF-8):	Kreator CD
+Summary(pl):	Kreator CD
 Name:		k3b
-Version:	1.0.5
-Release:	5
+Version:	1.0
+Release:	0.%{_pre}.1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	e3b37d0d009af3dd149215d6ae0d54f3
-Source1:	http://dl.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
-# Source1-md5:	610b1fd9356c89cbb38b6dda1f115c86
-Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-group.patch
-Patch2:		%{name}-libadd.patch
-Patch3:		%{name}-ffmpeg.patch
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_pre}.tar.bz2
+# Source0-md5:	de6d97ebc62dc6687bc03d0ac7a10302
+Patch0:		%{name}-linux22.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-group.patch
+Patch3:		kde-ac260.patch
+Patch4:		%{name}-dbus.patch
+Patch5:		%{name}-libadd.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
-BuildRequires:	dbus-qt-devel >= 0.70
-BuildRequires:	ffmpeg-devel >= 0.4.9-4.20080930.1
-BuildRequires:	flac-c++-devel >= 1.2.0
+BuildRequires:	dbus-qt-devel >= 0.62
+BuildRequires:	ffmpeg-devel >= 0.4.9
+BuildRequires:	flac-devel >= 1.1.2
 BuildRequires:	gettext-devel
-%{?with_hal:BuildRequires:	hal-devel >= 0.5}
+%{?with_hal:BuildRequires:	hal-devel >= 0.4}
 BuildRequires:	kdelibs-devel >= %{_kdever}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdvdread-devel
@@ -38,7 +40,6 @@ BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
-BuildRequires:	libtool >= 2:2.2.4
 BuildRequires:	pkgconfig
 %{?with_resmgr:BuildRequires:	resmgr-devel}
 BuildRequires:	rpmbuild(macros) >= 1.129
@@ -46,16 +47,14 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
+Requires:	kdelibs
 Requires:	mkisofs
 %if %{with reqs}
 Requires:	normalize
 Requires:	transcode >= 0.6.0
 Requires:	vcdimager >= 0.7
 %endif
-Suggests:	convmv
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         _noautoreq      libtool(.*)
 
 %description
 The CD Kreator features:
@@ -73,163 +72,162 @@ The CD Kreator features:
  - Support for ATAPI drives without SCSI-emulation for reading
  - integrated full featured audio player
 
-%description -l pl.UTF-8
-WÅ‚asnoÅ›ci Kreatora CD:
- - najbardziej przyjazny dla uÅ¼ytkownika interfejs ;-)
- - zapisywanie pÅ‚yt CD-Audio
- - zapisywanie pÅ‚yt ISO
- - zapisywanie istniejÄ…cych obrazÃ³w ISO na CD
- - kopiowanie CD (data/audio/mixed - z danymi, dÅºwiÄ™kiem i mieszane)
- - czyszczenie pÅ‚yt CD-RW
- - rippowanie CD do plikÃ³w WAV
- - rippowanie DVD przy uÅ¼yciu narzÄ™dzi transcode
+%description -l pl
+W³asno¶ci Kreatora CD:
+ - najbardziej przyjazny dla u¿ytkownika interfejs ;-)
+ - zapisywanie p³yt CD-Audio
+ - zapisywanie p³yt ISO
+ - zapisywanie istniej±cych obrazów ISO na CD
+ - kopiowanie CD (data/audio/mixed - z danymi, d¼wiêkiem i mieszane)
+ - czyszczenie p³yt CD-RW
+ - rippowanie CD do plików WAV
+ - rippowanie DVD przy u¿yciu narzêdzi transcode
  - kodowanie DivX/XviD
- - sprawdzanie, czy uÅ¼ytkownik wÅ‚oÅ¼yÅ‚ czystÄ… pÅ‚ytÄ™
+ - sprawdzanie, czy u¿ytkownik w³o¿y³ czyst± p³ytê
  - odtwarzania CD-info i TOC
- - obsÅ‚uga nagrywarek ATAPI bez emulacji SCSI przy odczycie
- - zintegrowany odtwarzacz pÅ‚yt audio o peÅ‚nych moÅ¼liwoÅ›ciach.
+ - obs³uga nagrywarek ATAPI bez emulacji SCSI przy odczycie
+ - zintegrowany odtwarzacz p³yt audio o pe³nych mo¿liwo¶ciach.
 
 %package devel
 Summary:	Header files for libk3bcore library
-Summary(pl.UTF-8):	Pliki nagÅ‚Ã³wkowe biblioteki libk3bcore
+Summary(pl):	Pliki nag³ówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	dbus-qt-devel
+Requires:	dbus-qt3-devel >= 0.2
 Requires:	hal-devel
 Requires:	kdelibs-devel
-Requires:	libdvdread-devel
 Requires:	libsamplerate-devel
 %{?with_resmgr:Requires:	resmgr-devel}
 
 %description devel
 Header files for libk3bcore library.
 
-%description devel -l pl.UTF-8
-Pliki nagÅ‚Ã³wkowe biblioteki libk3bcore.
+%description devel -l pl
+Pliki nag³ówkowe biblioteki libk3bcore.
 
 %package plugin-decoder-ffmpeg
 Summary:	Decoder plugin - FFMpeg
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - FFMpeg
+Summary(pl):	Wtyczka dekoduj±ca - FFMpeg
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-ffmpeg
 Decoding module to decode WMA (and others) files.
 
-%description plugin-decoder-ffmpeg -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki w formacie WMA (i nie tylko).
+%description plugin-decoder-ffmpeg -l pl
+Modu³ dekoduj±cy pliki w formacie WMA (i nie tylko).
 
 %package plugin-decoder-flac
 Summary:	Decoder plugin - FLAC
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - FLAC
+Summary(pl):	Wtyczka dekoduj±ca - FLAC
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-flac
 Decoding module to decode FLAC files.
 
-%description plugin-decoder-flac -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki w formacie FLAC.
+%description plugin-decoder-flac -l pl
+Modu³ dekoduj±cy pliki w formacie FLAC.
 
 %package plugin-decoder-libsndfile
 Summary:	Decoder plugin - libsndfile
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - libsndfile
+Summary(pl):	Wtyczka dekoduj±ca - libsndfile
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-libsndfile
 Decoding module to decode audio files supported by libsndfile.
 
-%description plugin-decoder-libsndfile -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki audio obsÅ‚ugiwane przez bibliotekÄ™ libsndfile.
+%description plugin-decoder-libsndfile -l pl
+Modu³ dekoduj±cy pliki audio obs³ugiwane przez bibliotekê libsndfile.
 
 %package plugin-decoder-mad
 Summary:	Decoder plugin - mad
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - mad
+Summary(pl):	Wtyczka dekoduj±ca - mad
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-mad
 Decoding module to decode MPEG-1 Layer III files.
 
-%description plugin-decoder-mad -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki w formacie MPEG-1 Layer III.
+%description plugin-decoder-mad -l pl
+Modu³ dekoduj±cy pliki w formacie MPEG-1 Layer III.
 
 %package plugin-decoder-musepack
 Summary:	Decoder plugin - Musepack
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - Musepack
+Summary(pl):	Wtyczka dekoduj±ca - Musepack
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-musepack
 Decoding module to decode Musepack audio files.
 
-%description plugin-decoder-musepack -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki audio w formacie Musepack.
+%description plugin-decoder-musepack -l pl
+Modu³ dekoduj±cy pliki audio w formacie Musepack.
 
 %package plugin-decoder-oggvorbis
 Summary:	Decoder plugin - oggvorbis
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - oggvorbis
+Summary(pl):	Wtyczka dekoduj±ca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-oggvorbis
 Decoding module to decode Ogg Vorbis files.
 
-%description plugin-decoder-oggvorbis -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki w formacie Ogg Vorbis.
+%description plugin-decoder-oggvorbis -l pl
+Modu³ dekoduj±cy pliki w formacie Ogg Vorbis.
 
 %package plugin-decoder-wave
 Summary:	Decoder plugin - WAVE
-Summary(pl.UTF-8):	Wtyczka dekodujÄ…ca - WAVE
+Summary(pl):	Wtyczka dekoduj±ca - WAVE
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-decoder-wave
 Decoding module to decode WAVE files.
 
-%description plugin-decoder-wave -l pl.UTF-8
-ModuÅ‚ dekodujÄ…cy pliki w formacie WAVE.
+%description plugin-decoder-wave -l pl
+Modu³ dekoduj±cy pliki w formacie WAVE.
 
 %package plugin-encoder-external
 Summary:	Encoder plugin - external
-Summary(pl.UTF-8):	Wtyczka kodujÄ…ca - external
+Summary(pl):	Wtyczka koduj±ca - external
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-external
 Encoding module that allows specifying an encoding command.
 
-%description plugin-encoder-external -l pl.UTF-8
-ModuÅ‚ kodujÄ…cy pozwalajÄ…cy na sformuÅ‚owanie komendy kodowania.
+%description plugin-encoder-external -l pl
+Modu³ koduj±cy pozwalaj±cy na sformu³owanie komendy kodowania.
 
 %package plugin-encoder-lame
 Summary:	Encoder plugin - lame
-Summary(pl.UTF-8):	Wtyczka kodujÄ…ca - lame
+Summary(pl):	Wtyczka koduj±ca - lame
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-lame
 Encoding module to encode MPEG-1 Layer III (mp3) files.
 
-%description plugin-encoder-lame -l pl.UTF-8
-ModuÅ‚ kodujÄ…cy pliki w formacie MPEG-1 Layer III (mp3).
+%description plugin-encoder-lame -l pl
+Modu³ koduj±cy pliki w formacie MPEG-1 Layer III (mp3).
 
 %package plugin-encoder-oggvorbis
 Summary:	Encoder plugin - oggvorbis
-Summary(pl.UTF-8):	Wtyczka kodujÄ…ca - oggvorbis
+Summary(pl):	Wtyczka koduj±ca - oggvorbis
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-encoder-oggvorbis
 Encoding module to encode Ogg Vorbis files.
 
-%description plugin-encoder-oggvorbis -l pl.UTF-8
-ModuÅ‚ kodujÄ…cy pliki w formacie Ogg Vorbis.
+%description plugin-encoder-oggvorbis -l pl
+Modu³ koduj±cy pliki w formacie Ogg Vorbis.
 
 %package plugin-encoder-sox
 Summary:	Encoder plugin - sox
-Summary(pl.UTF-8):	Wtyczka kodujÄ…ca - sox
+Summary(pl):	Wtyczka koduj±ca - sox
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	sox
@@ -237,12 +235,12 @@ Requires:	sox
 %description plugin-encoder-sox
 Encoding module to encode many file formats using sox.
 
-%description plugin-encoder-sox -l pl.UTF-8
-ModuÅ‚ kodujÄ…cy pliki w wielu formatach przy uÅ¼yciu programu sox.
+%description plugin-encoder-sox -l pl
+Modu³ koduj±cy pliki w wielu formatach przy u¿yciu programu sox.
 
 %package plugin-konqueror
 Summary:	Plugins extending the functionality of Konqueror
-Summary(pl.UTF-8):	Wtyczki rozszerzajÄ…ce funkcjonalnoÅ›Ä‡ Konquerora
+Summary(pl):	Wtyczki rozszerzaj±ce funkcjonalno¶æ Konquerora
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Requires:	konqueror >= %{_kdever}
@@ -251,76 +249,72 @@ Requires:	konqueror >= %{_kdever}
 Package contains plugins (but accurately "servicemenus") extending the
 functionality of Konqueror.
 
-%description plugin-konqueror -l pl.UTF-8
-Pakiet zawiera wtyczki (a dokÅ‚adniej "servicemenus") rozszerzajÄ…ce
-funkcjonalnoÅ›Ä‡ Konquerora.
+%description plugin-konqueror -l pl
+Pakiet zawiera wtyczki (a dok³adniej "servicemenus") rozszerzaj±ce
+funkcjonalno¶æ Konquerora.
 
 %package plugin-output-alsa
 Summary:	Plugin - ALSA support
-Summary(pl.UTF-8):	Wtyczka - obsÅ‚uga ALSA
+Summary(pl):	Wtyczka - obs³uga ALSA
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-output-alsa
 Audio Output plugin which plays through ALSA.
 
-%description plugin-output-alsa -l pl.UTF-8
-Wtyczka odtwarzania dÅºwiÄ™ku przez ALSA.
+%description plugin-output-alsa -l pl
+Wtyczka odtwarzania d¼wiêku przez ALSA.
 
 %package plugin-output-arts
 Summary:	Plugin - arts support
-Summary(pl.UTF-8):	Wtyczka - obsÅ‚uga arts
+Summary(pl):	Wtyczka - obs³uga arts
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-output-arts
 Audio Output plugin which plays through arts.
 
-%description plugin-output-arts -l pl.UTF-8
-Wtyczka odtwarzania dÅºwiÄ™ku przez arts.
+%description plugin-output-arts -l pl
+Wtyczka odtwarzania d¼wiêku przez arts.
 
 %package plugin-project
 Summary:	Additional plugins from group project
-Summary(pl.UTF-8):	Dodatkowe wtyczki z grupy projekt
+Summary(pl):	Dodatkowe wtyczki z grupy projekt
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-project
-Additional plugins from group project: Audio Metainfo Renamer, Cddb
-Audio Plugin.
+Additional plugins from group project:
+Audio Metainfo Renamer, Cddb Audio Plugin.
 
-%description plugin-project -l pl.UTF-8
-Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
-Plugin.
+%description plugin-project -l pl
+Dodatkowe wtyczki z grupy projekt:
+Audio Metainfo Renamer, Cddb Audio Plugin.
 
 %prep
-%setup -q -a1
-%patch0 -p0
-%patch1 -p1
+%setup -q -n %{name}-%{version}%{_pre}
+%{?with_linux22:%patch0 -p1}
+%patch1 -p0
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-curdir=$(pwd)
-for dir in . k3b-i18n-*; do
-	cd $dir
-	cp -f /usr/share/automake/config.sub admin
-	cp -f /usr/share/libtool/config/ltmain.sh admin
-	: > admin/libtool.m4.in
-	rm -f acinclude.m4
-	%{__make} -f admin/Makefile.common
-	%configure \
-		--%{!?debug:dis}%{?debug:en}able-debug \
-		%{!?debug:--disable-rpath} \
-		%{!?with_setup:--with-k3bsetup=no} \
-		--with-qt-libraries=%{_libdir} \
-		%{!?with_hal:--without-hal} \
-		%{!?with_resmgr:--without-resmgr}
-	cd $curdir
-done
+cp -f /usr/share/automake/config.sub admin
+cp -f /usr/share/libtool/ltmain.sh admin
+: > admin/libtool.m4.in
+rm -f acinclude.m4
+%{__make} -f admin/Makefile.common
+%configure \
+	--%{!?debug:dis}%{?debug:en}able-debug \
+	%{!?debug:--disable-rpath} \
+	%{!?with_setup:--with-k3bsetup=no} \
+	--with-qt-libraries=%{_libdir} \
+	%{!?with_hal:--without-hal} \
+	%{!?with_resmgr:--without-resmgr}
 
 %{__make}
-%{__make} -C k3b-i18n-*
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -330,10 +324,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 	DESTDIR=$RPM_BUILD_ROOT \
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
-	kde_htmldir=%{_kdedocdir}
-
-%{__make} -C k3b-i18n-* install \
-	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
@@ -363,8 +353,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/*.wav
 %{_desktopdir}/kde/k3b.desktop
 %{_iconsdir}/*/*/apps/k3b.png
-%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
-%{_libdir}/kde3/kio_videodvd.la
 
 %if %{with setup}
 %attr(755,root,root) %{_bindir}/k3bsetup
@@ -379,6 +367,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
 %{_libdir}/kde3/kfile_k3b.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_k3b.so
+%{_libdir}/kde3/kio_videodvd.la
+%attr(755,root,root) %{_libdir}/kde3/kio_videodvd.so
 %{_libdir}/libk3b.la
 %{_libdir}/libk3bdevice.la
 %{_includedir}/*.h
