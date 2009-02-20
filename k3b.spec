@@ -20,6 +20,7 @@ BuildRequires:	QtSvg-devel >= %{_qtver}
 BuildRequires:	QtTest-devel >= %{_qtver}
 BuildRequires:	QtUiTools-devel >= %{_qtver}
 BuildRequires:	QtWebKit-devel >= %{_qtver}
+BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libjpeg-devel
