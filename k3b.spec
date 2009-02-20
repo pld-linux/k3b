@@ -1,4 +1,7 @@
+
+%define		_qtver	4.4.3
 %define		_snap 925654
+
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
@@ -9,14 +12,14 @@ Group:		X11/Libraries
 Source0:	k3b-%{version}-%{_snap}.tar.bz2
 # Source0-md5:	371d0a6f8a332e9820a561d3c6df4caf
 URL:		http://k3b.plainblack.com/
-BuildRequires:	QtNetwork-devel >= 4.4.1
-BuildRequires:	QtOpenGL-devel >= 4.4.1
-BuildRequires:	QtScript-devel >= 4.4.1
-BuildRequires:	QtSql-devel >= 4.4.1
-BuildRequires:	QtSvg-devel >= 4.4.1
-BuildRequires:	QtTest-devel >= 4.4.1
-BuildRequires:	QtUiTools-devel >= 4.4.1
-BuildRequires:	QtWebKit-devel >= 4.4.1
+BuildRequires:	QtNetwork-devel >= %{_qtver}
+BuildRequires:	QtOpenGL-devel >= %{_qtver}
+BuildRequires:	QtScript-devel >= %{_qtver}
+BuildRequires:	QtSql-devel >= %{_qtver}
+BuildRequires:	QtSvg-devel >= %{_qtver}
+BuildRequires:	QtTest-devel >= %{_qtver}
+BuildRequires:	QtUiTools-devel >= %{_qtver}
+BuildRequires:	QtWebKit-devel >= %{_qtver}
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libjpeg-devel
@@ -61,6 +64,7 @@ Własności Kreatora CD:
 
 %prep
 %setup -q -n %{name}-%{version}-%{_snap}
+%{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup2.desktop
 
 %build
 install -d build
