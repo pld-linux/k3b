@@ -69,7 +69,7 @@ cd build
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-LCMS_DIR=%{_libdir} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=release \
+	-DCMAKE_BUILD_TYPE=%{!?debug:release}%{?debug:debug} \
 	../
 %{__make}
 
