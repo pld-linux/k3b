@@ -3,7 +3,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.95
-Release:	0.%{_snap}.1
+Release:	0.%{_snap}.2
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	k3b-%{version}-%{_snap}.tar.bz2
@@ -69,6 +69,7 @@ cd build
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-LCMS_DIR=%{_libdir} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
+	-DCMAKE_BUILD_TYPE=release \
 	../
 %{__make}
 
