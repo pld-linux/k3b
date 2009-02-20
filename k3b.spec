@@ -101,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_bindir}/k3bsetup
 %attr(755,root,root) %{_libdir}/kde4/k3bexternalencoder.so
+%attr(755,root,root) %{_libdir}/kde4/k3bflacdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3blameencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bmaddecoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3boggvorbisdecoder.so
@@ -130,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/ServiceMenus/k3b_handle_empty_dvd.desktop
 %{_datadir}/kde4/services/ServiceMenus/k3b_videodvd_rip.desktop
 %{_datadir}/kde4/services/k3bexternalencoder.desktop
+%{_datadir}/kde4/services/k3bflacdecoder.desktop
 %{_datadir}/kde4/services/k3blameencoder.desktop
 %{_datadir}/kde4/services/k3blibsndfiledecoder.desktop
 %{_datadir}/kde4/services/k3bmaddecoder.desktop
@@ -144,4 +146,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/kcm_k3boggvorbisencoder.desktop
 %{_datadir}/kde4/services/videodvd.protocol
 %{_datadir}/kde4/servicetypes/k3bplugin.desktop
+%{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
 %{_datadir}/sounds/k3b*.wav
