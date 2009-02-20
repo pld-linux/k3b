@@ -70,6 +70,9 @@ cd build
 	-LCMS_DIR=%{_libdir} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DCMAKE_BUILD_TYPE=%{!?debug:release}%{?debug:debug} \
+%if "%{_lib}" == "lib64"
+	-DLIB_SUFFIX=64 \
+%endif
 	../
 %{__make}
 
