@@ -6,7 +6,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.95
-Release:	0.%{_snap}.3
+Release:	0.%{_snap}.4
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	k3b-%{version}-%{_snap}.tar.bz2
@@ -24,6 +24,7 @@ BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libmpcdec-devel
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
 Suggests:	cdrdao
