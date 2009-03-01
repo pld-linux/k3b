@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.0.5
-Release:	5
+Release:	6
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -47,6 +47,7 @@ BuildRequires:	taglib-devel
 Requires:	cdrdao >= 1.1.5
 Requires:	cdrecord
 Requires:	mkisofs
+Requires:	setup >= 2.6.1-1
 %if %{with reqs}
 Requires:	normalize
 Requires:	transcode >= 0.6.0
