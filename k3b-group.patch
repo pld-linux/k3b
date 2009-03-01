@@ -5,7 +5,7 @@
    d->config->setGroup( "General Settings" );
    w->m_checkUseBurningGroup->setChecked( d->config->readBoolEntry( "use burning group", false ) );
 -  w->m_editBurningGroup->setText( d->config->readEntry( "burning group", "burning" ) );
-+  w->m_editBurningGroup->setText( d->config->readEntry( "burning group", "cdwrite" ) );
++  w->m_editBurningGroup->setText( d->config->readEntry( "burning group", "cdrom" ) );
  
  
    // load search path
@@ -14,7 +14,7 @@
  {
    w->m_checkUseBurningGroup->setChecked(false);
 -  w->m_editBurningGroup->setText( "burning" );
-+  w->m_editBurningGroup->setText( "cdwrite" );
++  w->m_editBurningGroup->setText( "cdrom" );
  
    //
    // This is a hack to work around a kcm bug which makes the faulty assumption that
@@ -23,7 +23,7 @@
  {
    QString g = w->m_editBurningGroup->text();
 -  return g.isEmpty() ? QString("burning") : g;
-+  return g.isEmpty() ? QString("cdwrite") : g;
++  return g.isEmpty() ? QString("cdrom") : g;
  }
  
  
