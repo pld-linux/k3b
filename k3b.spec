@@ -1,16 +1,16 @@
 
 %define		_qtver	4.4.3
-%define		_snap 925654
+%define		_snap 934067
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.95
-Release:	0.%{_snap}.4
+Version:	2.0
+Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	k3b-%{version}-%{_snap}.tar.bz2
-# Source0-md5:	371d0a6f8a332e9820a561d3c6df4caf
+Source0:	%{name}-%{version}-%{_snap}.tar.bz2
+# Source0-md5:	29da72674211a2747541ce4e1a1e49aa
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{_qtver}
 BuildRequires:	QtOpenGL-devel >= %{_qtver}
@@ -100,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_bindir}/k3bsetup
+%attr(755,root,root) %{_libdir}/kde4/k3baudiometainforenamerplugin.so
+%attr(755,root,root) %{_libdir}/kde4/k3baudioprojectcddbplugin.so
 %attr(755,root,root) %{_libdir}/kde4/k3bexternalencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bflacdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3blameencoder.so
@@ -109,32 +111,40 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/k3bsoxencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bwavedecoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bffmpegdecoder.so
-%attr(755,root,root) %{_libdir}/kde4/k3bmpcdecoder.desktop
 %attr(755,root,root) %{_libdir}/kde4/k3bmpcdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bexternalencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3blameencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3boggvorbisencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bsetup2.so
 %attr(755,root,root) %{_libdir}/kde4/kio_videodvd.so
-%attr(755,root,root) %ghost %{_libdir}/libk3b.so.4
-%attr(755,root,root) %{_libdir}/libk3b.so.4.0.0
+%attr(755,root,root) %ghost %{_libdir}/libk3b.so.6
+%attr(755,root,root) %{_libdir}/libk3b.so.6.0.0
 %attr(755,root,root) %ghost %{_libdir}/libk3bdevice.so.6
 %attr(755,root,root) %{_libdir}/libk3bdevice.so.6.0.0
 %attr(755,root,root) %{_libdir}/kde4/k3blibsndfiledecoder.so
 %{_desktopdir}/kde4/k3b.desktop
 %{_datadir}/apps/k3b
 %{_iconsdir}/hicolor/*x*/apps/k3b.png
-%{_datadir}/kde4/services/ServiceMenus/k3b_audiocd_rip.desktop
-%{_datadir}/kde4/services/ServiceMenus/k3b_cd_copy.desktop
-%{_datadir}/kde4/services/ServiceMenus/k3b_dvd_copy.desktop
-%{_datadir}/kde4/services/ServiceMenus/k3b_handle_empty_cd.desktop
-%{_datadir}/kde4/services/ServiceMenus/k3b_handle_empty_dvd.desktop
-%{_datadir}/kde4/services/ServiceMenus/k3b_videodvd_rip.desktop
+
+%{_datadir}/apps/solid/actions/k3b_audiocd_rip.desktop
+%{_datadir}/apps/solid/actions/k3b_copy_disc.desktop
+%{_datadir}/apps/solid/actions/k3b_create_audio_cd_from_blank_medium.desktop
+%{_datadir}/apps/solid/actions/k3b_create_data_project_from_blank_medium.desktop
+%{_datadir}/apps/solid/actions/k3b_videodvd_rip.desktop
+
+%{_datadir}/kde4/services/ServiceMenus/k3b_create_audio_cd.desktop
+%{_datadir}/kde4/services/ServiceMenus/k3b_create_data_project.desktop
+%{_datadir}/kde4/services/ServiceMenus/k3b_create_video_cd.desktop
+%{_datadir}/kde4/services/ServiceMenus/k3b_write_bin_image.desktop
+%{_datadir}/kde4/services/ServiceMenus/k3b_write_iso_image.desktop
+%{_datadir}/kde4/services/k3baudiometainforenamerplugin.desktop
+%{_datadir}/kde4/services/k3baudioprojectcddbplugin.desktop
 %{_datadir}/kde4/services/k3bexternalencoder.desktop
 %{_datadir}/kde4/services/k3bflacdecoder.desktop
 %{_datadir}/kde4/services/k3blameencoder.desktop
 %{_datadir}/kde4/services/k3blibsndfiledecoder.desktop
 %{_datadir}/kde4/services/k3bmaddecoder.desktop
+%{_datadir}/kde4/services/k3bmpcdecoder.desktop
 %{_datadir}/kde4/services/k3boggvorbisdecoder.desktop
 %{_datadir}/kde4/services/k3boggvorbisencoder.desktop
 %{_datadir}/kde4/services/k3bsetup2.desktop
