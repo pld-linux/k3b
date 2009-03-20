@@ -1,6 +1,6 @@
 
-%define		_qtver	4.4.3
-%define		_snap 934067
+%define		_qtver	4.5.0
+%define		_snap 941673
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
@@ -10,7 +10,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	%{name}-%{version}-%{_snap}.tar.bz2
-# Source0-md5:	29da72674211a2747541ce4e1a1e49aa
+# Source0-md5:	6cf7a8ba7f3bd8d6cf42456b58b8a551
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{_qtver}
 BuildRequires:	QtOpenGL-devel >= %{_qtver}
