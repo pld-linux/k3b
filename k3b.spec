@@ -1,25 +1,26 @@
 
-%define		_qtver	4.5.0
-%define		_snap 948635
+%define		qtver	4.5.0
+%define		snap 948635
 
+%define		rel	2
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0
-Release:	0.%{_snap}.1
+Release:	0.%{snap}.%{rel}
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	%{name}-%{version}-%{_snap}.tar.bz2
+Source0:	%{name}-%{version}-%{snap}.tar.bz2
 # Source0-md5:	160f13bfa0bfc7c95dc05616163cc34f
 URL:		http://k3b.plainblack.com/
-BuildRequires:	QtNetwork-devel >= %{_qtver}
-BuildRequires:	QtOpenGL-devel >= %{_qtver}
-BuildRequires:	QtScript-devel >= %{_qtver}
-BuildRequires:	QtSql-devel >= %{_qtver}
-BuildRequires:	QtSvg-devel >= %{_qtver}
-BuildRequires:	QtTest-devel >= %{_qtver}
-BuildRequires:	QtUiTools-devel >= %{_qtver}
-BuildRequires:	QtWebKit-devel >= %{_qtver}
+BuildRequires:	QtNetwork-devel >= %{qtver}
+BuildRequires:	QtOpenGL-devel >= %{qtver}
+BuildRequires:	QtScript-devel >= %{qtver}
+BuildRequires:	QtSql-devel >= %{qtver}
+BuildRequires:	QtSvg-devel >= %{qtver}
+BuildRequires:	QtTest-devel >= %{qtver}
+BuildRequires:	QtUiTools-devel >= %{qtver}
+BuildRequires:	QtWebKit-devel >= %{qtver}
 BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
@@ -30,6 +31,21 @@ BuildRequires:	taglib-devel
 Suggests:	cdrdao
 Suggests:	cdrtools
 Suggests:	dvd+rw-tools
+Obsoletes:	plugin-decoder-ffmpeg
+Obsoletes:	plugin-decoder-flac
+Obsoletes:	plugin-decoder-libsndfile
+Obsoletes:	plugin-decoder-mad
+Obsoletes:	plugin-decoder-musepack
+Obsoletes:	plugin-decoder-oggvorbis
+Obsoletes:	plugin-decoder-wave
+Obsoletes:	plugin-encoder-external
+Obsoletes:	plugin-encoder-lame
+Obsoletes:	plugin-encoder-oggvorbis
+Obsoletes:	plugin-encoder-sox
+Obsoletes:	plugin-konqueror
+Obsoletes:	plugin-output-alsa
+Obsoletes:	plugin-output-arts
+Obsoletes:	plugin-project
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,7 +81,7 @@ Własności Kreatora CD:
  - zintegrowany odtwarzacz płyt audio o pełnych możliwościach
 
 %prep
-%setup -q -n %{name}-%{version}-%{_snap}
+%setup -q -n %{name}-%{version}-%{snap}
 %{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup2.desktop
 
 %build
