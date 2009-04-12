@@ -2,7 +2,7 @@
 %define		qtver	4.5.0
 %define		snap 948635
 
-%define		rel	2
+%define		rel	3
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
@@ -31,21 +31,21 @@ BuildRequires:	taglib-devel
 Suggests:	cdrdao
 Suggests:	cdrtools
 Suggests:	dvd+rw-tools
-Obsoletes:	plugin-decoder-ffmpeg
-Obsoletes:	plugin-decoder-flac
-Obsoletes:	plugin-decoder-libsndfile
-Obsoletes:	plugin-decoder-mad
-Obsoletes:	plugin-decoder-musepack
-Obsoletes:	plugin-decoder-oggvorbis
-Obsoletes:	plugin-decoder-wave
-Obsoletes:	plugin-encoder-external
-Obsoletes:	plugin-encoder-lame
-Obsoletes:	plugin-encoder-oggvorbis
-Obsoletes:	plugin-encoder-sox
-Obsoletes:	plugin-konqueror
-Obsoletes:	plugin-output-alsa
-Obsoletes:	plugin-output-arts
-Obsoletes:	plugin-project
+Obsoletes:	k3b-plugin-decoder-ffmpeg
+Obsoletes:	k3b-plugin-decoder-flac
+Obsoletes:	k3b-plugin-decoder-libsndfile
+Obsoletes:	k3b-plugin-decoder-mad
+Obsoletes:	k3b-plugin-decoder-musepack
+Obsoletes:	k3b-plugin-decoder-oggvorbis
+Obsoletes:	k3b-plugin-decoder-wave
+Obsoletes:	k3b-plugin-encoder-external
+Obsoletes:	k3b-plugin-encoder-lame
+Obsoletes:	k3b-plugin-encoder-oggvorbis
+Obsoletes:	k3b-plugin-encoder-sox
+Obsoletes:	k3b-plugin-konqueror
+Obsoletes:	k3b-plugin-output-alsa
+Obsoletes:	k3b-plugin-output-arts
+Obsoletes:	k3b-plugin-project
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
