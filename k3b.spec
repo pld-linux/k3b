@@ -25,7 +25,9 @@ BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libmad-devel
 BuildRequires:	libmpcdec-devel
+BuildRequires:	libmusicbrainz-devel
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
 Suggests:	cdrdao
