@@ -1,17 +1,21 @@
+#
+# TODO:
+# - package Polkit-Qt which is required to build k3b.
 
 %define		qtver	4.5.0
 %define		snap 948635
 
-%define		rel	3
+%define		rel	0.1
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	2.0
-Release:	0.%{snap}.%{rel}
+Version:	1.65.0
+Release:	%{rel}
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	160f13bfa0bfc7c95dc05616163cc34f
+#Source0:	%{name}-%{version}-%{snap}.tar.bz2
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha1.tar.bz2
+# Source0-md5:	1573fcf064fee3d9848a63ceefa5cf41
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
@@ -21,6 +25,7 @@ BuildRequires:	QtSvg-devel >= %{qtver}
 BuildRequires:	QtTest-devel >= %{qtver}
 BuildRequires:	QtUiTools-devel >= %{qtver}
 BuildRequires:	QtWebKit-devel >= %{qtver}
+BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdemultimedia-devel
 BuildRequires:	libdvdread-devel
@@ -28,6 +33,8 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
+BuildRequires:	libsamplerate-devel
+BuildRequires:	libsndfile-devel
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
 Suggests:	cdrdao
@@ -83,7 +90,7 @@ Własności Kreatora CD:
  - zintegrowany odtwarzacz płyt audio o pełnych możliwościach
 
 %prep
-%setup -q -n %{name}-%{version}-%{snap}
+%setup -q
 %{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup2.desktop
 
 %build
