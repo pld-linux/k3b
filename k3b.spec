@@ -1,11 +1,8 @@
 #
-# TODO:
-# - package Polkit-Qt which is required to build k3b.
-
 %define		qtver	4.5.0
 %define		snap 948635
 
-%define		rel	0.1
+%define		rel	0.2
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
@@ -35,6 +32,7 @@ BuildRequires:	libmpcdec-devel
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
+BuildRequires:	polkit-qt-devel >= 0.9.2
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
 Suggests:	cdrdao
@@ -147,6 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libk3bdevice.so.6
 %attr(755,root,root) %{_libdir}/libk3bdevice.so.6.0.0
 %attr(755,root,root) %{_libdir}/kde4/k3blibsndfiledecoder.so
+%attr(755,root,root) %{_libdir}/kde4/libexec/k3bsetup_worker
 %{_desktopdir}/kde4/k3b.desktop
 %{_datadir}/apps/k3b
 %{_iconsdir}/hicolor/*x*/apps/k3b.png
@@ -183,3 +182,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/servicetypes/k3bplugin.desktop
 %{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
 %{_datadir}/sounds/k3b*.wav
+%{_datadir}/dbus-1/interfaces/org.k3b.setup.xml
+%{_datadir}/dbus-1/system-services/org.k3b.setup.service
