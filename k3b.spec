@@ -4,17 +4,17 @@
 %define		qtver	4.5.0
 %define		snap 948635
 
-%define		rel	0.2
+%define		rel	0.1
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.65.0
+Version:	1.66.0
 Release:	%{rel}
 License:	GPL v2+
 Group:		X11/Libraries
 #Source0:	%{name}-%{version}-%{snap}.tar.bz2
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha1.tar.bz2
-# Source0-md5:	1573fcf064fee3d9848a63ceefa5cf41
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha2.tar.bz2
+# Source0-md5:	60717ca718da93ee65f5fc2c0d9e8c71
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
@@ -105,7 +105,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
-%{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup2.desktop
+%{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup.desktop
 
 %build
 install -d build
@@ -154,7 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bexternalencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3blameencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3boggvorbisencoder.so
-%attr(755,root,root) %{_libdir}/kde4/kcm_k3bsetup2.so
+%attr(755,root,root) %{_libdir}/kde4/kcm_k3bsetup.so
 %attr(755,root,root) %{_libdir}/kde4/kio_videodvd.so
 %attr(755,root,root) %ghost %{_libdir}/libk3b.so.6
 %attr(755,root,root) %{_libdir}/libk3b.so.6.0.0
@@ -187,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/k3bmpcdecoder.desktop
 %{_datadir}/kde4/services/k3boggvorbisdecoder.desktop
 %{_datadir}/kde4/services/k3boggvorbisencoder.desktop
-%{_datadir}/kde4/services/k3bsetup2.desktop
+%{_datadir}/kde4/services/k3bsetup.desktop
 %{_datadir}/kde4/services/k3bsoxencoder.desktop
 %{_datadir}/kde4/services/k3bwavedecoder.desktop
 %{_datadir}/kde4/services/k3bffmpegdecoder.desktop
