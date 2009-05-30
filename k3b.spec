@@ -1,4 +1,6 @@
 #
+# TODO: fill R: of -devel subpackage
+
 %define		qtver	4.5.0
 %define		snap 948635
 
@@ -86,6 +88,20 @@ Własności Kreatora CD:
  - odtwarzania CD-info i TOC
  - obsługa nagrywarek ATAPI bez emulacji SCSI przy odczycie
  - zintegrowany odtwarzacz płyt audio o pełnych możliwościach
+
+%package devel
+Summary:	Header files for libk3bcore library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libk3bcore
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	libdvdread-devel
+Requires:	libsamplerate-devel
+
+%description devel
+Header files for libk3bcore library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
@@ -184,3 +200,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/k3b*.wav
 %{_datadir}/dbus-1/interfaces/org.k3b.setup.xml
 %{_datadir}/dbus-1/system-services/org.k3b.setup.service
+%{_sysconfdir}/dbus-1/system.d/org.k3b.setup.conf
+%{_datadir}/PolicyKit/policy/org.k3b.setup.policy
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libk3b.so
+%attr(755,root,root) %{_libdir}/libk3bdevice.so
+%{_includedir}/*.h
