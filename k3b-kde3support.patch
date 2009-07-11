@@ -1,0 +1,58 @@
+--- admin/acinclude.m4.in.orig	2009-07-11 23:41:59.387802510 +0200
++++ admin/acinclude.m4.in	2009-07-11 23:43:00.084748075 +0200
+@@ -1791,11 +1791,11 @@
+ AC_MSG_CHECKING([for KDE])
+ 
+ if test "${prefix}" != NONE; then
+-  kde_includes=${includedir}
+-  KDE_EXPAND_MAKEVAR(ac_kde_includes, includedir)
++  kde_includes=${includedir}/kde3
++  KDE_EXPAND_MAKEVAR(ac_kde_includes, includedir/kde3)
+ 
+-  kde_libraries=${libdir}
+-  KDE_EXPAND_MAKEVAR(ac_kde_libraries, libdir)
++  kde_libraries=${libdir}/kde3dev
++  KDE_EXPAND_MAKEVAR(ac_kde_libraries, libdir/kde3dev)
+ 
+ else
+   ac_kde_includes=
+@@ -1833,18 +1833,12 @@
+ test -n "$KDEDIR" && kde_libdirs="$KDEDIR/lib${kdelibsuff} $KDEDIR $kde_libdirs"
+ kde_libdirs="$ac_kde_libraries $libdir $kde_libdirs"
+ AC_FIND_FILE($kde_check_lib, $kde_libdirs, kde_libdir)
+-ac_kde_libraries="$kde_libdir"
++ac_kde_libraries="$kde_libdir/kde3dev"
+ 
+ kde_widgetdir=NO
+ dnl this might be somewhere else
+ AC_FIND_FILE("kde3/plugins/designer/kdewidgets.la", $kde_libdirs, kde_widgetdir)
+ 
+-if test -n "$ac_kde_libraries" && test ! -r "$ac_kde_libraries/$kde_check_lib"; then
+-AC_MSG_ERROR([
+-in the prefix, you've chosen, are no KDE libraries installed. This will fail.
+-So, check this please and use another prefix!])
+-fi
+-
+ if test -n "$kde_widgetdir" && test ! -r "$kde_widgetdir/kde3/plugins/designer/kdewidgets.la"; then
+ AC_MSG_ERROR([
+ I can't find the designer plugins. These are required and should have been installed
+@@ -1886,8 +1880,8 @@
+   AC_MSG_RESULT([will be installed in $ac_kde_prefix and $ac_kde_exec_prefix])
+  fi
+ 
+- kde_libraries="${libdir}"
+- kde_includes="${includedir}"
++ kde_libraries="${libdir}/kde3dev"
++ kde_includes="${includedir}/kde3"
+ 
+ else
+   ac_cv_have_kde="have_kde=yes \
+@@ -1928,7 +1922,7 @@
+ KDE_CHECK_UIC_PLUGINS
+ fi
+ 
+-ac_kde_libraries="$kde_libdir"
++ac_kde_libraries="$kde_libdir/kde3dev"
+ 
+ AC_SUBST(AUTODIRS)
+ 
