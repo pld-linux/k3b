@@ -21,6 +21,8 @@ Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
 Patch3:		%{name}-ffmpeg.patch
+Patch4:		%{name}-nodocs.patch
+Patch5:		%{name}-kde3support.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -30,7 +32,11 @@ BuildRequires:	ffmpeg-devel >= 0.4.9-4.20080930.1
 BuildRequires:	flac-c++-devel >= 1.2.0
 BuildRequires:	gettext-devel
 %{?with_hal:BuildRequires:	hal-devel >= 0.5}
-BuildRequires:	kdelibs-devel >= %{_kdever}
+%if "%{pld_release}" == "ti"
+BuildRequires: kde4-kde3support-devel >= 3.5
+%else 
+BuildRequires: kdelibs-devel >= %{_kdever}
+%endif [FN]
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libgsm-devel
@@ -300,6 +306,10 @@ Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%if "%{pld_release}" == "ti"
+%patch4 -p0
+%patch5 -p0
+%endif
 
 %build
 curdir=$(pwd)
