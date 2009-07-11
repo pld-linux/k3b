@@ -1,0 +1,8 @@
+--- Makefile.am	2008-05-27 10:34:22.000000000 +0200
++++ Makefile.am-new	2009-07-11 22:45:57.511547596 +0200
+@@ -8,4 +8,4 @@
+ 
+ #include admin/deps.am
+ 
+-SUBDIRS = doc  libk3bdevice libk3b src kioslaves plugins kfile-plugins $(K3BSETUPDIR)
++SUBDIRS = libk3bdevice libk3b src kioslaves plugins kfile-plugins $(K3BSETUPDIR)
