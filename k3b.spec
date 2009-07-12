@@ -21,8 +21,7 @@ Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
 Patch3:		%{name}-ffmpeg.patch
-Patch4:		%{name}-nodocs.patch
-Patch5:		%{name}-kde3support.patch
+Patch4:		%{name}-kde3support.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -306,19 +305,22 @@ Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%if "%{pld_release}" == "ti"
-%patch4 -p0
-%patch5 -p0
-%endif
-
-%build
-curdir=$(pwd)
 for dir in . k3b-i18n-*; do
 	cd $dir
 	cp -f /usr/share/automake/config.sub admin
 	cp -f /usr/share/libtool/config/ltmain.sh admin
 	: > admin/libtool.m4.in
 	rm -f acinclude.m4
+	cd -
+done
+%if "%{pld_release}" == "ti"
+%patch4 -p0
+%endif
+
+%build
+curdir=$(pwd)
+for dir in . k3b-i18n-*; do
+	cd $dir
 	%{__make} -f admin/Makefile.common
 	%configure \
 		--%{!?debug:dis}%{?debug:en}able-debug \
@@ -326,6 +328,10 @@ for dir in . k3b-i18n-*; do
 		%{!?with_setup:--with-k3bsetup=no} \
 		--with-qt-libraries=%{_libdir} \
 		%{!?with_hal:--without-hal} \
+%if "%{pld_release}" == "ti"
+		--with-extra-libs=%{_libdir}/kde3dev \
+		--with-extra-includes=%{_includedir}/kde3 \
+%endif
 		%{!?with_resmgr:--without-resmgr}
 	cd $curdir
 done
