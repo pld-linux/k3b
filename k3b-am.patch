@@ -1,0 +1,24 @@
+diff -ur k3b-1.0.5.orig/admin/cvs.sh k3b-1.0.5/admin/cvs.sh
+--- k3b-1.0.5.orig/admin/cvs.sh	2009-07-03 16:21:55.747706941 +0200
++++ k3b-1.0.5/admin/cvs.sh	2009-07-03 16:22:38.166938212 +0200
+@@ -68,7 +68,7 @@
+     echo "*** KDE requires automake $required_automake_version"
+     exit 1
+     ;;
+-  automake*1.6.* | automake*1.7* | automake*1.8* | automake*1.9* | automake*1.10*)
++  automake*1.6.* | automake*1.7* | automake*1.8* | automake*1.9* | automake*1.10* | automake*1.11*)
+     echo "*** $AUTOMAKE_STRING found."
+     UNSERMAKE=no
+     ;;
+diff -ur k3b-1.0.5.orig/k3b-i18n-1.0.5/admin/cvs.sh k3b-1.0.5/k3b-i18n-1.0.5/admin/cvs.sh
+--- k3b-1.0.5.orig/k3b-i18n-1.0.5/admin/cvs.sh	2009-07-03 16:21:56.164373339 +0200
++++ k3b-1.0.5/k3b-i18n-1.0.5/admin/cvs.sh	2009-07-03 16:22:53.140409188 +0200
+@@ -68,7 +68,7 @@
+     echo "*** KDE requires automake $required_automake_version"
+     exit 1
+     ;;
+-  automake*1.6.* | automake*1.7* | automake*1.8* | automake*1.9* | automake*1.10*)
++  automake*1.6.* | automake*1.7* | automake*1.8* | automake*1.9* | automake*1.10* | automake*1.11*)
+     echo "*** $AUTOMAKE_STRING found."
+     UNSERMAKE=no
+     ;;

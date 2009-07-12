@@ -22,6 +22,7 @@ Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
 Patch3:		%{name}-ffmpeg.patch
 Patch4:		%{name}-kde3support.patch
+Patch5:		%{name}-am.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -316,6 +317,7 @@ done
 %if "%{pld_release}" == "ti"
 %patch4 -p0
 %endif
+%patch5 -p1
 
 %build
 curdir=$(pwd)
