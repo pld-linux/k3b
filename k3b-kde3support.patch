@@ -58,33 +58,6 @@
  
  AC_SUBST(AUTODIRS)
  
---- admin/ltmain.sh	2009-07-12 16:17:37.648523138 +0200
-+++ admin/ltmain.sh-new	2009-07-12 16:17:45.251231198 +0200
-@@ -5669,7 +5669,23 @@
- 	    case $hardcode_action in
- 	    immediate | unsupported)
- 	      if test "$hardcode_direct" = no; then
--		add="$dir/$linklib"
-+		if test "$linklib" = "libDCOP.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkwalletclient.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkdefx.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkdecore.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkdeui.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkparts.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		elif test "$linklib" = "libkio.so"; then
-+			add="$dir/kde3dev/$linklib"
-+		else
-+			add="$dir/$linklib"
-+		fi
- 		case $host in
- 		  *-*-sco3.2v5.0.[024]*) add_dir="-L$dir" ;;
- 		  *-*-sysv4*uw2*) add_dir="-L$dir" ;;
 --- admin/acinclude.m4.in-new	2009-07-12 16:59:51.390969154 +0200
 +++ admin/acinclude.m4.in	2009-07-12 17:00:06.398894540 +0200
 @@ -578,7 +578,7 @@
@@ -129,3 +102,224 @@
        }
        $lookup = 'KDE_XSL_STYLESHEET\s*=';
        if ($MakefileData !~ /\n($lookup)/) {
+--- admin/ltmain.sh	2009-07-12 17:52:23.311079431 +0200
++++ admin/ltmain.sh-new	2009-07-12 17:52:37.627328398 +0200
+@@ -5669,7 +5669,23 @@
+ 	    case $hardcode_action in
+ 	    immediate | unsupported)
+ 	      if test "$hardcode_direct" = no; then
+-		add="$dir/$linklib"
++		if test "$linklib" = "libDCOP.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkwalletclient.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdefx.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdecore.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdeui.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkparts.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkio.so"; then
++			add="$dir/kde3dev/$linklib"
++		else
++			add="$dir/$linklib"
++		fi
+ 		case $host in
+ 		  *-*-sco3.2v5.0.[024]*) add_dir="-L$dir" ;;
+ 		  *-*-sysv4*uw2*) add_dir="-L$dir" ;;
+@@ -5710,14 +5726,30 @@
+ 	    relink)
+ 	      if test "$hardcode_direct" = yes &&
+ 	         test "$hardcode_direct_absolute" = no; then
+-		add="$dir/$linklib"
++		if test "$linklib" = "libDCOP.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkwalletclient.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdefx.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdecore.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdeui.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkparts.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkio.so"; then
++			add="$dir/kde3dev/$linklib"
++		else
++			add="$dir/$linklib"
++		fi
+ 	      elif test "$hardcode_minus_L" = yes; then
+ 		add_dir="-L$dir"
+ 		# Try looking first in the location we're being installed to.
+ 		if test -n "$inst_prefix_dir"; then
+ 		  case $libdir in
+ 		    [\\/]*)
+-		      add_dir="$add_dir -L$inst_prefix_dir$libdir"
++		      add_dir="$add_dir -L$inst_prefix_dir$libdir/kde3dev"
+ 		      ;;
+ 		  esac
+ 		fi
+@@ -5767,7 +5799,23 @@
+ 	    # Finalize command for both is simple: just hardcode it.
+ 	    if test "$hardcode_direct" = yes &&
+ 	       test "$hardcode_direct_absolute" = no; then
+-	      add="$libdir/$linklib"
++		if test "$linklib" = "libDCOP.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkwalletclient.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdefx.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdecore.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkdeui.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkparts.so"; then
++			add="$dir/kde3dev/$linklib"
++		elif test "$linklib" = "libkio.so"; then
++			add="$dir/kde3dev/$linklib"
++		else
++			add="$dir/$linklib"
++		fi
+ 	    elif test "$hardcode_minus_L" = yes; then
+ 	      add_dir="-L$libdir"
+ 	      add="-l$name"
+--- admin/acinclude.m4.in	2009-07-12 17:53:54.890669276 +0200
++++ admin/acinclude.m4.in-new	2009-07-12 18:21:36.072038700 +0200
+@@ -1903,7 +1903,7 @@
+ 
+ KDE_DEFAULT_CXXFLAGS="-DQT_CLEAN_NAMESPACE -DQT_NO_ASCII_CAST -DQT_NO_STL -DQT_NO_COMPAT -DQT_NO_TRANSLATION"
+  
+-KDE_LDFLAGS="-L$kde_libraries"
++KDE_LDFLAGS="-L$kde_libraries/kde3dev"
+ if test ! "$kde_libraries" = "$x_libraries" && test ! "$kde_libraries" = "$qt_libraries" ; then 
+  all_libraries="$KDE_LDFLAGS $all_libraries"
+ fi
+--- admin/acinclude.m4.in	2009-07-12 18:22:26.757982416 +0200
++++ admin/acinclude.m4.in-new	2009-07-12 18:35:21.812623658 +0200
+@@ -1514,7 +1514,7 @@
+ ac_libs_safe="$LIBS"
+ 
+ CXXFLAGS="$CXXFLAGS -I$qt_incdir $all_includes"
+-LDFLAGS="$LDFLAGS -L$qt_libdir $all_libraries $USER_LDFLAGS $KDE_MT_LDFLAGS"
++LDFLAGS="$LDFLAGS -L$qt_libdir $USER_LDFLAGS $all_libraries $KDE_MT_LDFLAGS"
+ LIBS="$LIBS $LIBQT $KDE_MT_LIBS"
+ 
+ KDE_PRINT_QT_PROGRAM
+@@ -1913,7 +1913,7 @@
+ 
+ AC_REQUIRE([KDE_CHECK_EXTRA_LIBS])
+ 
+-all_libraries="$all_libraries $USER_LDFLAGS"
++all_libraries="$USER_LDFLAGS $all_libraries"
+ all_includes="$all_includes $USER_INCLUDES"
+ AC_SUBST(all_includes)
+ AC_SUBST(all_libraries)
+@@ -2049,7 +2049,7 @@
+ 
+  LIBS="-lkde-qt-addon $LIBQT $LIBS"
+  CXXFLAGS="$CXXFLAGS -I$prefix/include -I$prefix/include/kde $all_includes"
+- LDFLAGS="$LDFLAGS $all_libraries $USER_LDFLAGS"
++ LDFLAGS="$LDFLAGS $USER_LDFLAGS $all_libraries"
+ 
+  AC_TRY_LINK([
+    #include <qdom.h>
+@@ -2517,7 +2517,7 @@
+ AC_CACHE_VAL(ac_cv_lib_jpeg_$1,
+ [
+ ac_save_LIBS="$LIBS"
+-LIBS="$all_libraries $USER_LDFLAGS -ljpeg$2 -lm"
++LIBS="$USER_LDFLAGS $all_libraries -ljpeg$2 -lm"
+ ac_save_CFLAGS="$CFLAGS"
+ CFLAGS="$CFLAGS $all_includes $USER_INCLUDES"
+ AC_TRY_LINK(
+@@ -2608,7 +2608,7 @@
+ AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ ac_save_LIBS="$LIBS"
+-LIBS="$all_libraries $USER_LDFLAGS $LIBQT"
++LIBS="$USER_LDFLAGS $all_libraries $LIBQT"
+ LIBS=`echo $LIBS | sed "s/$LIBJPEG//"`
+ ac_save_CXXFLAGS="$CXXFLAGS"
+ CXXFLAGS="$CXXFLAGS $all_includes $USER_INCLUDES"
+@@ -2643,7 +2643,7 @@
+ AC_CACHE_VAL(ac_cv_lib_z,
+ [
+ kde_save_LIBS="$LIBS"
+-LIBS="$all_libraries $USER_LDFLAGS -lz $LIBSOCKET"
++LIBS="$USER_LDFLAGS $all_libraries -lz $LIBSOCKET"
+ kde_save_CFLAGS="$CFLAGS"
+ CFLAGS="$CFLAGS $all_includes $USER_INCLUDES"
+ AC_TRY_LINK(dnl
+@@ -2689,9 +2689,9 @@
+ AC_LANG_CPLUSPLUS
+ kde_save_LIBS="$LIBS"
+ if test "x$kde_use_qt_emb" != "xyes" && test "x$kde_use_qt_mac" != "xyes"; then
+-LIBS="$all_libraries $USER_LDFLAGS -l$1 $LIBJPEG $LIBZ -lX11 $LIBSOCKET -lm"
++LIBS="$USER_LDFLAGS $all_libraries -l$1 $LIBJPEG $LIBZ -lX11 $LIBSOCKET -lm"
+ else
+-LIBS="$all_libraries $USER_LDFLAGS -l$1 $LIBJPEG $LIBZ -lm"
++LIBS="$USER_LDFLAGS $all_libraries -l$1 $LIBJPEG $LIBZ -lm"
+ fi
+ kde_save_CXXFLAGS="$CXXFLAGS"
+ CXXFLAGS="$CXXFLAGS $all_includes $USER_INCLUDES"
+@@ -2766,7 +2766,7 @@
+            EXRSTATUS=old
+         else
+            kde_save_LIBS="$LIBS"
+-           LIBS="$LIBS $all_libraries $USER_LDFLAGS `pkg-config --libs OpenEXR` $LIBZ"
++           LIBS="$LIBS $USER_LDFLAGS $all_libraries `pkg-config --libs OpenEXR` $LIBZ"
+            AC_LANG_SAVE
+            AC_LANG_CPLUSPLUS
+            kde_save_CXXFLAGS="$CXXFLAGS"
+@@ -2815,9 +2815,9 @@
+ [
+ kde_save_LIBS="$LIBS"
+ if test "x$kde_use_qt_emb" != "xyes" && test "x$kde_use_qt_mac" != "xyes"; then
+-LIBS="$LIBS $all_libraries $USER_LDFLAGS -lpng $LIBZ -lm -lX11 $LIBSOCKET"
++LIBS="$LIBS $USER_LDFLAGS $all_libraries -lpng $LIBZ -lm -lX11 $LIBSOCKET"
+ else
+-LIBS="$LIBS $all_libraries $USER_LDFLAGS -lpng $LIBZ -lm"
++LIBS="$LIBS $USER_LDFLAGS $all_libraries -lpng $LIBZ -lm"
+ fi
+ kde_save_CFLAGS="$CFLAGS"
+ CFLAGS="$CFLAGS $all_includes $USER_INCLUDES"
+@@ -2858,7 +2858,7 @@
+ AC_CACHE_VAL(ac_cv_jasper,
+ [
+ kde_save_LIBS="$LIBS"
+-LIBS="$LIBS $all_libraries $USER_LDFLAGS -ljasper $LIBJPEG -lm"
++LIBS="$LIBS $USER_LDFLAGS $all_libraries -ljasper $LIBJPEG -lm"
+ kde_save_CFLAGS="$CFLAGS"
+ CFLAGS="$CFLAGS $all_includes $USER_INCLUDES"
+ 
+@@ -5509,7 +5509,7 @@
+   ac_libs_safe="$LIBS"
+ 
+   CXXFLAGS="$CXXFLAGS -I$qtopia_incdir $all_includes"
+-  LDFLAGS="$LDFLAGS $QT_LDFLAGS $all_libraries $USER_LDFLAGS $KDE_MT_LDFLAGS"
++  LDFLAGS="$LDFLAGS $QT_LDFLAGS $USER_LDFLAGS $all_libraries $KDE_MT_LDFLAGS"
+   LIBS="$LIBS $LIB_QTOPIA $LIBQT"
+ 
+   cat > conftest.$ac_ext <<EOF
+@@ -5590,7 +5590,7 @@
+ AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ kde_save_LIBS="$LIBS"
+-LIBS="$all_libraries $USER_LDFLAGS -lbz2 $LIBSOCKET"
++LIBS="$USER_LDFLAGS $all_libraries -lbz2 $LIBSOCKET"
+ kde_save_CXXFLAGS="$CXXFLAGS"
+ CXXFLAGS="$CXXFLAGS $all_includes $USER_INCLUDES"
+ AC_TRY_LINK(dnl
+@@ -5630,7 +5630,7 @@
+    AC_LANG_SAVE
+    AC_LANG_CPLUSPLUS
+    kde_save_LIBS="$LIBS"
+-   LIBS="$all_libraries $USER_LDFLAGS $ld_shared_flag -lbz2 $LIBSOCKET"
++   LIBS="$USER_LDFLAGS $all_libraries $ld_shared_flag -lbz2 $LIBSOCKET"
+    kde_save_CXXFLAGS="$CXXFLAGS"
+    CXXFLAGS="$CFLAGS $cxx_shared_flag $all_includes $USER_INCLUDES"
+ 
