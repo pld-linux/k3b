@@ -32,7 +32,7 @@ BuildRequires:	ffmpeg-devel >= 0.4.9-4.20080930.1
 BuildRequires:	flac-c++-devel >= 1.2.0
 BuildRequires:	gettext-devel
 %{?with_hal:BuildRequires:	hal-devel >= 0.5}
-%if "%{pld_release}" == "ti"
+%if "%{pld_release}" != "ac"
 BuildRequires: kde4-kde3support-devel >= 3.5
 %else 
 BuildRequires: kdelibs-devel >= %{_kdever}
