@@ -103,7 +103,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	dbus-qt-devel
 Requires:	hal-devel
-%if "%{pld_release}" == "ti"
+%if "%{pld_release}" != "ac"
 Requires:	kde4-kde3support-devel
 %else
 Requires:	kdelibs-devel
@@ -318,7 +318,7 @@ for dir in . k3b-i18n-*; do
 	rm -f acinclude.m4
 	cd -
 done
-%if "%{pld_release}" == "ti"
+%if "%{pld_release}" != "ac"
 %patch4 -p0
 %endif
 %patch5 -p1
@@ -334,7 +334,7 @@ for dir in . k3b-i18n-*; do
 		%{!?with_setup:--with-k3bsetup=no} \
 		--with-qt-libraries=%{_libdir} \
 		%{!?with_hal:--without-hal} \
-%if "%{pld_release}" == "ti"
+%if "%{pld_release}" != "ac"
 		--with-extra-libs=%{_libdir}/kde3dev \
 		--with-extra-includes=%{_includedir}/kde3 \
 %endif
