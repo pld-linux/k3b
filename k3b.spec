@@ -10,7 +10,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.0.5
-Release:	7
+Release:	8
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
@@ -473,9 +473,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libk3bsoxencoder.la
 %{_datadir}/apps/k3b/plugins/k3bsoxencoder.plugin
 
+%if "%{pld_release}" == "ac"
 %files plugin-konqueror
 %defattr(644,root,root,755)
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
+%endif
 
 %files plugin-output-alsa
 %defattr(644,root,root,755)
