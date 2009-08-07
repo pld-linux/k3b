@@ -10,6 +10,7 @@ Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.67.0
 Release:	%{rel}
+Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	%{name}-%{version}-r%{snap}.tar.bz2
