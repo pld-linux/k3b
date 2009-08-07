@@ -1,20 +1,20 @@
 #
 # TODO: fill R: of -devel subpackage
 
-%define		qtver	4.5.0
-%define		snap 948635
+%define		qtver	4.5.2
+%define		snap 	1008218
 
 %define		rel	0.1
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.66.0
+Version:	1.67.0
 Release:	%{rel}
 License:	GPL v2+
 Group:		X11/Libraries
-#Source0:	%{name}-%{version}-%{snap}.tar.bz2
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha2.tar.bz2
-# Source0-md5:	60717ca718da93ee65f5fc2c0d9e8c71
+Source0:	%{name}-%{version}-r%{snap}.tar.bz2
+# Source0-md5:	038cdbf4e9cd3383bc42f0e82cbd7d95
+#Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha2.tar.bz2
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
@@ -104,7 +104,7 @@ Header files for libk3bcore library.
 Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup.desktop
 
 %build
@@ -200,7 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sounds/k3b*.wav
 %{_datadir}/dbus-1/interfaces/org.k3b.setup.xml
 %{_datadir}/dbus-1/system-services/org.k3b.setup.service
-%{_sysconfdir}/dbus-1/system.d/org.k3b.setup.conf
+/etc/dbus-1/system.d/org.k3b.setup.conf
 %{_datadir}/PolicyKit/policy/org.k3b.setup.policy
 
 %files devel
