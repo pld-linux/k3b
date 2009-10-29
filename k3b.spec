@@ -3,19 +3,18 @@
 
 %define		qtver	4.5.2
 %define		snap 	1008218
+%define     _state  alpha3
 
-%define		rel	0.1
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.67.0
-Release:	%{rel}
+Version:	1.68.0
+Release:	0.%{_state}.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	%{name}-%{version}-r%{snap}.tar.bz2
-# Source0-md5:	038cdbf4e9cd3383bc42f0e82cbd7d95
-#Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}alpha2.tar.bz2
+Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
+# Source0-md5:	bfad8703714c6d71fae992ca7ba7fc38
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
@@ -105,7 +104,7 @@ Header files for libk3bcore library.
 Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 %{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup.desktop
 
 %build
