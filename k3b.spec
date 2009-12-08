@@ -105,7 +105,6 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
-%{__sed} -i -e 's@Exec=k3bsetup@Exec=k3bsetup2@g' k3bsetup/k3bsetup.desktop
 
 %build
 install -d build
