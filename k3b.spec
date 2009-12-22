@@ -37,6 +37,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	polkit-qt-devel >= 0.9.2
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
+Requires:	kde4-kdebase-runtime
 Suggests:	cdrdao
 Suggests:	cdrtools
 Suggests:	dvd+rw-tools
