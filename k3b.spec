@@ -9,7 +9,7 @@ Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.69.0
-Release:	0.%{_state}.1
+Release:	0.%{_state}.2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
@@ -94,7 +94,7 @@ Własności Kreatora CD:
 Summary:	Header files for libk3bcore library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libk3bcore
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libdvdread-devel
 Requires:	libsamplerate-devel
 
