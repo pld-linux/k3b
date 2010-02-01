@@ -1,20 +1,20 @@
 #
 # TODO: fill R: of -devel subpackage
 
-%define		qtver	4.5.2
+%define		qtver	4.6.0
 %define		snap 	1008218
-%define     _state  alpha4
+%define     _state  beta1
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.69.0
-Release:	0.%{_state}.2
+Version:	1.70.0
+Release:	0.%{_state}.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
-# Source0-md5:	8e7c15565c806cb028e11764f8781b97
+Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
+# Source0-md5:	ccfe9c3a59f12707cec3d0c6e5ef78d4
 URL:		http://k3b.plainblack.com/
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
@@ -155,16 +155,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3blameencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3boggvorbisencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bsetup.so
+%attr(755,root,root) %{_libdir}/kde4/kcm_k3bsoxencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kio_videodvd.so
-%attr(755,root,root) %ghost %{_libdir}/libk3b.so.6
-%attr(755,root,root) %{_libdir}/libk3b.so.6.0.0
+%attr(755,root,root) %ghost %{_libdir}/libk3blib.so.6
+%attr(755,root,root) %{_libdir}/libk3blib.so.6.0.0
 %attr(755,root,root) %ghost %{_libdir}/libk3bdevice.so.6
 %attr(755,root,root) %{_libdir}/libk3bdevice.so.6.0.0
 %attr(755,root,root) %{_libdir}/kde4/k3blibsndfiledecoder.so
 %attr(755,root,root) %{_libdir}/kde4/libexec/k3bsetup_worker
 %{_desktopdir}/kde4/k3b.desktop
 %{_datadir}/apps/k3b
-%{_iconsdir}/hicolor/*x*/apps/k3b.png
+#%{_iconsdir}/hicolor/*x*/apps/k3b.png
 
 %{_datadir}/apps/solid/actions/k3b_audiocd_rip.desktop
 %{_datadir}/apps/solid/actions/k3b_copy_disc.desktop
@@ -194,6 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/kcm_k3bexternalencoder.desktop
 %{_datadir}/kde4/services/kcm_k3blameencoder.desktop
 %{_datadir}/kde4/services/kcm_k3boggvorbisencoder.desktop
+%{_datadir}/kde4/services/kcm_k3bsoxencoder.desktop
 %{_datadir}/kde4/services/videodvd.protocol
 %{_datadir}/kde4/servicetypes/k3bplugin.desktop
 %{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
@@ -205,6 +207,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libk3b.so
+%attr(755,root,root) %{_libdir}/libk3blib.so
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
 %{_includedir}/*.h
