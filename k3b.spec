@@ -16,6 +16,7 @@ Group:		X11/Libraries
 Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
 # Source0-md5:	ccfe9c3a59f12707cec3d0c6e5ef78d4
 URL:		http://k3b.plainblack.com/
+BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
 BuildRequires:	QtScript-devel >= %{qtver}
