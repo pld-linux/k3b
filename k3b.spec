@@ -4,6 +4,7 @@
 %define		qtver	4.6.1
 %define		snap 	1008218
 %define		 _state	beta1
+%define		kdever	4.3.5
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
@@ -25,9 +26,13 @@ BuildRequires:	QtSvg-devel >= %{qtver}
 BuildRequires:	QtTest-devel >= %{qtver}
 BuildRequires:	QtUiTools-devel >= %{qtver}
 BuildRequires:	QtWebKit-devel >= %{qtver}
+BuildRequires:	automoc4 >= 0.9.88
+BuildRequires:	cmake >= 2.8.0
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-c++-devel
-BuildRequires:	kde4-kdemultimedia-devel
+BuildRequires:	kde4-kdelibs-devel >= %{kdever}
+BuildRequires:	kde4-kdebase-workspace-devel >= %{kdever}
+BuildRequires:	kde4-kdemultimedia-devel >= %{kdever}
 BuildRequires:	libdvdread-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmad-devel
@@ -36,6 +41,8 @@ BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel
 BuildRequires:	polkit-qt-devel >= 0.9.2
+BuildRequires:	qt4-build >= %{qtver}
+BuildRequires:	qt4-qmake >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
 Requires:	kde4-kdebase-runtime
