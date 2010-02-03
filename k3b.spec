@@ -1,9 +1,9 @@
 #
 # TODO: fill R: of -devel subpackage
 
-%define		qtver	4.6.0
+%define		qtver	4.6.1
 %define		snap 	1008218
-%define     _state  beta1
+%define		 _state	beta1
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
