@@ -1,21 +1,21 @@
 #
 # TODO: fill R: of -devel subpackage
 
-%define		qtver	4.6.1
+%define		qtver	4.6.2
 %define		snap 	1008218
-%define		 _state	beta1
-%define		kdever	4.3.5
+%define		 _state	rc2
+%define		kdever	4.4.1
 
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.70.0
-Release:	0.%{_state}.2
+Version:	1.91.0
+Release:	0.%{_state}.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
-# Source0-md5:	ccfe9c3a59f12707cec3d0c6e5ef78d4
+Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
+# Source0-md5:	56d1c726a2771d341f59f08d5364d141
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -137,13 +137,15 @@ rm -rf $RPM_BUILD_ROOT
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
 
+%find_lang %{name} --all-name --with-kde
+
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/k3b
 %attr(755,root,root) %{_bindir}/k3bsetup
@@ -170,7 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libk3bdevice.so.6
 %attr(755,root,root) %{_libdir}/libk3bdevice.so.6.0.0
 %attr(755,root,root) %{_libdir}/kde4/k3blibsndfiledecoder.so
-%attr(755,root,root) %{_libdir}/kde4/libexec/k3bsetup_worker
+%attr(755,root,root) %{_libdir}/kde4/libexec/k3bsetuphelper
 %{_desktopdir}/kde4/k3b.desktop
 %{_datadir}/apps/k3b
 #%{_iconsdir}/hicolor/*x*/apps/k3b.png
@@ -208,12 +210,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/servicetypes/k3bplugin.desktop
 %{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
 %{_datadir}/sounds/k3b*.wav
-%{_datadir}/dbus-1/interfaces/org.k3b.setup.xml
-%{_datadir}/dbus-1/system-services/org.k3b.setup.service
-/etc/dbus-1/system.d/org.k3b.setup.conf
-%{_datadir}/PolicyKit/policy/org.k3b.setup.policy
+%{_datadir}/mime/packages/x-k3b.xml
+%{_datadir}/dbus-1/system-services/org.kde.kcontrol.k3bsetup.service
+/etc/dbus-1/system.d/org.kde.kcontrol.k3bsetup.conf
+%{_datadir}/PolicyKit/policy/org.kde.kcontrol.k3bsetup.policy
 
-%files devel
+%files devel -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3blib.so
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
