@@ -1,5 +1,10 @@
 #
 # TODO: fill R: of -devel subpackage
+# - k3b-1.91.0-0.rc2.1.i686: required "/usr/share/apps/konqsidebartng/virtual_folders/services" is provided by following packages:
+#   a) kde4-kdebase-workspace-4.4.2-3.i686
+#   b) kde4-kdebase-workspace-4.4.1-1.i686
+#   c) kde4-konqueror-4.4.2-1.i686
+#   d) kde4-konqueror-4.4.1-1.i686
 
 %define		qtver	4.6.2
 %define		snap 	1008218
@@ -7,6 +12,7 @@
 %define		kdever	4.4.1
 
 Summary:	The CD Kreator
+Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.91.0
@@ -82,6 +88,22 @@ The CD Kreator features:
  - Support for ATAPI drives without SCSI-emulation for reading
  - integrated full featured audio player
 
+%description -l hu.UTF-8
+A CD Kreator lehetőségei:
+ - a legfelhasználóbarátabb felület ;-)
+ - audio CD-k írása
+ - ISO CD-k írása
+ - iso-képek írása CD-re
+ - CD másolás (adat, audio, vegyes)
+ - CD-RW-k törlése
+ - CD rippelése WAV-ba
+ - dvd rippelése
+ - DivX/XviD kódolás
+ - k3b ellenőrzi, hogy van-e a gépben üres lemez
+ - CD infomráció és toc lekérdezése
+ - ATAPI támogatás SCSI-emuláció nélkül az olvasáshoz
+ - audiolejátszó
+
 %description -l pl.UTF-8
 Własności Kreatora CD:
  - najbardziej przyjazny dla użytkownika interfejs ;-)
@@ -100,6 +122,7 @@ Własności Kreatora CD:
 
 %package devel
 Summary:	Header files for libk3bcore library
+Summary(hu.UTF-8):	Fejléc fájlok (libk3bcore)
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libk3bcore
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
@@ -108,6 +131,9 @@ Requires:	libsamplerate-devel
 
 %description devel
 Header files for libk3bcore library.
+
+%description devel -l hu.UTF-8
+Fejléc fájlok a libk3bcore-hoz.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki libk3bcore.
