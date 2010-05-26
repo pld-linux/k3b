@@ -10,17 +10,16 @@
 Summary:	The CD Kreator
 Summary(pl):	Kreator CD
 Name:		k3b
-Version:	1.0.5
-Release:	1
+Version:	1.0
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	e3b37d0d009af3dd149215d6ae0d54f3
-Source1:	http://dl.sourceforge.net/k3b/k3b-i18n-%{version}.tar.bz2
-# Source1-md5:	610b1fd9356c89cbb38b6dda1f115c86
+# Source0-md5:	02bf955059adfe9ac8a11d36fb34a11c
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
-Patch2:		%{name}-libadd.patch
+Patch2:		%{name}-dbus.patch
+Patch3:		%{name}-libadd.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf >= 2.52
@@ -292,32 +291,27 @@ Dodatkowe wtyczki z grupy projekt: Audio Metainfo Renamer, Cddb Audio
 Plugin.
 
 %prep
-%setup -q -a1
+%setup -q
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-curdir=$(pwd)
-for dir in . k3b-i18n-*; do
-	cd $dir
-	cp -f /usr/share/automake/config.sub admin
-	cp -f /usr/share/libtool/ltmain.sh admin
-	: > admin/libtool.m4.in
-	rm -f acinclude.m4
-	%{__make} -f admin/Makefile.common
-	%configure \
-		--%{!?debug:dis}%{?debug:en}able-debug \
-		%{!?debug:--disable-rpath} \
-		%{!?with_setup:--with-k3bsetup=no} \
-		--with-qt-libraries=%{_libdir} \
-		%{!?with_hal:--without-hal} \
-		%{!?with_resmgr:--without-resmgr}
-	cd $curdir
-done
+cp -f /usr/share/automake/config.sub admin
+cp -f /usr/share/libtool/ltmain.sh admin
+: > admin/libtool.m4.in
+rm -f acinclude.m4
+%{__make} -f admin/Makefile.common
+%configure \
+	--%{!?debug:dis}%{?debug:en}able-debug \
+	%{!?debug:--disable-rpath} \
+	%{!?with_setup:--with-k3bsetup=no} \
+	--with-qt-libraries=%{_libdir} \
+	%{!?with_hal:--without-hal} \
+	%{!?with_resmgr:--without-resmgr}
 
 %{__make}
-%{__make} -C k3b-i18n-*
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -328,9 +322,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/libisofs
 	appsdir=%{_desktopdir}/kde \
 	k3bsetup2dir=%{_desktopdir}/kde \
 	kde_htmldir=%{_kdedocdir}
-
-%{__make} -C k3b-i18n-* install \
-	DESTDIR=$RPM_BUILD_ROOT \
 
 install libk3b/tools/libisofs/*.h $RPM_BUILD_ROOT%{_includedir}/libisofs
 
