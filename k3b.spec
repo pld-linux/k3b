@@ -163,6 +163,10 @@ rm -rf $RPM_BUILD_ROOT
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
 
+# remove unsupported langs
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavian
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavianlatin
+
 %find_lang %{name} --all-name --with-kde
 
 %post	-p /sbin/ldconfig
