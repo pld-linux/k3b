@@ -140,6 +140,8 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
+# remove unsupported langs
+%{__sed} -i -e 's/.*sr@ijekavian.*//g' po/CMakeLists.txt
 
 %build
 install -d build
@@ -162,10 +164,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
-
-# remove unsupported langs
-rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavian
-rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavianlatin
 
 %find_lang %{name} --all-name --with-kde
 
