@@ -241,7 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 /etc/dbus-1/system.d/org.kde.kcontrol.k3bsetup.conf
 %{_datadir}/PolicyKit/policy/org.kde.kcontrol.k3bsetup.policy
 
-%files devel -f %{name}.lang
+%files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libk3blib.so
 %attr(755,root,root) %{_libdir}/libk3bdevice.so
