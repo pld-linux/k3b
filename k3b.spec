@@ -141,7 +141,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 %prep
 %setup -q
 # remove unsupported langs
-%{__sed} -i -e 's/.*sr@ijekavian.*//g' po/CMakeLists.txt
+%{__sed} -i -e '/sr@ijekavian./d' po/CMakeLists.txt
 
 %build
 install -d build
@@ -150,7 +150,7 @@ cd build
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-LCMS_DIR=%{_libdir} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=%{!?debug:release}%{?debug:debug} \
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 %if "%{_lib}" == "lib64"
 	-DLIB_SUFFIX=64 \
 %endif
