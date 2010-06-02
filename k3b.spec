@@ -141,7 +141,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 %prep
 %setup -q
 # remove unsupported langs
-%{__sed} -i -e '/sr@ijekavian./d' po/CMakeLists.txt
+%{__sed} -i -e '/sr@ijekavian/d' po/CMakeLists.txt
 
 %build
 install -d build
