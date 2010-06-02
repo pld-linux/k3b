@@ -16,7 +16,7 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	1.92.0
-Release:	0.%{_state}.1
+Release:	0.%{_state}.2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
@@ -140,8 +140,6 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
-# remove unsupported langs
-%{__sed} -i -e '/sr@ijekavian/d' po/CMakeLists.txt
 
 %build
 install -d build
@@ -164,6 +162,10 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
+
+# remove unsupported langs
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavian
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/locale/sr@ijekavianlatin
 
 %find_lang %{name} --all-name --with-kde
 
