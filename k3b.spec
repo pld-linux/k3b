@@ -6,22 +6,20 @@
 #   c) kde4-konqueror-4.4.2-1.i686
 #   d) kde4-konqueror-4.4.1-1.i686
 
-%define		qtver	4.6.2
-%define		snap 	1008218
-%define		 _state	rc4
+%define		qtver	4.6.3
 %define		kdever	4.4.4
 
 Summary:	The CD Kreator
 Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	1.93.0
-Release:	0.%{_state}.1
+Version:	2.0.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}%{_state}.tar.bz2
-# Source0-md5:	78ce03b8a7d4f9872b4dd0963b77307c
+Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+# Source0-md5:	2ec161ccd6c24778d4c5289c85473747
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
