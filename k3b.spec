@@ -56,6 +56,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _noautoreq      libtool(.*)
 
+# build broken with spaces in CC
+%undefine	with_ccache
+
+# also broken
+%define		filterout_ld	-Wl,--as-needed
+
 %description
 The CD Kreator features:
  - the most userfriendly interface ever ;-)
