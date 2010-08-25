@@ -14,15 +14,16 @@ Version:	1.0.5
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	e3b37d0d009af3dd149215d6ae0d54f3
-Source1:	http://dl.sourceforge.net/k3b/k3b-i18n-%{version}.tar.bz2
+Source1:	http://downloads.sourceforge.net/k3b/%{name}-i18n-%{version}.tar.bz2
 # Source1-md5:	610b1fd9356c89cbb38b6dda1f115c86
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
+BuildRequires:	autoconf < 2.64
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake >= 1:1.9.4
 BuildRequires:	dbus-qt-devel >= 0.62
