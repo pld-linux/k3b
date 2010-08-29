@@ -7,19 +7,19 @@
 #   d) kde4-konqueror-4.4.1-1.i686
 
 %define		qtver	4.6.3
-%define		kdever	4.4.4
+%define		kdever	4.4.5
 
 Summary:	The CD Kreator
 Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	2.0.0
-Release:	2
+Version:	2.0.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	2ec161ccd6c24778d4c5289c85473747
+# Source0-md5:	4e5b6665d91d4984cbfa814b797257cb
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -241,7 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mime/packages/x-k3b.xml
 %{_datadir}/dbus-1/system-services/org.kde.kcontrol.k3bsetup.service
 /etc/dbus-1/system.d/org.kde.kcontrol.k3bsetup.conf
-%{_datadir}/PolicyKit/policy/org.kde.kcontrol.k3bsetup.policy
+%{_datadir}/polkit-1/actions/org.kde.kcontrol.k3bsetup.policy
 
 %files devel
 %defattr(644,root,root,755)
