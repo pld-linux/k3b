@@ -5,7 +5,7 @@
 %bcond_without	hal		# build without hal support
 %bcond_without	resmgr		# build without ResMgr support
 %bcond_without	setup		# don't build K3bSetup2 KControl Module
-#
+
 %define		_kdever		9:3.2
 Summary:	The CD Kreator
 Summary(pl.UTF-8):	Kreator CD
@@ -22,6 +22,7 @@ Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-group.patch
 Patch2:		%{name}-libadd.patch
 Patch3:		kde-am.patch
+Patch4:		%{name}-ffmpeg.patch
 URL:		http://www.k3b.org/
 BuildRequires:	arts-qt-devel
 BuildRequires:	autoconf < 2.64
@@ -305,6 +306,7 @@ Plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 curdir=$(pwd)
