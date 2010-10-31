@@ -49,6 +49,7 @@ BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-qmake >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	taglib-devel
+Requires:	hal
 Requires:	kde4-kdebase-runtime
 Suggests:	cdrdao
 Suggests:	cdrtools
