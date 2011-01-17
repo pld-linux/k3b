@@ -13,13 +13,13 @@ Summary:	The CD Kreator
 Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	2.0.1
-Release:	2
+Version:	2.0.2
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
 Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	4e5b6665d91d4984cbfa814b797257cb
+# Source0-md5:	c86113af31a2032e57fd2f302b5f637a
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -47,7 +47,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	polkit-qt-devel >= 0.9.2
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-qmake >= %{qtver}
-BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	taglib-devel
 Requires:	kde4-kdebase-runtime
 Suggests:	cdrdao
@@ -143,13 +143,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 install -d build
 cd build
 %cmake \
-	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-LCMS_DIR=%{_libdir} \
-	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
-%if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64 \
-%endif
 	../
 %{__make}
 
@@ -162,8 +156,8 @@ rm -rf $RPM_BUILD_ROOT
 	kde_libs_htmldir=%{_kdedocdir}
 
 # remove unsupported langs
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/sr@ijekavian
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/sr@ijekavianlatin
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/sr@ijekavian
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/sr@ijekavianlatin
 
 %find_lang %{name} --all-name --with-kde
 
@@ -237,7 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/videodvd.protocol
 %{_datadir}/kde4/servicetypes/k3bplugin.desktop
 %{_datadir}/apps/konqsidebartng/virtual_folders/services/videodvd.desktop
-%{_datadir}/sounds/k3b*.wav
+#%%{_datadir}/sounds/k3b*.wav
 %{_datadir}/mime/packages/x-k3b.xml
 %{_datadir}/dbus-1/system-services/org.kde.kcontrol.k3bsetup.service
 /etc/dbus-1/system.d/org.kde.kcontrol.k3bsetup.conf
