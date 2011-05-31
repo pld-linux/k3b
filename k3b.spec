@@ -32,6 +32,7 @@ BuildRequires:	QtUiTools-devel >= %{qtver}
 BuildRequires:	QtWebKit-devel >= %{qtver}
 BuildRequires:	automoc4 >= 0.9.88
 BuildRequires:	cmake >= 2.8.0
+BuildRequires:	docbook-dtd42-xml
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdebase-workspace-devel >= %{kdever}
