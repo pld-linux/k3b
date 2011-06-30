@@ -20,6 +20,7 @@ License:	GPL v2+
 Group:		X11/Libraries
 Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	c86113af31a2032e57fd2f302b5f637a
+Patch0:		%{name}-ffmpeg-0.8.patch
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -33,7 +34,7 @@ BuildRequires:	QtWebKit-devel >= %{qtver}
 BuildRequires:	automoc4 >= 0.9.88
 BuildRequires:	cmake >= 2.8.0
 BuildRequires:	docbook-dtd42-xml
-BuildRequires:	ffmpeg-devel
+BuildRequires:	ffmpeg-devel >= 0.8
 BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdebase-workspace-devel >= %{kdever}
 BuildRequires:	kde4-kdelibs-devel >= %{kdever}
@@ -139,6 +140,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 install -d build
