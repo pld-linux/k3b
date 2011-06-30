@@ -238,11 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mime/packages/x-k3b.xml
 %{_datadir}/dbus-1/system-services/org.kde.kcontrol.k3bsetup.service
 /etc/dbus-1/system.d/org.kde.kcontrol.k3bsetup.conf
-%if "%{pld_release}" == "ti"
-%{_datadir}/PolicyKit/policy/org.kde.kcontrol.k3bsetup.policy
-%else
 %{_datadir}/polkit-1/actions/org.kde.kcontrol.k3bsetup.policy
-%endif
 
 %files devel
 %defattr(644,root,root,755)
