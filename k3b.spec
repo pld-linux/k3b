@@ -14,7 +14,7 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0.2
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
@@ -146,6 +146,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 install -d build
 cd build
 %cmake \
+	-DK3B_ENABLE_HAL_SUPPORT=no \
 	-LCMS_DIR=%{_libdir} \
 	../
 %{__make}
