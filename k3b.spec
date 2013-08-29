@@ -14,7 +14,7 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0.2
-Release:	6
+Release:	7
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
@@ -22,6 +22,7 @@ Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
 # Source0-md5:	c86113af31a2032e57fd2f302b5f637a
 Patch0:		k3b-2.0.2-ffmpeg.patch
 Patch1:		k3b-2.0.2-libavformat54.patch
+Patch2:		ffmpeg2.patch
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -143,6 +144,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 install -d build
