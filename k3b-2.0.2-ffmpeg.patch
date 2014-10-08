@@ -94,3 +94,23 @@ index 0ad59fc..0c5f366 100644
  
          if( d->packetSize <= 0 || len < 0 )
              ::av_free_packet( &d->packet );
+--- k3b-2.0.2/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp.org	2014-10-08 09:20:42.493085826 +0200
++++ k3b-2.0.2/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp	2014-10-08 09:22:45.357371074 +0200
+@@ -95,7 +95,7 @@
+     }
+ 
+     // analyze the streams
+-    ::av_find_stream_info( d->formatContext );
++    ::avformat_find_stream_info( d->formatContext, NULL );
+ 
+     // we only handle files containing one audio stream
+     if( d->formatContext->nb_streams != 1 ) {
+@@ -165,7 +165,7 @@
+     }
+ 
+     if( d->formatContext ) {
+-        ::av_close_input_file( d->formatContext );
++        ::avformat_close_input( &d->formatContext );
+         d->formatContext = 0;
+     }
+ }
