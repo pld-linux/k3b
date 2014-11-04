@@ -13,16 +13,13 @@ Summary:	The CD Kreator
 Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
-Version:	2.0.2
-Release:	9
+Version:	2.0.3
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	http://downloads.sourceforge.net/k3b/%{name}-%{version}.tar.bz2
-# Source0-md5:	c86113af31a2032e57fd2f302b5f637a
-Patch0:		k3b-2.0.2-ffmpeg.patch
-Patch1:		k3b-2.0.2-libavformat54.patch
-Patch2:		ffmpeg2.patch
+Source0:	http://download.kde.org/stable/k3b/%{name}-%{version}.tar.xz
+# Source0-md5:	dacad4e06be1c6fcb5efd3ac8ecd61f1
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -142,9 +139,6 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 install -d build
@@ -205,7 +199,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/libexec/k3bsetuphelper
 %{_desktopdir}/kde4/k3b.desktop
 %{_datadir}/apps/k3b
-#%{_iconsdir}/hicolor/*x*/apps/k3b.png
+%{_iconsdir}/hicolor/*x*/apps/k3b.png
+%{_iconsdir}/hicolor/scalable/apps/k3b.svgz
 
 %{_datadir}/apps/solid/actions/k3b_audiocd_rip.desktop
 %{_datadir}/apps/solid/actions/k3b_copy_disc.desktop
