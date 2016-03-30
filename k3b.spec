@@ -6,6 +6,8 @@
 #   c) kde4-konqueror-4.4.2-1.i686
 #   d) kde4-konqueror-4.4.1-1.i686
 
+%bcond_with	ffmpeg
+
 %define		qtver	4.6.3
 %define		kdever	4.4.5
 
@@ -34,7 +36,7 @@ BuildRequires:	QtWebKit-devel >= %{qtver}
 BuildRequires:	automoc4 >= 0.9.88
 BuildRequires:	cmake >= 2.8.0
 BuildRequires:	docbook-dtd42-xml
-BuildRequires:	ffmpeg-devel
+%{?with_ffmpeg:BuildRequires:	ffmpeg-devel}
 BuildRequires:	flac-c++-devel
 BuildRequires:	kde4-kdebase-workspace-devel >= %{kdever}
 BuildRequires:	kde4-kdelibs-devel >= %{kdever}
@@ -146,7 +148,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 install -d build
 cd build
 %cmake \
-	-DK3B_BUILD_FFMPEG_DECODER_PLUGIN=no \
+	%{!?with_ffmpeg:-DK3B_BUILD_FFMPEG_DECODER_PLUGIN=no} \
 	-DK3B_ENABLE_HAL_SUPPORT=no \
 	-LCMS_DIR=%{_libdir} \
 	../
@@ -186,7 +188,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/k3boggvorbisencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bsoxencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bwavedecoder.so
-#%attr(755,root,root) %{_libdir}/kde4/k3bffmpegdecoder.so
+%{?with_ffmpeg:%attr(755,root,root) %{_libdir}/kde4/k3bffmpegdecoder.so}
 %attr(755,root,root) %{_libdir}/kde4/k3bmpcdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bexternalencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3blameencoder.so
@@ -229,7 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/k3bsetup.desktop
 %{_datadir}/kde4/services/k3bsoxencoder.desktop
 %{_datadir}/kde4/services/k3bwavedecoder.desktop
-#%{_datadir}/kde4/services/k3bffmpegdecoder.desktop
+%{?with_ffmpeg:%{_datadir}/kde4/services/k3bffmpegdecoder.desktop}
 %{_datadir}/kde4/services/kcm_k3bexternalencoder.desktop
 %{_datadir}/kde4/services/kcm_k3blameencoder.desktop
 %{_datadir}/kde4/services/kcm_k3boggvorbisencoder.desktop

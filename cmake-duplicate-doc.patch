@@ -1,0 +1,9 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -350,6 +350,3 @@ macro_display_feature_log()
+ 
+ include(MacroOptionalAddSubdirectory)
+ macro_optional_add_subdirectory( po )
+-
+-include(MacroOptionalAddSubdirectory)
+-macro_optional_add_subdirectory( doc )
