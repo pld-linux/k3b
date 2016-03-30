@@ -6,7 +6,7 @@
 #   c) kde4-konqueror-4.4.2-1.i686
 #   d) kde4-konqueror-4.4.1-1.i686
 
-%bcond_with	ffmpeg
+%bcond_without	ffmpeg
 
 %define		qtver	4.6.3
 %define		kdever	4.4.5
@@ -23,6 +23,7 @@ Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/k3b/%{name}-%{version}a.tar.xz
 # Source0-md5:	52e78aabe8e483347d04e88be0aed150
 Patch0:		cmake-duplicate-doc.patch
+Patch1:		ffmpeg3.patch
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -142,7 +143,8 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
-%patch0	-p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 install -d build
