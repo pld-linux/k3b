@@ -14,12 +14,13 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0.3
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
-Source0:	http://download.kde.org/stable/k3b/%{name}-%{version}.tar.xz
-# Source0-md5:	dacad4e06be1c6fcb5efd3ac8ecd61f1
+Source0:	http://download.kde.org/stable/k3b/%{name}-%{version}a.tar.xz
+# Source0-md5:	52e78aabe8e483347d04e88be0aed150
+Patch0:		cmake-duplicate-doc.patch
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -139,11 +140,13 @@ Pliki nagłówkowe biblioteki libk3bcore.
 
 %prep
 %setup -q
+%patch0	-p1
 
 %build
 install -d build
 cd build
 %cmake \
+	-DK3B_BUILD_FFMPEG_DECODER_PLUGIN=no \
 	-DK3B_ENABLE_HAL_SUPPORT=no \
 	-LCMS_DIR=%{_libdir} \
 	../
@@ -183,7 +186,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde4/k3boggvorbisencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bsoxencoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bwavedecoder.so
-%attr(755,root,root) %{_libdir}/kde4/k3bffmpegdecoder.so
+#%attr(755,root,root) %{_libdir}/kde4/k3bffmpegdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/k3bmpcdecoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3bexternalencoder.so
 %attr(755,root,root) %{_libdir}/kde4/kcm_k3blameencoder.so
@@ -226,7 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kde4/services/k3bsetup.desktop
 %{_datadir}/kde4/services/k3bsoxencoder.desktop
 %{_datadir}/kde4/services/k3bwavedecoder.desktop
-%{_datadir}/kde4/services/k3bffmpegdecoder.desktop
+#%{_datadir}/kde4/services/k3bffmpegdecoder.desktop
 %{_datadir}/kde4/services/kcm_k3bexternalencoder.desktop
 %{_datadir}/kde4/services/kcm_k3blameencoder.desktop
 %{_datadir}/kde4/services/kcm_k3boggvorbisencoder.desktop
