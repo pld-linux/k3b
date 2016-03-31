@@ -1,0 +1,11 @@
+--- k3b-2.0.3/cmake/modules/FindMuse.cmake~	2014-11-05 03:37:31.000000000 +0900
++++ k3b-2.0.3/cmake/modules/FindMuse.cmake	2016-03-31 19:42:33.717694990 +0900
+@@ -21,7 +21,7 @@
+ 
+ if( HAVE_MPC_MPCDEC_H )
+     find_path( MUSE_INCLUDE_DIR mpc/mpcdec.h )
+-    find_library( MUSE_LIBRARIES NAMES mpcdec )
++    find_library( MUSE_LIBRARIES NAMES mpcdecsv8 )
+     set( MPC_HEADER_FILE "<mpc/mpcdec.h>" )
+ elseif( HAVE_MPCDEC_MPCDEC_H )
+     find_path( MUSE_INCLUDE_DIR mpcdec/mpcdec.h )
