@@ -16,7 +16,7 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0.3
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries
@@ -25,6 +25,7 @@ Source0:	http://download.kde.org/stable/k3b/%{name}-%{version}a.tar.xz
 Patch0:		cmake-duplicate-doc.patch
 Patch1:		ffmpeg3.patch
 Patch2:		musepack.patch
+Patch3:		k3b-build.patch
 URL:		http://k3b.plainblack.com/
 BuildRequires:	Qt3Support-devel >= %{qtver}
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -148,6 +149,7 @@ Pliki nagłówkowe biblioteki libk3bcore.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 install -d build
