@@ -16,7 +16,7 @@ Summary(hu.UTF-8):	CD Kreator
 Summary(pl.UTF-8):	Kreator CD
 Name:		k3b
 Version:	2.0.3
-Release:	5
+Release:	6
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Libraries

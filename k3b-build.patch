@@ -95,3 +95,65 @@ index 388d181..d365905 100644
 -- 
 cgit v0.11.2
 
+From 88b3596675e06c04573b4c0a296d4eabcc94680f Mon Sep 17 00:00:00 2001
+From: Leslie Zhai <xiangzhai83@gmail.com>
+Date: Mon, 28 Nov 2016 12:28:15 +0800
+Subject: Export K3b::BootItem compiled for clang++
+
+---
+ CMakeLists.txt                              | 1 +
+ INSTALL.txt                                 | 2 ++
+ libk3b/projects/datacd/k3bbootitem.h        | 3 ++-
+ plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp | 6 +++---
+ 4 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/libk3b/projects/datacd/k3bbootitem.h b/libk3b/projects/datacd/k3bbootitem.h
+index 305c8dd..7b9a7ed 100644
+--- a/libk3b/projects/datacd/k3bbootitem.h
++++ b/libk3b/projects/datacd/k3bbootitem.h
+@@ -16,9 +16,10 @@
+ #define _K3B_BOOT_ITEM_H_
+ 
+ #include "k3bfileitem.h"
++#include "k3b_export.h"
+ 
+ namespace K3b {
+-    class BootItem : public FileItem
++    class LIBK3B_EXPORT BootItem : public FileItem
+     {
+     public:
+         BootItem( const QString& fileName, DataDoc& doc, const QString& k3bName = 0 );
+diff --git a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+index 25b2208..f1dfbf7 100644
+--- a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
++++ b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+@@ -260,7 +260,7 @@ QString K3bFFMpegFile::title() const
+     AVDictionaryEntry *ade = av_dict_get( d->formatContext->metadata, "TITLE", NULL, 0 );
+     if( ade == NULL )
+         return QString();
+-    if( ade->value != '\0' )
++    if (strlen(ade->value))
+         return QString::fromLocal8Bit( ade->value );
+     else
+         return QString();
+@@ -273,7 +273,7 @@ QString K3bFFMpegFile::author() const
+     AVDictionaryEntry *ade = av_dict_get( d->formatContext->metadata, "ARTIST", NULL, 0 );
+     if( ade == NULL )
+         return QString();
+-    if( ade->value != '\0' )
++    if (strlen(ade->value))
+         return QString::fromLocal8Bit( ade->value );
+     else
+         return QString();
+@@ -286,7 +286,7 @@ QString K3bFFMpegFile::comment() const
+     AVDictionaryEntry *ade = av_dict_get( d->formatContext->metadata, "COMMENT", NULL, 0 );
+     if( ade == NULL )
+         return QString();
+-    if( ade->value != '\0' )
++    if (strlen(ade->value))
+         return QString::fromLocal8Bit( ade->value );
+     else
+         return QString();
+-- 
+cgit v0.11.2
+
